@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "634691601162",
+    "project_id": "cloud-message-test-921ee",
+    "storage_bucket": "cloud-message-test-921ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634691601162:android:6020039fd0245d56c8f0f3",
+        "android_client_info": {
+          "package_name": "bu.ac.kr.pushmessage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634691601162-au20jroa3dlb5o42rcr80ieft03pgkr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBECWDlWMNOLMQCZqdofWNRHMdLLrCUmmM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634691601162-au20jroa3dlb5o42rcr80ieft03pgkr2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
