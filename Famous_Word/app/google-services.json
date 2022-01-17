@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1035885630228",
+    "project_id": "famous-word-1c6af",
+    "storage_bucket": "famous-word-1c6af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035885630228:android:869eee8518351413962801",
+        "android_client_info": {
+          "package_name": "bu.ac.kr.famous_word"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035885630228-52n3ubnlpdn16ao5b0qvtrjno9del54e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYst_jh9KFznzeYACx0V-DuV3LoG-HokI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035885630228-52n3ubnlpdn16ao5b0qvtrjno9del54e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
