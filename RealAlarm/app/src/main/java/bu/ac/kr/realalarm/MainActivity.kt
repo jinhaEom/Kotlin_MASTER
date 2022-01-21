@@ -13,6 +13,7 @@ import android.widget.TextView
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,9 +24,10 @@ class MainActivity : AppCompatActivity() {
         val model = fetchDataFromSharedPreferences()
         renderView(model)
         //step 1. 데이터 가져오기
-        //step 2. 가져온 데이터를 view에 그려주기
+        //step 2. 가져온 데이터를 뷰에 그려주기
 
     }
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun initOnOffButton(){
         val onOffButton = findViewById<Button>(R.id.onOffButton)
         onOffButton.setOnClickListener {
@@ -97,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         }
         return model
     }
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun fetchDataFromSharedPreferences(): AlarmDisplayModel{
         val sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
 
@@ -135,6 +138,7 @@ class MainActivity : AppCompatActivity() {
             tag = model
         }
     }
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun cancelAlarm(){
         val pendingIntent = PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, Intent(this,AlarmReceiver::class.java),PendingIntent.FLAG_NO_CREATE)
         pendingIntent?.cancel()
