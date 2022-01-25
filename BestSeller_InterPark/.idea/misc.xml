@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.13958333333333334" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/drawable/background_gray_stroke_radius_16.xml" value="0.1390625" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.1390625" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1390625" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/drawable/store_button.xml" value="0.13958333333333334" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/layout/activity_detail.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/layout/activity_main.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/BestSeller_InterPark/app/src/main/res/layout/item_book.xml" value="0.14356884057971014" />
