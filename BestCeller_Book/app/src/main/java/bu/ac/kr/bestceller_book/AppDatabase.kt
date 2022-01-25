@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import bu.ac.kr.bestceller_book.dao.HistoryDao
-import bu.ac.kr.bestceller_book.dao.ReviewDao
 import bu.ac.kr.bestceller_book.model.Review
 
 @Database(entities = [History::class, Review::class], version = 2)

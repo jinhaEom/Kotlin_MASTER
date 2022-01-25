@@ -7,12 +7,14 @@ import bu.ac.kr.bestceller_book.History
 
 @Dao
 interface HistoryDao {
-        @Query("SELECT*FROM history")
-        fun getAll() : List<History>
+
+        @Query("SELECT * FROM history")
+        fun getAll(): List<History>
 
         @Insert
         fun insertHistory(history: History)
 
-        @Query("DELETE FROM history WHERE keyword == :keyword")
-        fun delete(keyword:String)
+        @Query("DELETE FROM history WHERE keyword = :keyword")
+        fun delete(keyword: String)
+
 }
