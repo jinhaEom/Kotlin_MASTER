@@ -4,12 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19537037037037036" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/drawable/activity_match.xml" value="0.14322916666666666" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19537037037037036" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/drawable/loginbox.xml" value="0.19537037037037036" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/drawable/loginbutton.xml" value="0.19537037037037036" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/layout/activity_like.xml" value="0.19701086956521738" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/layout/activity_main.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/layout/activity_match.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/layout/item_card.xml" value="0.19701086956521738" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Tinder_match/app/src/main/res/layout/item_matched_user.xml" value="0.18704710144927536" />
       </map>
     </option>
   </component>

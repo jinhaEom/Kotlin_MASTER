@@ -1,7 +1,9 @@
 package bu.ac.kr.tinder_match
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -51,12 +53,28 @@ class LikeActivity: AppCompatActivity(), CardStackListener {
 
         })
         initCardStackView()
+        initSignOutButton()
+        initMatchedListButton()
     }
     private fun initCardStackView(){
         val stackView = findViewById<CardStackView>(R.id.cardStackView)
 
         stackView.layoutManager = manager
         stackView.adapter = adapter
+    }
+    private fun initSignOutButton(){
+        val signOutButton = findViewById<Button>(R.id.signOutButton)
+        signOutButton.setOnClickListener {
+            auth.signOut()
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
+    }
+    private fun initMatchedListButton(){
+        val matchedListButton = findViewById<Button>(R.id.matchListButton)
+        matchedListButton.setOnClickListener {
+            startActivity(Intent(this, MatchedUserActivity::class.java))
+        }
     }
     private fun getUnSelectedUsers(){
         userDB.addChildEventListener(object : ChildEventListener{
@@ -139,6 +157,8 @@ class LikeActivity: AppCompatActivity(), CardStackListener {
             .child(getCurrentUserID())
             .setValue(true)
 
+        saveMatchIfOtherUserLikedMe(card.userId)
+
         // TODO 매칭이 된 시점을 봐야함.
         Toast.makeText(this,"LIKE",Toast.LENGTH_SHORT).show()
     }
@@ -153,6 +173,31 @@ class LikeActivity: AppCompatActivity(), CardStackListener {
             .setValue(true)
 
         Toast.makeText(this,"DISLIKE",Toast.LENGTH_SHORT).show()
+    }
+    private fun saveMatchIfOtherUserLikedMe(otherUserId: String){
+        val otherUserDB = userDB.child(getCurrentUserID()).child("likedBy").child("like").child(otherUserId)
+        otherUserDB.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.value == true){
+                    userDB.child(getCurrentUserID())
+                        .child("likedBy")
+                        .child("match")
+                        .child(otherUserId)
+                        .setValue(true)
+
+                    userDB.child(otherUserId)
+                        .child("likedBy")
+                        .child("match")
+                        .child(getCurrentUserID())
+                        .setValue(true)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
