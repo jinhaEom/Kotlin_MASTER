@@ -17,6 +17,7 @@ class MatchedUserActivity: AppCompatActivity() {
     private lateinit var userDB : DatabaseReference
     private val adapter = MatchedUserAdapter()
     private val cardItems = mutableListOf<CardItem>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match)
@@ -29,6 +30,7 @@ class MatchedUserActivity: AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.matchedUserRecyclerView)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
     }
     private fun getMatchUsers(){
         val matchedDB = userDB.child(getcurrentUserID()).child("likedBy").child("match")
