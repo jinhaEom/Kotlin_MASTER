@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/drawable/ic_baseline_person_pin_24.xml" value="0.20092592592592592" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/drawable/selector_menu_color.xml" value="0.20092592592592592" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/layout/activity_main.xml" value="0.136" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/layout/fragment_chatlist.xml" value="0.14356884057971014" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/layout/fragment_home.xml" value="0.14356884057971014" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/layout/fragment_mypage.xml" value="0.14356884057971014" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/layout/item_article.xml" value="0.2" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/UsedGoods_Trade/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.24947916666666667" />
       </map>
     </option>
