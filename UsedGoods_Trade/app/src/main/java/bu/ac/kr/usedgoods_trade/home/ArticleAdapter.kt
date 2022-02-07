@@ -17,10 +17,11 @@ class ArticleAdapter : ListAdapter<ArticleModel, ArticleAdapter.ViewHolder>(diff
 
         fun bind(articleModel: ArticleModel) {
             val format = SimpleDateFormat("MM월 dd일")
-            val date = Date(articleModel.createAt)
+            val date = Date(articleModel.createdAt)
             binding.titleTextView.text = articleModel.title
             binding.dateTextView.text = format.format(date).toString()
             binding.priceTextView.text = articleModel.price
+
 
             if (articleModel.imageUrl.isNotEmpty()) {
                 Glide.with(binding.thumbnailImageView)
@@ -47,7 +48,7 @@ class ArticleAdapter : ListAdapter<ArticleModel, ArticleAdapter.ViewHolder>(diff
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<ArticleModel>() {
             override fun areItemsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean {
-                return oldItem.createAt == newItem.createAt
+                return oldItem.createdAt == newItem.createdAt
             }
 
             override fun areContentsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean {
