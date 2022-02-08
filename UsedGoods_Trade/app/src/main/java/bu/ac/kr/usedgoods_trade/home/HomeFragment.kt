@@ -81,8 +81,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     @SuppressLint("NotifyDataSetChanged")
+
     override fun onResume() {
         super.onResume()
+
         articleAdapter.notifyDataSetChanged()
     }
     override fun onDestroyView() {
