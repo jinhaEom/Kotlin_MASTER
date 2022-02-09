@@ -7,8 +7,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import bu.ac.kr.usedgoods_trade.R
+import bu.ac.kr.usedgoods_trade.chatlist.ChatListItem
 import bu.ac.kr.usedgoods_trade.databinding.FragmentHomeBinding
+import bu.ac.kr.usedgoods_trade.mypage.DBKey.Companion.CHILD_CHAT
 import bu.ac.kr.usedgoods_trade.mypage.DBKey.Companion.DB_ARTICLES
+import bu.ac.kr.usedgoods_trade.mypage.DBKey.Companion.DB_USERS
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -22,13 +25,17 @@ import com.google.firebase.ktx.Firebase
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var articleDB: DatabaseReference
+    private lateinit var userDB: DatabaseReference
     private lateinit var articleAdapter: ArticleAdapter
 
+
     private val articleList = mutableListOf<ArticleModel>()
-    private val listener = object : ChildEventListener {
+    private val listener = object: ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+
             val articleModel = snapshot.getValue(ArticleModel::class.java)
             articleModel ?: return
+
             articleList.add(articleModel)
             articleAdapter.submitList(articleList)
         }
@@ -41,46 +48,85 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         override fun onCancelled(error: DatabaseError) {}
 
+
     }
 
     private var binding: FragmentHomeBinding? = null
-
     private val auth: FirebaseAuth by lazy {
         Firebase.auth
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentHomeBinding = FragmentHomeBinding.bind(view)
         binding = fragmentHomeBinding
+
         articleList.clear()
-
+        userDB = Firebase.database.reference.child(DB_USERS)
         articleDB = Firebase.database.reference.child(DB_ARTICLES)
+        articleAdapter = ArticleAdapter(onItemClicked = { articleModel ->
+            if (auth.currentUser != null) {
+                // 로그인을 한 상태
+                if (auth.currentUser!!.uid != articleModel.sellerId) {
 
-        articleAdapter = ArticleAdapter()
+                    val chatRoom = ChatListItem(
+                        buyerId = auth.currentUser!!.uid,
+                        sellerId = articleModel.sellerId,
+                        itemTitle = articleModel.title,
+                        key = System.currentTimeMillis()
+                    )
+
+                    userDB.child(auth.currentUser!!.uid)
+                        .child(CHILD_CHAT)
+                        .push()
+                        .setValue(chatRoom)
+
+                    userDB.child(articleModel.sellerId)
+                        .child(CHILD_CHAT)
+                        .push()
+                        .setValue(chatRoom)
+
+
+                    Snackbar.make(view, "채팅방이 생성되었습니다. 채팅탭에서 확인해주세요.", Snackbar.LENGTH_LONG).show()
+
+
+                } else {
+                    // 내가 올린 아이템
+                    Snackbar.make(view, "내가 올린 아이템입니다", Snackbar.LENGTH_LONG).show()
+                }
+            } else {
+                // 로그인을 안한 상태
+                Snackbar.make(view, "로그인 후 사용해주세요", Snackbar.LENGTH_LONG).show()
+            }
+
+
+
+
+        })
 
         fragmentHomeBinding.articleRecyclerView.layoutManager = LinearLayoutManager(context)
         fragmentHomeBinding.articleRecyclerView.adapter = articleAdapter
 
         fragmentHomeBinding.addFloatingButton.setOnClickListener {
             context?.let {
-
                 if (auth.currentUser != null) {
-                    val intent = Intent(requireActivity(), AddArticleActivity::class.java)
+                    val intent = Intent(it, AddArticleActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Snackbar.make(view, "로그인 후 사용해주세요.", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(view, "로그인 후 사용해주세요", Snackbar.LENGTH_LONG).show()
                 }
-
-
             }
+
+
         }
 
-        articleDB.addChildEventListener(listener)
-    }
 
-    @SuppressLint("NotifyDataSetChanged")
+        articleDB.addChildEventListener(listener)
+
+
+    }
 
     override fun onResume() {
         super.onResume()
@@ -93,4 +139,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         articleDB.removeEventListener(listener)
     }
+
+
+
+
+
 }
