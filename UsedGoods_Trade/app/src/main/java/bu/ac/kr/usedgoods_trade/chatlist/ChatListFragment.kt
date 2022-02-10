@@ -1,10 +1,12 @@
 package bu.ac.kr.usedgoods_trade.chatlist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import bu.ac.kr.usedgoods_trade.R
+import bu.ac.kr.usedgoods_trade.chatdetail.ChatRoomActivity
 import bu.ac.kr.usedgoods_trade.databinding.FragmentChatlistBinding
 import bu.ac.kr.usedgoods_trade.mypage.DBKey.Companion.CHILD_CHAT
 import bu.ac.kr.usedgoods_trade.mypage.DBKey.Companion.DB_USERS
@@ -34,8 +36,14 @@ class ChatListFragment: Fragment(R.layout.fragment_chatlist) {
         val fragmentChatListBinding = FragmentChatlistBinding.bind(view)
         binding = fragmentChatListBinding
 
-        chatListAdapter = ChatListAdapter(onItemClicked = {
+        chatListAdapter = ChatListAdapter(onItemClicked = { chatRoom ->
             //채팅방으로 이동하는 코드
+            context?.let{
+                val intent = Intent(it,ChatRoomActivity::class.java)
+                intent.putExtra("chatKey",chatRoom.key)
+                startActivity(intent)
+            }
+
         })
 
         chatRoomList.clear()
