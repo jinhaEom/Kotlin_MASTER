@@ -1,5 +1,6 @@
 package bu.ac.kr.usedgoods_trade.mypage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -18,11 +19,13 @@ class MyPageFragment : Fragment(R.layout.fragment_mypage){
         Firebase.auth
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentMypageBinding = FragmentMypageBinding.bind(view)
         binding = fragmentMypageBinding
+
 
         fragmentMypageBinding.signInOutButton.setOnClickListener {
             binding?.let { binding ->
@@ -36,7 +39,7 @@ class MyPageFragment : Fragment(R.layout.fragment_mypage){
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
                                 successSignIn()
-                                
+
                             } else {
                                 Toast.makeText(context, "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
                             }
@@ -133,7 +136,6 @@ class MyPageFragment : Fragment(R.layout.fragment_mypage){
         binding?.signInOutButton?.text = "로그아웃"
 
     }
-
 
 }
 
