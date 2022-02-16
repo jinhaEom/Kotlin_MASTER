@@ -26,7 +26,7 @@ class LoginFragment: Fragment() {
             val bundle = Bundle()
             bundle.putString("nickname",nickname)
             //chatFragment로 이동
-            /*(activity as MainActivity).replaceFragment(bundle)*/
+            (activity as MainActivity).replaceFragment(bundle)
         }
 
         return view

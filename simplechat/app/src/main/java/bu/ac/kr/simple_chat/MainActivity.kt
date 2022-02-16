@@ -17,13 +17,15 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.layout_frame,LoginFragment())
             .commit()
 
-        fun replaceFragment(bundle: Bundle){
-            val destination = ChatFragment()
-            destination.arguments = bundle
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.layout_frame,destination)
-                .commit()
-        }
+
+    }
+
+    fun replaceFragment(bundle: Bundle) {
+        val destination = ChatFragment()
+        destination.arguments = bundle
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.layout_frame,destination)
+            .commit()
     }
 
 
