@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import bu.ac.kr.simple_chat.databinding.FragmentChatBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,7 +39,9 @@ class ChatFragment :Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentChatBinding.inflate(inflater,container,false)
         val view = binding.root
+/*
         Toast.makeText(context,"현재 닉네임은 ${currentUser}입니다",Toast.LENGTH_SHORT).show()
+*/
 
         binding.rvList.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         adapter = ChatAdapter(currentUser, chatList)
@@ -74,7 +77,8 @@ class ChatFragment :Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatList.add(ChatLayout("알림","$currentUser 닉네임으로 입장했습니다.",""))
+        Snackbar.make(view,"$currentUser 닉네임으로 입장했습니다!",Snackbar.LENGTH_SHORT).show()
+        /*chatList.add(ChatLayout("알림","$currentUser 닉네임으로 입장했습니다.",""))*/
         val enterTime = Date(System.currentTimeMillis())
 
         registration = db.collection("Chat")
@@ -111,8 +115,8 @@ class ChatFragment :Fragment() {
             }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         registration.remove()
         _binding=null
     }
