@@ -4,6 +4,8 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.naver.maps.geometry.LatLng
@@ -11,6 +13,7 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
+import com.naver.maps.map.widget.LocationButtonView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +31,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private val viewPager : ViewPager2 by lazy{
         findViewById(R.id.houseViewPager)
     }
+    private val recyclerView : RecyclerView by lazy{
+        findViewById(R.id.recyclerView)
+    }
+    private val currentLocationButton : LocationButtonView by lazy{
+        findViewById(R.id.currentLocationButton)
+    }
     private val viewPagerAdapter = HouseViewPagerAdapter()
+    private val recyclerAdapter = HouseListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +48,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView.getMapAsync(this)
 
         viewPager.adapter = viewPagerAdapter
+        recyclerView.adapter = recyclerAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onMapReady(map: NaverMap) {
@@ -51,7 +63,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.moveCamera(cameraUpdate)
 
         val uiSetting = naverMap.uiSettings
-        uiSetting.isLocationButtonEnabled = true  // 현위치 찍기
+        uiSetting.isLocationButtonEnabled = false  // 현위치 찍기
+
+        currentLocationButton.map = naverMap
 
         locationSource = FusedLocationSource(
             this@MainActivity,
@@ -82,6 +96,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             updateMarker(dto.items)
                             viewPagerAdapter.submitList(dto.items)
+                            recyclerAdapter.submitList(dto.items)
 
                         }
                     }
