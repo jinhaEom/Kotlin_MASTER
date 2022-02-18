@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                         response.body()?.let { dto ->
 
                             updateMarker(dto.items)
+                            viewPagerAdapter.submitList(dto.items)
 
                         }
                     }
