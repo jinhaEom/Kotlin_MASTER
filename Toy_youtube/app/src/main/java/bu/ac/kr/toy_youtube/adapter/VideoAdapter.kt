@@ -17,7 +17,7 @@ class VideoAdapter: ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: VideoModel) {
-            val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
+            val titleTextView = view.findViewById<TextView>(R.id.titlecd TextView)
             val subTitleTextView = view.findViewById<TextView>(R.id.subTitleTextView)
             val thumbnailImageView = view.findViewById<ImageView>(R.id.thumbnailImageView)
 
