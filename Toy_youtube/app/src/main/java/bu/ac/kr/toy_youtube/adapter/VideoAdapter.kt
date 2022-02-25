@@ -12,12 +12,12 @@ import bu.ac.kr.toy_youtube.R
 import bu.ac.kr.toy_youtube.VideoModel
 import com.bumptech.glide.Glide
 
-class VideoAdapter: ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
+class VideoAdapter(val callback:(String,String)->Unit): ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: VideoModel) {
-            val titleTextView = view.findViewById<TextView>(R.id.titlecd TextView)
+            val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
             val subTitleTextView = view.findViewById<TextView>(R.id.subTitleTextView)
             val thumbnailImageView = view.findViewById<ImageView>(R.id.thumbnailImageView)
 
@@ -27,6 +27,10 @@ class VideoAdapter: ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
             Glide.with(thumbnailImageView.context)
                 .load(item.thumb)
                 .into(thumbnailImageView)
+
+            view.setOnClickListener {
+                callback(item.sources, item.title)
+            }
 
 
         }

@@ -62,7 +62,9 @@ class PlayerFragment:Fragment(R.layout.fragment_player) {
     }
     private fun initRecyclerView(fragmentPlayerBinding: FragmentPlayerBinding){
 
-        videoAdapter = VideoAdapter()
+        videoAdapter = VideoAdapter(callback = {url,title->
+            play(url,title)
+        })
         fragmentPlayerBinding.fragmentRecyclerView.apply{
             adapter = videoAdapter
             layoutManager = LinearLayoutManager(context)
@@ -96,6 +98,12 @@ class PlayerFragment:Fragment(R.layout.fragment_player) {
                     }
 
                 })
+        }
+    }
+    fun play(url:String,title:String){
+        binding?.let {
+            it.playerMotionLayout.transitionToEnd()
+            it.bottomTitleTextView.text = title
         }
     }
 
