@@ -10,12 +10,13 @@
         android:id="@+id/mainContainerLayout"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:background="@color/purple_200"
+        android:background="#AAAAAA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.exoplayer2.ui.PlayerView
+        app:resize_mode="fill"
         android:id="@+id/playerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -40,6 +41,7 @@
         android:layout_marginEnd="12dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textColor="@color/black"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@id/bottomPlayerControlButton"
         app:layout_constraintEnd_toStartOf="@id/bottomPlayerControlButton"

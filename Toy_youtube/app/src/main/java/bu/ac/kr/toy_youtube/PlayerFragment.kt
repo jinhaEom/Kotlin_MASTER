@@ -16,7 +16,6 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.hls.DefaultHlsDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +39,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         initMotionLayoutEvent(fragmentPlayerBinding)
         initRecyclerView(fragmentPlayerBinding)
         initPlayer(fragmentPlayerBinding)
-
+        initControlButton(fragmentPlayerBinding)
         getVideoList()
     }
 
@@ -106,6 +105,30 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         }
         fragmentPlayerBinding.playerView.player = player
+        binding?.let{
+            player?.addListener(object: Player.Listener{
+                override fun onIsPlayingChanged(isPlaying: Boolean) {
+                    super.onIsPlayingChanged(isPlaying)
+
+                    if(isPlaying){
+                        it.bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_pause_24)
+                    }else{
+                        it.bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                    }
+                }
+            })
+        }
+    }
+    private fun initControlButton(fragmentPlayerBinding: FragmentPlayerBinding){
+        fragmentPlayerBinding.bottomPlayerControlButton.setOnClickListener {
+            val player = this.player ?: return@setOnClickListener
+
+            if(player.isPlaying){
+                player.pause()
+            }else{
+                player.play()
+            }
+        }
     }
 
     private fun getVideoList() {
@@ -154,9 +177,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+
+        player?.pause()
+    }
     override fun onDestroy() {
         super.onDestroy()
-
         binding = null
+        player?.release()
     }
 }

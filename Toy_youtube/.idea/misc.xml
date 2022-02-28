@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.25925925925925924" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.25925925925925924" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/drawable/ic_baseline_pause_24.xml" value="0.265625" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.25925925925925924" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/drawable/ic_launcher_background.xml" value="0.25925925925925924" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/drawable/shape_circle.xml" value="0.26153846153846155" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/drawable/shapecircle.xml" value="0.26153846153846155" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/layout/activity_main.xml" value="0.14356884057971014" />
-        <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/layout/fragment_player.xml" value="0.1" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/layout/fragment_player.xml" value="0.10400000000000001" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/layout/item_video.xml" value="0.264" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Toy_youtube/app/src/main/res/menu/bottom_nav_menu.xml" value="0.24947916666666667" />
       </map>
