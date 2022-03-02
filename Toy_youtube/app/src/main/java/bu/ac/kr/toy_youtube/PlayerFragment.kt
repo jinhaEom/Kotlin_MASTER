@@ -119,13 +119,13 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             })
         }
     }
-    private fun closeButton(fragmentPlayerBinding: FragmentPlayerBinding){
+   /* private fun closeButton(fragmentPlayerBinding: FragmentPlayerBinding){
         fragmentPlayerBinding.bottomPlayerControlButton2.setOnClickListener {
             val player = this.player?: return@setOnClickListener
 
             
         }
-    }
+    }*/
     private fun initControlButton(fragmentPlayerBinding: FragmentPlayerBinding){
         fragmentPlayerBinding.bottomPlayerControlButton.setOnClickListener {
             val player = this.player ?: return@setOnClickListener
