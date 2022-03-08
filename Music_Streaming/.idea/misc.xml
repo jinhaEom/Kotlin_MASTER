@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Music_Streaming/app/src/main/res/drawable/ic_baseline_playlist_play_48.xml" value="0.26153846153846155" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/Music_Streaming/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26153846153846155" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Music_Streaming/app/src/main/res/drawable/player_seek_background.xml" value="0.26153846153846155" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Music_Streaming/app/src/main/res/drawable/player_seek_thumb.xml" value="0.26153846153846155" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/Music_Streaming/app/src/main/res/layout/activity_main.xml" value="0.1" />
