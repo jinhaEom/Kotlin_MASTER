@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import bu.ac.kr.music_streaming.databinding.FragmentPlayerBinding
 import bu.ac.kr.music_streaming.service.MusicDto
 import bu.ac.kr.music_streaming.service.MusicService
+import bu.ac.kr.music_streaming.service.mapper
 import com.google.android.exoplayer2.util.Log
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,7 +31,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private fun initPlayListButton(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.playlistImageView.setOnClickListener {
-            //TODO 만약에 서버에서 데이터가 다 불러오지 않은 형태일때 예외처리 
+            //TODO 만약에 서버에서 데이터가 다 불러오지 않은 형태일때 예외처리
             fragmentPlayerBinding.playerViewGroup.isVisible = isWatchingPlayListView
 
             fragmentPlayerBinding.playListViewGroup.isVisible = isWatchingPlayListView.not()
@@ -54,6 +55,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                             response: Response<MusicDto>
                         ) {
                             Log.d("PlayerFragment","${response.body()}")
+                            response.body()?.let{
+                                val modelList = it.musics.mapIndexed{ index, musicEntity ->
+                                    musicEntity.mapper(index.toLong())
+                                }
+                            }
                         }
 
                         override fun onFailure(call: Call<MusicDto>, t: Throwable) {
