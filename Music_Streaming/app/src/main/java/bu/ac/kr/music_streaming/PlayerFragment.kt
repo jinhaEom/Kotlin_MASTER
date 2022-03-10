@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import bu.ac.kr.music_streaming.databinding.FragmentPlayerBinding
 import bu.ac.kr.music_streaming.service.MusicDto
 import bu.ac.kr.music_streaming.service.MusicService
@@ -18,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class PlayerFragment : Fragment(R.layout.fragment_player) {
     private var binding : FragmentPlayerBinding? = null
     private var isWatchingPlayListView = true
+    private lateinit var playListAdapter: PlayListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,8 +27,20 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         val fragmentPlayerBinding = FragmentPlayerBinding.bind(view)
         binding = fragmentPlayerBinding
         initPlayListButton(fragmentPlayerBinding)
+        initRecyclerView(fragmentPlayerBinding)
 
         getVideoListFromServer()
+    }
+
+    private fun initRecyclerView(fragmentPlayerBinding: FragmentPlayerBinding) {
+        playListAdapter = PlayListAdapter{
+            // TODO 음악 재생.
+
+        }
+        fragmentPlayerBinding.playListRecyclerView.apply{
+            adapter = playListAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun initPlayListButton(fragmentPlayerBinding: FragmentPlayerBinding) {
@@ -59,6 +73,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                                 val modelList = it.musics.mapIndexed{ index, musicEntity ->
                                     musicEntity.mapper(index.toLong())
                                 }
+                                playListAdapter.submitList(modelList)
                             }
                         }
 
