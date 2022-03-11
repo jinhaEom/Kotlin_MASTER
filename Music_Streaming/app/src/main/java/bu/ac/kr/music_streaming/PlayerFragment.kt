@@ -21,8 +21,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
+
+    private var model : PlayerModel = PlayerModel()
     private var binding: FragmentPlayerBinding? = null
-    private var isWatchingPlayListView = true
     private var player: SimpleExoPlayer? = null
 
     private lateinit var playListAdapter: PlayListAdapter
@@ -123,8 +124,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                         ) {
                             Log.d("PlayerFragment", "${response.body()}")
                             response.body()?.let {
-                                val modelList = it.musics.mapIndexed { index, musicEntity ->
-                                    musicEntity.mapper(index.toLong())
+
                                 }
                                 setMusicList(modelList)
                                 playListAdapter.submitList(modelList)
