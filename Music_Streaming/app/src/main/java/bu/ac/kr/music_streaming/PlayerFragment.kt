@@ -130,7 +130,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             if(model.currentPosition== -1) return@setOnClickListener
             fragmentPlayerBinding.playerViewGroup.isVisible = model.isWatchingPlayListView
 
-            fragmentPlayerBinding.playListViewGroup.isVisible = !model.isWatchingPlayListView
+            fragmentPlayerBinding.playListViewGroup.isVisible = model.isWatchingPlayListView.not()
 
             model.isWatchingPlayListView = !model.isWatchingPlayListView
         }
