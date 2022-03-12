@@ -36,13 +36,13 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         initPlayView(fragmentPlayerBinding)
         initPlayListButton(fragmentPlayerBinding)
-        initPlayCntrolButtons(fragmentPlayerBinding)
+        initPlayControlButtons(fragmentPlayerBinding)
         initRecyclerView(fragmentPlayerBinding)
 
         getVideoListFromServer()
     }
 
-    private fun initPlayCntrolButtons(fragmentPlayerBinding: FragmentPlayerBinding) {
+    private fun initPlayControlButtons(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.playControlImageView.setOnClickListener {
             val player = this.player ?: return@setOnClickListener
 
@@ -53,10 +53,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             }
         }
         fragmentPlayerBinding.skipNextImageView.setOnClickListener {
-
+            val nextMusic = model.nextMusic() ?: return@setOnClickListener
+            playMusic(nextMusic)
         }
         fragmentPlayerBinding.skipPrevImageView.setOnClickListener {
-
+            val prevMusic = model.prevMusic() ?: return@setOnClickListener
+            playMusic(prevMusic)
         }
     }
 
@@ -81,6 +83,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                         binding.playControlImageView.setImageResource(R.drawable.ic_baseline_play_arrow_48)
                     }
                 }
+
+                override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                    super.onMediaItemTransition(mediaItem, reason)
+
+                    val newIndex = mediaItem?.mediaId ?: return
+                    model.currentPosition = newIndex.toInt()
+                    playListAdapter.submitList(model.getAdapterModels())
+                }
             })
 
         }
@@ -88,7 +98,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private fun initRecyclerView(fragmentPlayerBinding: FragmentPlayerBinding) {
         playListAdapter = PlayListAdapter {
-            // TODO 음악 재생.
+            playMusic(it)
 
         }
         fragmentPlayerBinding.playListRecyclerView.apply {
@@ -100,11 +110,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     private fun initPlayListButton(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.playlistImageView.setOnClickListener {
             //TODO 만약에 서버에서 데이터가 다 불러오지 않은 형태일때 예외처리
-            fragmentPlayerBinding.playerViewGroup.isVisible = isWatchingPlayListView
+            if(model.currentPosition== -1) return@setOnClickListener
+            fragmentPlayerBinding.playerViewGroup.isVisible = model.isWatchingPlayListView
 
-            fragmentPlayerBinding.playListViewGroup.isVisible = isWatchingPlayListView.not()
+            fragmentPlayerBinding.playListViewGroup.isVisible = !model.isWatchingPlayListView
 
-            isWatchingPlayListView = !isWatchingPlayListView
+            model.isWatchingPlayListView = !model.isWatchingPlayListView
         }
     }
 
@@ -118,27 +129,25 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             .also {
                 it.listMusics()
                     .enqueue(object : Callback<MusicDto> {
-                        override fun onResponse(
-                            call: Call<MusicDto>,
-                            response: Response<MusicDto>
-                        ) {
-                            Log.d("PlayerFragment", "${response.body()}")
-                            response.body()?.let {
+                        override fun onResponse(call: Call<MusicDto>, response: Response<MusicDto>) {
 
-                                }
-                                setMusicList(modelList)
-                                playListAdapter.submitList(modelList)
+                            Log.d("PlayerFragment", "${response.body()}")
+
+                            response.body()?.let { musicDto ->
+
+                                model = musicDto.mapper()
+
+                                setMusicList(model.getAdapterModels())
+                                playListAdapter.submitList(model.getAdapterModels())
+
                             }
                         }
 
                         override fun onFailure(call: Call<MusicDto>, t: Throwable) {
-
                         }
-
                     })
             }
     }
-
     private fun setMusicList(modelList: List<MusicModel>) {
         context?.let {
             player?.addMediaItems(modelList.map { musicModel ->
@@ -148,9 +157,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                     .build()
             })
             player?.prepare()
-            player?.play()
+
         }
     }
+    private fun playMusic(musicModel: MusicModel) {
+        model.updateCurrentPosition(musicModel)
+        player?.seekTo(model.currentPosition, 0)
+        player?.play()
+}
 
     companion object {
         fun newInstance(): PlayerFragment {

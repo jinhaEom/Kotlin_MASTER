@@ -13,8 +13,7 @@ fun MusicEntity.mapper(id: Long): MusicModel =
 
 fun MusicDto.mapper(): PlayerModel =
     PlayerModel(
-        playMusicList = musics.mapIndexed {
-            val modelList = musics.mapIndexed { index, musicEntity ->
-                musicEntity.mapper(index.toLong())
-            }
-            )
+        playMusicList = musics.mapIndexed{ index, musicEntity ->
+            musicEntity.mapper(index.toLong())
+        }
+    )
