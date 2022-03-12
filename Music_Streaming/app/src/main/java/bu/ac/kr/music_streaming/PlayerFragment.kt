@@ -10,6 +10,7 @@ import bu.ac.kr.music_streaming.service.MusicDto
 import bu.ac.kr.music_streaming.service.MusicModel
 import bu.ac.kr.music_streaming.service.MusicService
 import bu.ac.kr.music_streaming.service.mapper
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -89,11 +90,27 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
                     val newIndex = mediaItem?.mediaId ?: return
                     model.currentPosition = newIndex.toInt()
+                    updatePlayerView(model.currentMusicModel())
+
                     playListAdapter.submitList(model.getAdapterModels())
                 }
             })
 
         }
+    }
+
+    private fun updatePlayerView(currentMusicModel: MusicModel?) {
+        currentMusicModel ?:return
+
+        binding?.let{ binding ->
+            binding.trackTextView.text = currentMusicModel.track
+            binding.artistTextView.text = currentMusicModel.artist
+            Glide.with(binding.coverImageView.context)
+                .load(currentMusicModel.coverUrl)
+                .into(binding.coverImageView)
+
+        }
+        currentMusicModel.id
     }
 
     private fun initRecyclerView(fragmentPlayerBinding: FragmentPlayerBinding) {
