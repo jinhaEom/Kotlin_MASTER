@@ -2,6 +2,7 @@ package bu.ac.kr.music_streaming
 
 import android.os.Bundle
 import android.view.View
+import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,9 +44,30 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         initPlayView(fragmentPlayerBinding)
         initPlayListButton(fragmentPlayerBinding)
         initPlayControlButtons(fragmentPlayerBinding)
+        initSeekBar(fragmentPlayerBinding)
         initRecyclerView(fragmentPlayerBinding)
 
         getVideoListFromServer()
+    }
+
+    private fun initSeekBar(fragmentPlayerBinding: FragmentPlayerBinding) {
+        //seekbar가 사용자에 의해 움직였을때
+        fragmentPlayerBinding.playerSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                player?.seekTo((seekBar.progress * 1000).toLong())
+            }
+
+        })
+
+        fragmentPlayerBinding.playListSeekBar.setOnTouchListener{v, event ->
+            false
+        }
     }
 
     private fun initPlayControlButtons(fragmentPlayerBinding: FragmentPlayerBinding) {
@@ -223,6 +245,22 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         player?.seekTo(model.currentPosition, 0)
         player?.play()
 }
+
+    override fun onStop() {
+        super.onStop()
+
+        player?.pause()
+        view?.removeCallbacks(updateSeekRunnable)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        binding = null
+        player?.release()
+        view?.removeCallbacks(updateSeekRunnable)
+
+    }
 
     companion object {
         fun newInstance(): PlayerFragment {
