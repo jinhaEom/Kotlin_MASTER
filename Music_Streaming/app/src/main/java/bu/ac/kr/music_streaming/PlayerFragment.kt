@@ -51,6 +51,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     }
 
     private fun initSeekBar(fragmentPlayerBinding: FragmentPlayerBinding) {
+
         //seekbar가 사용자에 의해 움직였을때
         fragmentPlayerBinding.playerSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
