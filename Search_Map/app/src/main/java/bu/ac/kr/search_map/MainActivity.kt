@@ -8,6 +8,8 @@ import androidx.core.view.isVisible
 import bu.ac.kr.search_map.databinding.ActivityMainBinding
 import bu.ac.kr.search_map.model.LocationLatLngEntity
 import bu.ac.kr.search_map.model.SearchResultEntity
+import bu.ac.kr.search_map.response.search.Poi
+import bu.ac.kr.search_map.response.search.Pois
 import bu.ac.kr.search_map.utility.RetrofitUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         initAdapter()
         initViews()
         initData()
-        setData()
         bindViews()
     }
 
@@ -54,19 +55,19 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private fun initData(){
         adapter.notifyDataSetChanged()
     }
-    private fun setData(){
-        val dataList = (0..10).map{
+    private fun setData(pois: Pois){
+        val dataList = (pois.poi).map{
             SearchResultEntity(
-                name = "빌딩 $it",
-                fullAdress = "주소 $it",
+                name = it.name ?: "빌딩명 없음",
+                fullAdress = makeMainAdress(it),
                 locationLatLng= LocationLatLngEntity(
-                    it.toFloat(),
-                    it.toFloat()
+                    it.noorLat,
+                    it.noorLon
                 )
             )
         }
         adapter.setSearchResult(dataList){
-            Toast.makeText(this,"빌딩이름: ${it.name} 주소 : ${it.fullAdress}",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"빌딩이름: ${it.name} 주소: ${it.fullAdress} 위도/경도: ${it.locationLatLng}",Toast.LENGTH_SHORT).show()
         }
     }
     private fun searchKeyword(keywordString:String){
@@ -80,6 +81,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                         val body = response.body()
                         withContext(Dispatchers.Main){
                             Log.e("response",body.toString())
+                            body?.let{ searchResponse ->
+                                setData(searchResponse.searchPoiInfo.pois)
+                            }
                         }
                     }
                 }
@@ -90,5 +94,24 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 }
             }
         }
+    private fun makeMainAdress(poi: Poi): String =
+        if (poi.secondNo?.trim().isNullOrEmpty()) {
+            (poi.upperAddrName?.trim() ?: "") + " " +
+                    (poi.middleAddrName?.trim() ?: "") + " " +
+                    (poi.lowerAddrName?.trim() ?: "") + " " +
+                    (poi.detailAddrName?.trim() ?: "") + " " +
+                    poi.firstNo?.trim()
+        } else {
+            (poi.upperAddrName?.trim() ?: "") + " " +
+                    (poi.middleAddrName?.trim() ?: "") + " " +
+                    (poi.lowerAddrName?.trim() ?: "") + " " +
+                    (poi.detailAddrName?.trim() ?: "") + " " +
+                    (poi.firstNo?.trim() ?: "") + " " +
+                    poi.secondNo?.trim()
+        }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
     }
