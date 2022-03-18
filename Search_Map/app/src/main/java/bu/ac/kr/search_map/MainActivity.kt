@@ -1,5 +1,6 @@
 package bu.ac.kr.search_map
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -68,6 +69,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
         adapter.setSearchResult(dataList){
             Toast.makeText(this,"빌딩이름: ${it.name} 주소: ${it.fullAdress} 위도/경도: ${it.locationLatLng}",Toast.LENGTH_SHORT).show()
+            startActivity(
+                Intent(this, MapActivity::class.java)
+            )
         }
     }
     private fun searchKeyword(keywordString:String){
