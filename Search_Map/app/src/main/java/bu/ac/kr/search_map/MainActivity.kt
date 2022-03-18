@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
+import bu.ac.kr.search_map.MapActivity.Companion.SEARCH_RESULT_EXTRA_KEY
 import bu.ac.kr.search_map.databinding.ActivityMainBinding
 import bu.ac.kr.search_map.model.LocationLatLngEntity
 import bu.ac.kr.search_map.model.SearchResultEntity
@@ -70,7 +71,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         adapter.setSearchResult(dataList){
             Toast.makeText(this,"빌딩이름: ${it.name} 주소: ${it.fullAddress} 위도/경도: ${it.locationLatLng}",Toast.LENGTH_SHORT).show()
             startActivity(
-                Intent(this, MapActivity::class.java)
+                Intent(this, MapActivity::class.java).apply {
+                    putExtra(SEARCH_RESULT_EXTRA_KEY,it)
+                }
             )
         }
     }
