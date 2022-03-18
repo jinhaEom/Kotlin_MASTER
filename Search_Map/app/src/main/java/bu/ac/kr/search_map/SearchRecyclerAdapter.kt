@@ -16,7 +16,7 @@ class SearchRecyclerAdapter : RecyclerView.Adapter<SearchRecyclerAdapter.SearchR
     class SearchResultItemViewHolder(private val binding: ViewholderSearchResultItemBinding, val searchResultClickListener: (SearchResultEntity)-> Unit): RecyclerView.ViewHolder(binding.root){
         fun bindData(data: SearchResultEntity) = with(binding){
             textTextView.text = data.name
-            subtextTextView.text = data.fullAdress
+            subtextTextView.text = data.fullAddress
 
 
         }

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         val dataList = (pois.poi).map{
             SearchResultEntity(
                 name = it.name ?: "빌딩명 없음",
-                fullAdress = makeMainAdress(it),
+                fullAddress = makeMainAdress(it),
                 locationLatLng= LocationLatLngEntity(
                     it.noorLat,
                     it.noorLon
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             )
         }
         adapter.setSearchResult(dataList){
-            Toast.makeText(this,"빌딩이름: ${it.name} 주소: ${it.fullAdress} 위도/경도: ${it.locationLatLng}",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"빌딩이름: ${it.name} 주소: ${it.fullAddress} 위도/경도: ${it.locationLatLng}",Toast.LENGTH_SHORT).show()
             startActivity(
                 Intent(this, MapActivity::class.java)
             )

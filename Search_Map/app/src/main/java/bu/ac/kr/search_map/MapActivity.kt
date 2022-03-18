@@ -1,7 +1,6 @@
 package bu.ac.kr.search_map
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import bu.ac.kr.search_map.databinding.ActivityMainBinding
 import bu.ac.kr.search_map.databinding.ActivityMapBinding
@@ -11,11 +10,12 @@ import com.google.android.gms.maps.SupportMapFragment
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMapBinding
+    private lateinit var map: GoogleMap
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupGoogleMap()
@@ -26,6 +26,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
+
     }
 
 }
+
+
+
+
+
