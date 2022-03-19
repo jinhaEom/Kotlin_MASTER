@@ -1,8 +1,11 @@
 package bu.ac.kr.search_map
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import bu.ac.kr.search_map.databinding.ActivityMainBinding
 import bu.ac.kr.search_map.databinding.ActivityMapBinding
+import bu.ac.kr.search_map.model.LocationLatLngEntity
 import bu.ac.kr.search_map.model.SearchResultEntity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -18,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlin.math.min
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -26,7 +31,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var currentSelectMarker: Marker?= null
 
     private lateinit var locationManager : LocationManager // GPS, Network의 위치 정보
-    private lateinit var myLocationListener : LocationManager
+    private lateinit var myLocationListener : MyLocationListener
     private lateinit var searchResult: SearchResultEntity
 
     companion object{
@@ -84,40 +89,68 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         }
-        var isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        if (isGPSEnabled) {
+        var isGPSEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if (isGPSEnable) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                ) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-            } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
                     ),
                     PERMISSION_REQUEST_CODE
                 )
-            }else{
+            } else {
                 setMyLocationListener()
             }
         }
     }
+    @SuppressLint("MissingPermission")
     private fun setMyLocationListener(){
         val minTime = 1500L //1.5초
         val minDistance = 100f
 
-        if(::myLocationListener.isEnabled.not()){
-            myLocationListener =
+        if(::myLocationListener.isInitialized.not()){
+            myLocationListener = MyLocationListener()
+        }
+        with(locationManager){
+            requestLocationUpdates( // 위치정보 업데이트
+                LocationManager.GPS_PROVIDER,
+                minTime,minDistance,myLocationListener
+            )
+            requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+            minTime, minDistance,myLocationListener
+            )
         }
     }
-    inner class MyLocationListener : LocationListener{
-        
+    private fun onCurrentLocationChanged(locationLatLngEntity: LocationLatLngEntity){
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+            LatLng(
+                locationLatLngEntity.latitude.toDouble(),
+                locationLatLngEntity.longitude.toDouble(),
+            ), CAMERA_ZOOM_LEVEL)
+        )
+
+    }
+    inner class MyLocationListener : LocationListener {
+
+        override fun onLocationChanged(location: Location) {
+            val locationLatLngEntity = LocationLatLngEntity(
+                location.latitude.toFloat(),
+                location.longitude.toFloat()
+            )
+            onCurrentLocationChanged(locationLatLngEntity)
+        }
+
     }
 }
 
