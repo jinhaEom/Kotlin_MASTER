@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
         <EditText
+            android:layout_marginTop="20dp"
             android:id="@+id/searchBarInputView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -16,14 +17,18 @@
             android:hint="@string/please_input_search_keyword"/>
 
         <Button
+            android:layout_marginTop="20dp"
             android:id="@+id/searchButton"
+            android:background="@drawable/button_pressed"
+            android:ellipsize="end"
+            android:shadowColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/searchBarInputView"
             android:textColor="@color/white"
-            android:text="@string/search"/>
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
