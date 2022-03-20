@@ -8,6 +8,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -52,7 +53,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
-        setupGoogleMap()
+        bindViews()
     }
     private fun bindViews() = with(binding){
         currentLocationButton.setOnClickListener {
@@ -114,21 +115,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
     @SuppressLint("MissingPermission")
-    private fun setMyLocationListener(){
-        val minTime = 1500L //1.5초
+    private fun setMyLocationListener() {
+        val minTime: Long = 1500
         val minDistance = 100f
-
-        if(::myLocationListener.isInitialized.not()){
+        if (::myLocationListener.isInitialized.not()) {
             myLocationListener = MyLocationListener()
         }
-        with(locationManager){
-            requestLocationUpdates( // 위치정보 업데이트
-                LocationManager.GPS_PROVIDER,
-                minTime,minDistance,myLocationListener
-            )
+        with(locationManager) {  //위치 정보 업데이트
             requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-            minTime, minDistance,myLocationListener
+                minTime, minDistance, myLocationListener
+            )
+            requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                minTime, minDistance, myLocationListener
             )
         }
     }
@@ -137,10 +137,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             LatLng(
                 locationLatLngEntity.latitude.toDouble(),
                 locationLatLngEntity.longitude.toDouble(),
-            ), CAMERA_ZOOM_LEVEL)
-        )
-
+            ), CAMERA_ZOOM_LEVEL))
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == PERMISSION_REQUEST_CODE){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                setMyLocationListener()
+            }else{
+                Toast.makeText(this,"권한을 받지 못했습니다.",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     inner class MyLocationListener : LocationListener {
 
         override fun onLocationChanged(location: Location) {
