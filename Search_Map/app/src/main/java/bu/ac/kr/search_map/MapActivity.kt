@@ -30,11 +30,6 @@ import kotlin.coroutines.CoroutineContext
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
-    private lateinit var job: Job
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
     private lateinit var binding: ActivityMapBinding
     private lateinit var map: GoogleMap
     private var currentSelectMarker: Marker?= null
@@ -42,6 +37,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
     private lateinit var locationManager : LocationManager // GPS, Network의 위치 정보
     private lateinit var myLocationListener : MyLocationListener
     private lateinit var searchResult: SearchResultEntity
+
+    private lateinit var job: Job
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     companion object{
         const val SEARCH_RESULT_EXTRA_KEY = "SEARCH_RESULT_EXTRA_KEY"
