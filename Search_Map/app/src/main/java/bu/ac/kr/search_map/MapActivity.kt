@@ -8,14 +8,15 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import bu.ac.kr.search_map.databinding.ActivityMainBinding
 import bu.ac.kr.search_map.databinding.ActivityMapBinding
 import bu.ac.kr.search_map.model.LocationLatLngEntity
 import bu.ac.kr.search_map.model.SearchResultEntity
+import bu.ac.kr.search_map.utility.RetrofitUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,9 +24,16 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlin.math.min
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+
+class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
+
+    private lateinit var job: Job
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     private lateinit var binding: ActivityMapBinding
     private lateinit var map: GoogleMap
@@ -138,6 +146,47 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 locationLatLngEntity.latitude.toDouble(),
                 locationLatLngEntity.longitude.toDouble(),
             ), CAMERA_ZOOM_LEVEL))
+        loadReverseGeoInformation(locationLatLngEntity)
+        removeLocationListener()
+    }
+    private fun loadReverseGeoInformation(locationLatLngEntity: LocationLatLngEntity){
+        launch(coroutineContext){
+            try{
+                withContext(Dispatchers.IO){
+                    val response = RetrofitUtil.apiService.getReverseGeoCode(
+                        lat = locationLatLngEntity.latitude.toDouble(),
+                        lon = locationLatLngEntity.latitude.toDouble()
+                    )
+                    if(response.isSuccessful){
+                        val body = response.body()
+                        withContext(Dispatchers.Main){
+                            Log.e("list",body.toString())
+                            body?.let{
+                                currentSelectMarker = setUpMarker(SearchResultEntity(
+                                    fullAddress = it.addressInfo.fullAddress ?: "주소 정보 없음.",
+                                    name = "내 위치",
+                                    locationLatLng = locationLatLngEntity
+                                ))
+                                currentSelectMarker?.showInfoWindow()
+                            }
+                        }
+
+                    }
+                    withContext(Dispatchers.Main){
+
+                    }
+                }
+            }catch (e: Exception){
+                e.printStackTrace()
+                Toast.makeText(this@MapActivity,"검색하는 과정에서 오류가 발생했습니다.",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+    private fun removeLocationListener(){ //내위치로 바뀌면 위치를 찾는 로직 제거
+        if(::locationManager.isInitialized && ::myLocationListener.isInitialized){
+            locationManager.removeUpdates(myLocationListener)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
