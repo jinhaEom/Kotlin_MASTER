@@ -5,43 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed7357c9-6db1-4f9a-964d-de54ce3622c1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/androidTest/java/bu/ac/kr/treat_repo/ExampleInstrumentedTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/java/bu/ac/kr/treat_repo/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/app/src/test/java/bu/ac/kr/treat_repo/ExampleUnitTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Treat_repo/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsedGoods_Trade/app/src/main/java/bu/ac/kr/usedgoods_trade/home/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/UsedGoods_Trade/app/src/main/java/bu/ac/kr/usedgoods_trade/home/HomeFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bmi/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/bmi/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

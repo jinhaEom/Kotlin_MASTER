@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data
                     android:host="github-auth"
-                    android:scheme="treat_repo"/>
+                    android:scheme="treat-repo"/>
             </intent-filter>
         </activity>
     </application>
