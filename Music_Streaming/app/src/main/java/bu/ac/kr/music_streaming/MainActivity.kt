@@ -13,4 +13,5 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, PlayerFragment.newInstance())
             .commit()
     }
+
 }

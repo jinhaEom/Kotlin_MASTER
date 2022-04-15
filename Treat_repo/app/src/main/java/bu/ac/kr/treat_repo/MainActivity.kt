@@ -7,10 +7,16 @@ import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.viewbinding.BuildConfig
 import bu.ac.kr.treat_repo.databinding.ActivityMainBinding
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , CoroutineScope {
 
     private lateinit var binding: ActivityMainBinding
+
+    val job:Job = Job()
+    override val coroutineContext: CoroutineContext
+    get() = Dispatchers.Main + job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +49,14 @@ class MainActivity : AppCompatActivity() {
         super.onNewIntent(intent)
 
         intent?.data?.getQueryParameter("code")?.let{
+            launch(coroutineContext) {
+                getAccessToken(it)
 
+            }
         }
+    }
+    private suspend fun getAccessToken(code:String) = withContext(Dispatchers.IO){
+        val response
+
     }
 }
