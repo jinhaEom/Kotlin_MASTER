@@ -1,6 +1,8 @@
 package bu.ac.kr.weather.data.services
 
 import bu.ac.kr.weather.BuildConfig
+import bu.ac.kr.weather.data.services.models.tmcoordinates.TmCoordinatesResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -11,5 +13,5 @@ interface KakaoLocalApiService {
     suspend fun  getTmCoordinates(
         @Query("x") longitude: Double,
         @Query("y") latitude: Double
-    )
+    ): Response<TmCoordinatesResponse>
 }

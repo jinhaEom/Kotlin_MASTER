@@ -13,6 +13,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -54,16 +55,8 @@ class MainActivity : AppCompatActivity() {
             finish()
         } else {
             //fetchData
-            cancellationTokenSource = CancellationTokenSource()
+            fetchAirQualityData()
 
-            fusedLocationProviderClient.getCurrentLocation(
-                LocationRequest.PRIORITY_HIGH_ACCURACY,
-                cancellationTokenSource!!.token
-            ).addOnSuccessListener { location ->
-                binding.textView.text = "${location.latitude}, ${location.longitude}"
-
-
-            }
         }
     }
 
@@ -84,6 +77,35 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun fetchAirQualityData(){
+        cancellationTokenSource = CancellationTokenSource()
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationProviderClient.getCurrentLocation(
+            LocationRequest.PRIORITY_HIGH_ACCURACY,
+            cancellationTokenSource!!.token
+        ).addOnSuccessListener { location ->
+            binding.textView.text = "${location.latitude}, ${location.longitude}"
+                scope.launch {  }
+
+        }
+    }
     companion object {
         private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
     }
