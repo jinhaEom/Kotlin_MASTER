@@ -9,7 +9,7 @@ import retrofit2.create
 
 object Respository {
 
-    suspend fun getNearbyMonitoringStation(latitude: Double, longitude: Double){
+    suspend fun getNearbyMonitoringStation(latitude: Double, longitude: Double) {
         val tmCoordinates = kakaoLocalApiService.getTmCoordinates(longitude, latitude)
             .body()
             ?.documents
@@ -18,7 +18,8 @@ object Respository {
         val tmX = tmCoordinates?.x
         val tmY = tmCoordinates?.y
     }
-    private val kakaoLocalApiService : KakaoLocalApiService by lazy{
+
+    private val kakaoLocalApiService: KakaoLocalApiService by lazy {
         Retrofit.Builder()
             .baseUrl(Url.KAKAO_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -31,9 +32,9 @@ object Respository {
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
-                    level = if(BuildConfig.DEBUG){
+                    level = if (BuildConfig.DEBUG) {
                         HttpLoggingInterceptor.Level.BODY
-                    }else{
+                    } else {
                         HttpLoggingInterceptor.Level.NONE
                     }
                 }
