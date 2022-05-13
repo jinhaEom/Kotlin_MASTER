@@ -39,7 +39,7 @@ object Respository {
     }
     private val airKoreaApiService: AirKoreaApiService by lazy {
         Retrofit.Builder()
-            .baseUrl(Url.AIR_KOREA_BASE_URL)
+            .baseUrl(Url.AIR_KOREA_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(buildHttpClient())
             .build()

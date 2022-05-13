@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
             LocationRequest.PRIORITY_HIGH_ACCURACY,
             cancellationTokenSource!!.token
         ).addOnSuccessListener { location ->
-            binding.textView.text = "${location.latitude}, ${location.longitude}"
                 scope.launch {
                   val monitoringStation =
                       Respository.getNearbyMonitoringStation(location.latitude, location.longitude)
