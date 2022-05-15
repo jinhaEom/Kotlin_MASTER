@@ -1,6 +1,7 @@
 package bu.ac.kr.weather.data.services
 
 import bu.ac.kr.weather.BuildConfig
+import bu.ac.kr.weather.data.services.models.airQuality.AirQualityResponse
 import bu.ac.kr.weather.data.services.models.monitoringstation.MonitoringStation
 import bu.ac.kr.weather.data.services.models.monitoringstation.MonitoringStationsResponse
 import retrofit2.Response
@@ -16,4 +17,13 @@ interface AirKoreaApiService {
         @Query("tmX") tmX: Double,
         @Query("tmY") tmY: Double,
     ): Response<MonitoringStationsResponse>
+
+
+    @GET("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty"+
+            "?serviceKey=${BuildConfig.AIR_KOREA_SERVICE_KEY}"+"&returnType=json"+"&dataTerm=DAILY"
+    +"&ver=1.3")
+    suspend fun getRealtimeAirQualites(
+        @Query("stationName")stationName: String
+
+    ): Response<AirQualityResponse>
 }

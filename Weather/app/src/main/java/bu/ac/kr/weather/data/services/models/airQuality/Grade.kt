@@ -22,7 +22,7 @@ enum class Grade(
     @SerializedName("4")
     AWFUL("매우나쁨", "😨", R.color.red),
 
-    UNKNOWN("미측정", "🧐", R.color.gray)
+    UNKNOWN("미측정", "🧐", R.color.gray);
 
     override fun toString(): String{
         return "$label $emoji"

@@ -1,6 +1,7 @@
 package bu.ac.kr.weather.data.services
 
 import bu.ac.kr.weather.BuildConfig
+import bu.ac.kr.weather.data.services.models.airQuality.MeasuredValue
 import bu.ac.kr.weather.data.services.models.monitoringstation.MonitoringStation
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-object Respository {
+object Repository {
 
     suspend fun getNearbyMonitoringStation(latitude: Double, longitude: Double):MonitoringStation? {
         val tmCoordinates = kakaoLocalApiService
@@ -28,6 +29,15 @@ object Respository {
             ?.monitoringStations
             ?.minByOrNull{ it.tm ?: Double.MAX_VALUE}
     }
+    suspend fun getLatestAirQualityData(stationName : String): MeasuredValue? =
+        airKoreaApiService
+            .getRealtimeAirQualites(stationName)
+            .body()
+            ?.response
+            ?.body
+            ?.measuredValues
+            ?.firstOrNull()
+
 
     private val kakaoLocalApiService: KakaoLocalApiService by lazy {
         Retrofit.Builder()

@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
-import bu.ac.kr.weather.data.services.Respository
+import bu.ac.kr.weather.data.services.Repository
 import bu.ac.kr.weather.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -104,9 +104,12 @@ class MainActivity : AppCompatActivity() {
         ).addOnSuccessListener { location ->
                 scope.launch {
                   val monitoringStation =
-                      Respository.getNearbyMonitoringStation(location.latitude, location.longitude)
+                      Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
 
-                    binding.textView.text = monitoringStation?.stationName
+                  val measuredValue =
+                      Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
+
+                    binding.textView.text = measuredValue.toString()
                 }
 
         }
