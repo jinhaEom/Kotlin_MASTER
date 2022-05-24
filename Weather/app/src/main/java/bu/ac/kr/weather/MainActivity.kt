@@ -80,83 +80,70 @@ class MainActivity : AppCompatActivity() {
             REQUEST_ACCESS_LOCATION_PERMISSIONS
         )
     }
-
+    @SuppressLint("MissingPermission")
     private fun fetchAirQualityData(){
         cancellationTokenSource = CancellationTokenSource()
 
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
         fusedLocationProviderClient
             .getCurrentLocation(
-            LocationRequest.PRIORITY_HIGH_ACCURACY,
-            cancellationTokenSource!!.token
-        ).addOnSuccessListener { location ->
-                scope.launch {
-                  val monitoringStation =
-                      Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
-
-                  val measuredValue =
-                      Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
+                LocationRequest.PRIORITY_HIGH_ACCURACY,
+                cancellationTokenSource!!.token
+            ).addOnSuccessListener { location ->
+                scope.launch{
+                    val monitoringStation =
+                        Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
+                    val measuredValue =
+                        Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
 
                     displayAirQualityData(monitoringStation, measuredValue!!)
 
                 }
-
-        }
+            }
     }
     @SuppressLint("SetTextI18n")
-    fun displayAirQualityData(monitoringStation: MonitoringStation, measuredValue: MeasuredValue){
-        binding.measuringStationNameTextView.text = monitoringStation.stationName
-        binding.measuringStationAddressTextView.text = monitoringStation.addr
+        fun displayAirQualityData(monitoringStation: MonitoringStation, measuredValue: MeasuredValue) {
+            binding.measuringStationNameTextView.text = monitoringStation.stationName
+            binding.measuringStationAddressTextView.text = monitoringStation.addr
 
-        (measuredValue.khaiGrade ?: Grade.UNKNOWN).let{ grade ->
-            binding.root.setBackgroundResource(grade.colorResId)
-            binding.totalGradeLabelTextView.text = grade.label
-            binding.totalGradleEmojiTextView.text = grade.emoji
-        }
-        with(measuredValue){
-            binding.fineDustInformationTextView.text =
-                "미세먼지: $pm10Value ㎍/㎥ ${(pm10Grade ?: Grade.UNKNOWN).emoji}"
-            binding.ultraFineDustInformationTextView.text =
-                "초미세먼지: $pm25Value ㎍/㎥ ${(pm25Grade ?: Grade.UNKNOWN).emoji}"
 
-            with(binding.so2Item){
-                labelTextView.text = "아황산가스"
-                gradeTextView.text = (so2Grade ?: Grade.UNKNOWN).toString()
-                valueTextView.text = "$so2Value ppm"
+
+            (measuredValue.khaiGrade ?: Grade.UNKNOWN).let { grade ->
+                binding.root.setBackgroundResource(grade.colorResId)
+                binding.totalGradeLabelTextView.text = grade.label
+                binding.totalGradleEmojiTextView.text = grade.emoji
             }
-            with(binding.coItem){
-                labelTextView.text = "일산화탄소"
-                gradeTextView.text = (coGrade ?: Grade.UNKNOWN).toString()
-                valueTextView.text = "$coValue ppm"
-            }
-            with(binding.o3Item){
-                labelTextView.text = "오존"
-                gradeTextView.text = (o3Grade ?: Grade.UNKNOWN).toString()
-                valueTextView.text = "$o3Value ppm"
-            }
-            with(binding.no2Item){
-                labelTextView.text = "이산화질소"
-                gradeTextView.text = (so2Grade ?: Grade.UNKNOWN).toString()
-                valueTextView.text = "$no2Value ppm"
+
+            with(measuredValue) {
+                binding.fineDustInformationTextView.text =
+                    "미세먼지: $pm10Value ㎍/㎥ ${(pm10Grade ?: Grade.UNKNOWN).emoji}"
+                binding.ultraFineDustInformationTextView.text =
+                    "초미세먼지: $pm25Value ㎍/㎥ ${(pm25Grade ?: Grade.UNKNOWN).emoji}"
+
+                with(binding.so2Item) {
+                    labelTextView.text = "아황산가스"
+                    gradeTextView.text = (so2Grade ?: Grade.UNKNOWN).toString()
+                    valueTextView.text = "$so2Value ppm"
+                }
+
+                with(binding.coItem) {
+                    labelTextView.text = "일산화탄소"
+                    gradeTextView.text = (coGrade ?: Grade.UNKNOWN).toString()
+                    valueTextView.text = "$coValue ppm"
+                }
+
+                with(binding.o3Item) {
+                    labelTextView.text = "오존"
+                    gradeTextView.text = (o3Grade ?: Grade.UNKNOWN).toString()
+                    valueTextView.text = "$o3Value ppm"
+                }
+
+                with(binding.no2Item) {
+                    labelTextView.text = "이산화질소"
+                    gradeTextView.text = (no2Grade ?: Grade.UNKNOWN).toString()
+                    valueTextView.text = "$no2Value ppm"
+                }
             }
         }
-    }
 
     companion object {
         private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100

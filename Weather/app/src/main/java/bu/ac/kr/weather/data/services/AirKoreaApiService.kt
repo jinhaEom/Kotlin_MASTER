@@ -19,7 +19,7 @@ interface AirKoreaApiService {
     ): Response<MonitoringStationsResponse>
 
 
-    @GET("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty"+
+    @GET("B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty"+
             "?serviceKey=${BuildConfig.AIR_KOREA_SERVICE_KEY}"+"&returnType=json"+"&dataTerm=DAILY"
     +"&ver=1.3")
     suspend fun getRealtimeAirQualites(

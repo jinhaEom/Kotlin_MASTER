@@ -11,7 +11,7 @@ import retrofit2.create
 
 object Repository {
 
-    suspend fun getNearbyMonitoringStation(latitude: Double, longitude: Double):MonitoringStation? {
+    suspend fun getNearbyMonitoringStation(latitude: Double, longitude: Double): MonitoringStation? {
         val tmCoordinates = kakaoLocalApiService
             .getTmCoordinates(longitude, latitude)
             .body()
@@ -27,9 +27,10 @@ object Repository {
             ?.response
             ?.body
             ?.monitoringStations
-            ?.minByOrNull{ it.tm ?: Double.MAX_VALUE}
+            ?.minByOrNull { it.tm ?: Double.MAX_VALUE }
     }
-    suspend fun getLatestAirQualityData(stationName : String): MeasuredValue? =
+
+    suspend fun getLatestAirQualityData(stationName: String): MeasuredValue? =
         airKoreaApiService
             .getRealtimeAirQualites(stationName)
             .body()
@@ -37,7 +38,6 @@ object Repository {
             ?.body
             ?.measuredValues
             ?.firstOrNull()
-
 
     private val kakaoLocalApiService: KakaoLocalApiService by lazy {
         Retrofit.Builder()
@@ -47,6 +47,7 @@ object Repository {
             .build()
             .create()
     }
+
     private val airKoreaApiService: AirKoreaApiService by lazy {
         Retrofit.Builder()
             .baseUrl(Url.AIR_KOREA_API_BASE_URL)
@@ -60,7 +61,7 @@ object Repository {
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
-                    level = if (BuildConfig.DEBUG) {
+                    level = if(BuildConfig.DEBUG) {
                         HttpLoggingInterceptor.Level.BODY
                     } else {
                         HttpLoggingInterceptor.Level.NONE
