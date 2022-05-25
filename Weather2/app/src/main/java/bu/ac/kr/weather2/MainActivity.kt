@@ -12,6 +12,8 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var cancellationTokenSource: CancellationTokenSource? = null
     private val binding by lazy{ ActivityMainBinding.inflate(layoutInflater)}
+    private val scope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cancellationTokenSource?.cancel()
+        scope.cancel()
     }
 
     @SuppressLint("MissingPermission")
