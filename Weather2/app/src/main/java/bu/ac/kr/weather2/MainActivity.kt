@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,16 +54,9 @@ class MainActivity : AppCompatActivity() {
         if(!locationPermissionGranted){
             finish()
         }else{
-            // fetchData
-            cancellationTokenSource = CancellationTokenSource()
+            fetchAirQualityData()
 
-            fusedLocationProviderClient.getCurrentLocation(
-                LocationRequest.PRIORITY_HIGH_ACCURACY,
-                cancellationTokenSource!!.token
-            ).addOnSuccessListener { location ->
-                binding.textView.text = "${location.latitude}, ${location.longitude}"
 
-            }
         }
     }
     private fun initVariables() {
@@ -79,6 +73,22 @@ class MainActivity : AppCompatActivity() {
             REQUEST_ACCESS_LOCATION_PERMISSIONS
 
         )
+    }
+    @SuppressLint("MissingPermission")
+    private fun fetchAirQualityData() {
+        // fetchData
+        cancellationTokenSource = CancellationTokenSource()
+
+        fusedLocationProviderClient.getCurrentLocation(
+            LocationRequest.PRIORITY_HIGH_ACCURACY,
+            cancellationTokenSource!!.token
+        ).addOnSuccessListener { location ->
+
+            scope.launch {
+
+            }
+        }
+
     }
 
     companion object{
