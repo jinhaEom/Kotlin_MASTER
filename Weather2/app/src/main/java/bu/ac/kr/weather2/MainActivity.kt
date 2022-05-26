@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.app.ActivityCompat
 import bu.ac.kr.weather2.data.Repository
 import bu.ac.kr.weather2.data.models.airquality.Grade
@@ -88,13 +89,22 @@ class MainActivity : AppCompatActivity() {
             cancellationTokenSource!!.token
         ).addOnSuccessListener { location ->
             scope.launch {
-               val monitoringStation =
-                   Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
+                binding.errorDescriptionTextView.visibility = View.GONE
+                try{
+                    val monitoringStation =
+                        Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
 
-                val measuredValue =
-                    Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
+                    val measuredValue =
+                        Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
 
-                displayAirQualityData(monitoringStation, measuredValue!!)
+                    displayAirQualityData(monitoringStation, measuredValue!!)
+                }catch (exception: Exception){
+                    binding.errorDescriptionTextView.visibility = View.VISIBLE
+                }finally{
+                    binding.progressBar.visibility = View.GONE
+                    binding.refresh.isRefreshing = false
+                }
+
 
 
             }
