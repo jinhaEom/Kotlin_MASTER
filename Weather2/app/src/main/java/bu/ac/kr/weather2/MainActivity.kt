@@ -84,13 +84,14 @@ class MainActivity : AppCompatActivity() {
             LocationRequest.PRIORITY_HIGH_ACCURACY,
             cancellationTokenSource!!.token
         ).addOnSuccessListener { location ->
-
             scope.launch {
                val monitoringStation =
                    Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
 
-                binding.textView.text= monitoringStation?.stationName
+                val measuredValue =
+                    Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
 
+                binding.textView.text = measuredValue.toString()
             }
         }
 

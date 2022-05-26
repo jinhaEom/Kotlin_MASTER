@@ -1,6 +1,7 @@
 package bu.ac.kr.weather2.data
 
 import bu.ac.kr.weather2.BuildConfig
+import bu.ac.kr.weather2.data.models.airquality.MeasuredValue
 import bu.ac.kr.weather2.data.models.tmcoordinates.monitoringStation.MonitoringStation
 import bu.ac.kr.weather2.data.services.AirKoreaApiService
 import bu.ac.kr.weather2.data.services.KakaoLocalApiService
@@ -31,6 +32,15 @@ object Repository {
             ?.minByOrNull { it.tm ?: Double.MAX_VALUE }
 
     }
+    suspend fun getLatestAirQualityData(stationName : String): MeasuredValue? =
+        airKoreaApiService
+            .getRealtimeAirQualities(stationName)
+            .body()
+            ?.response
+            ?.body
+            ?.measuredValues
+            ?.firstOrNull()
+
     private val kakaoLocalApiService : KakaoLocalApiService by lazy{
         Retrofit.Builder()
             .baseUrl(Url.KAKAO_API_BASE_URL)
