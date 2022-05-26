@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        
+        bindViews()
         initVariables()
         requestLocationPermissions()
     }
@@ -64,6 +65,12 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+    private fun bindViews(){
+        binding.refresh.setOnRefreshListener {
+            fetchAirQualityData()
+        }
+    }
+
     private fun initVariables() {
         fusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(this)
     }
