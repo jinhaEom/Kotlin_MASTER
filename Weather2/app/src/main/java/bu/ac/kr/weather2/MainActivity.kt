@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                     displayAirQualityData(monitoringStation, measuredValue!!)
                 }catch (exception: Exception){
                     binding.errorDescriptionTextView.visibility = View.VISIBLE
+                    binding.contentsLayout.alpha = 0F
                 }finally{
                     binding.progressBar.visibility = View.GONE
                     binding.refresh.isRefreshing = false
@@ -112,6 +113,11 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun displayAirQualityData(monitoringStation: MonitoringStation, measuredValue: MeasuredValue){
+
+        binding.contentsLayout.animate()
+            .alpha(1F)
+            .start()
+
         binding.measuringStationNameTextView.text = monitoringStation.stationName
         binding.measuringStationAddressTextView.text = monitoringStation.addr
 
