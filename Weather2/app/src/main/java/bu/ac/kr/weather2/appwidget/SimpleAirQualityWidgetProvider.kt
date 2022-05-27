@@ -73,19 +73,29 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
             LocationServices.getFusedLocationProviderClient(this).lastLocation
                 .addOnSuccessListener { location ->
                     lifecycleScope.launch {
-                        val nearbyMonitoringStation = Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
-                        val measuredvalue = Repository.getLatestAirQualityData(nearbyMonitoringStation!!.stationName!!)
-                        val updateViews = RemoteViews(packageName, R.layout.widget_simple).apply{
-                            setViewVisibility(R.id.labelTextView, View.VISIBLE)
-                            setViewVisibility(R.id.gradeLabelTextView, View.VISIBLE)
+                        try {
+                            val nearbyMonitoringStation = Repository.getNearbyMonitoringStation(
+                                location.latitude,
+                                location.longitude)
+                            val measuredvalue =
+                                Repository.getLatestAirQualityData(nearbyMonitoringStation!!.stationName!!)
+                            val updateViews =
+                                RemoteViews(packageName, R.layout.widget_simple).apply {
+                                    setViewVisibility(R.id.labelTextView, View.VISIBLE)
+                                    setViewVisibility(R.id.gradeLabelTextView, View.VISIBLE)
 
-                            val currentGrade = (measuredvalue?.khaiGrade ?: Grade.UNKNOWN)
-                            setTextViewText(R.id.resultTextView , currentGrade.emoji)
-                            setTextViewText(R.id.gradeLabelTextView, currentGrade.label)
+                                    val currentGrade = (measuredvalue?.khaiGrade ?: Grade.UNKNOWN)
+                                    setTextViewText(R.id.resultTextView, currentGrade.emoji)
+                                    setTextViewText(R.id.gradeLabelTextView, currentGrade.label)
+
+                                }
+                            updateWidget(updateViews)
+                        }catch (exception : Exception){
+                            exception.printStackTrace()
+                        }finally {
+                            stopSelf()
 
                         }
-                        updateWidget(updateViews)
-                        stopSelf()
 
                     }
                 }
