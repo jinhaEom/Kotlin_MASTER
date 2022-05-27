@@ -64,6 +64,8 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
                         R.id.resultTextView,
                         "권한 없음"
                     )
+                    setViewVisibility(R.id.labelTextView, View.GONE)
+                    setViewVisibility(R.id.gradeLabelTextView, View.GONE)
                 }
                 updateWidget(updateViews)
                 stopSelf()
