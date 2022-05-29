@@ -24,7 +24,7 @@ object Repository {
         unsplashApiService.getRandomPhotos(query).body()
 
     private fun buildOkHttpClient(): OkHttpClient =
-        OkHttpClient.Builder()
+        OkHttpClient.Builder()  //로그 찍기
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
                     level = if(BuildConfig.DEBUG){
