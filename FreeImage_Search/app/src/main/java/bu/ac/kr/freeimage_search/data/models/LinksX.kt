@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class LinksX(
     @SerializedName("html")
-    val html: String?,
+    val html: String? = null,
     @SerializedName("likes")
-    val likes: String?,
+    val likes: String? = null,
     @SerializedName("photos")
-    val photos: String?,
+    val photos: String? = null,
     @SerializedName("portfolio")
-    val portfolio: String?,
+    val portfolio: String? = null,
     @SerializedName("self")
-    val self: String?
+    val self: String? = null
 )

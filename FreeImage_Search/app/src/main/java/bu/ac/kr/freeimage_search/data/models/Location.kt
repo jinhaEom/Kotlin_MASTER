@@ -1,15 +1,14 @@
 package bu.ac.kr.freeimage_search.data.models
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Location(
     @SerializedName("city")
-    val city: String?,
+    val city: String? = null,
     @SerializedName("country")
-    val country: String?,
+    val country: String? = null,
     @SerializedName("name")
-    val name: String?,
+    val name: String? = null,
     @SerializedName("position")
-    val position: Position?
+    val position: Position? = null
 )

@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class Exif(
     @SerializedName("aperture")
-    val aperture: String?,
+    val aperture: String? = null,
     @SerializedName("exposure_time")
-    val exposureTime: String?,
+    val exposureTime: String? = null,
     @SerializedName("focal_length")
-    val focalLength: String?,
+    val focalLength: String? = null,
     @SerializedName("iso")
-    val iso: Int?,
+    val iso: Int? = null,
     @SerializedName("make")
-    val make: String?,
+    val make: String? = null,
     @SerializedName("model")
-    val model: String?
+    val model: String? = null
 )

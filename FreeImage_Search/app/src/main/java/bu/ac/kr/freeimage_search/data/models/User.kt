@@ -5,31 +5,31 @@ import com.google.gson.annotations.SerializedName
 
 data class User(
     @SerializedName("bio")
-    val bio: String?,
+    val bio: String? = null,
     @SerializedName("id")
-    val id: String?,
+    val id: String? = null,
     @SerializedName("instagram_username")
-    val instagramUsername: String?,
+    val instagramUsername: String? = null,
     @SerializedName("links")
-    val links: LinksX?,
+    val links: LinksX? = null,
     @SerializedName("location")
-    val location: String?,
+    val location: String? = null,
     @SerializedName("name")
-    val name: String?,
+    val name: String? = null,
     @SerializedName("portfolio_url")
-    val portfolioUrl: String?,
+    val portfolioUrl: String? = null,
     @SerializedName("total_collections")
-    val totalCollections: Int?,
+    val totalCollections: Int? = null,
     @SerializedName("total_likes")
-    val totalLikes: Int?,
+    val totalLikes: Int? = null,
     @SerializedName("total_photos")
-    val totalPhotos: Int?,
+    val totalPhotos: Int? = null,
     @SerializedName("twitter_username")
-    val twitterUsername: String?,
+    val twitterUsername: String? = null,
     @SerializedName("updated_at")
-    val updatedAt: String?,
+    val updatedAt: String? = null,
     @SerializedName("username")
-    val username: String?,
+    val username: String? = null,
     @SerializedName("profile_image")
-    val profileImageUrls: ProfileImageUrls?= null
+    val profileImageUrls: ProfileImageUrls? = null
 )

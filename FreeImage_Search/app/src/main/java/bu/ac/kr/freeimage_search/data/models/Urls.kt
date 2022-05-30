@@ -1,17 +1,18 @@
 package bu.ac.kr.freeimage_search.data.models
 
 
+
 import com.google.gson.annotations.SerializedName
 
 data class Urls(
     @SerializedName("full")
-    val full: String?,
+    val full: String? = null,
     @SerializedName("raw")
-    val raw: String?,
+    val raw: String? = null,
     @SerializedName("regular")
-    val regular: String?,
+    val regular: String? = null,
     @SerializedName("small")
-    val small: String?,
+    val small: String? = null,
     @SerializedName("thumb")
-    val thumb: String?
+    val thumb: String? = null
 )

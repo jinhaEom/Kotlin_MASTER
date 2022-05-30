@@ -11,7 +11,7 @@ import retrofit2.create
 
 object Repository {
 
-    private val unsplashApiService: UnsplashApiService by lazy{
+    private val unsplashApiService: UnsplashApiService by lazy {
         Retrofit.Builder()
             .baseUrl(Url.UNSPLASH_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -24,12 +24,12 @@ object Repository {
         unsplashApiService.getRandomPhotos(query).body()
 
     private fun buildOkHttpClient(): OkHttpClient =
-        OkHttpClient.Builder()  //로그 찍기
+        OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
-                    level = if(BuildConfig.DEBUG){
+                    level = if(BuildConfig.DEBUG) {
                         HttpLoggingInterceptor.Level.BODY
-                    }else{
+                    } else {
                         HttpLoggingInterceptor.Level.NONE
                     }
                 }
