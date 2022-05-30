@@ -11,3 +11,12 @@
     - Glide
     - ShimmerLayout
     - WallpaperManager
++ 새로 알게된 기능
+    - 키보드 숨김 : hideSoftInputFromWindow(view windowToken, int flags)
+    - Glide 이미지 원형으로 가르기 - circleCrop()
+    - 키보드에서 오른쪽 하단버튼 검색으로 바꾸기 : imeOptions 값 -> actionSearch (xml)
+    - 글씨에 그림자 효과주기(xml)
+    android:shadowColor="#60000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="5"
