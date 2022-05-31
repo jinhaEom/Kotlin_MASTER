@@ -1,8 +1,10 @@
 package bu.ac.kr.freeimage_search
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,13 +38,15 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = PhotoAdapter()
     }
-    private fun bindViews(){
+
+    private fun bindViews() {
         binding.searchEditText
             .setOnEditorActionListener { editText, actionId, event ->
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                    currentFocus?.let{ view ->
-                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    inputMethodManager?.hideSoftInputFromWindow(view.windowToken,0)  //키보드 내리기
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    currentFocus?.let { view ->
+                        val inputMethodManager =
+                            getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)  //키보드 내리기
 
                         view.clearFocus()
                     }
@@ -50,18 +54,33 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 true
-        }
+            }
         binding.refreshLayout.setOnRefreshListener {
             fetchRandomPhotos(binding.searchEditText.text.toString())
         }
     }
-    private fun fetchRandomPhotos(query: String?= null)= scope.launch{
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun fetchRandomPhotos(query: String? = null) = scope.launch {
+
+        try {
         Repository.getRandomPhotos(query)?.let { photos ->
+
+            binding.errorDescriptionTextView.visibility = View.GONE
             (binding.recyclerView.adapter as? PhotoAdapter)?.apply {
                 this.photos = photos
                 notifyDataSetChanged()
             }
-            binding.refreshLayout.isRefreshing = false
+        }
+                binding.recyclerView.visibility = View.VISIBLE
+
+            } catch (exception: Exception) {
+                binding.recyclerView.visibility = View.INVISIBLE
+                binding.errorDescriptionTextView.visibility = View.VISIBLE
+            } finally {
+                binding.shimmerLayout.visibility = View.GONE
+                binding.refreshLayout.isRefreshing = false
+            }
+
         }
     }
-}
