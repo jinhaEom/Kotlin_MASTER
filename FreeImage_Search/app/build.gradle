@@ -55,7 +55,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
     kapt 'android.arch.lifecycle:compiler:1.0.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
-
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 

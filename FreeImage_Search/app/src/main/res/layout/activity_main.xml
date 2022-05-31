@@ -28,13 +28,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            tools:listitem="@layout/item_photo"
-            android:paddingVertical="6dp"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:clipToPadding="false"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingVertical="6dp"
+                android:visibility="invisible"
+                tools:listitem="@layout/item_photo" />
+
+            <TextView
+                android:id="@+id/errorDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:gravity="center"
+                android:drawablePadding="6dp"
+                app:drawableTopCompat="@drawable/ic_baseline_refresh_24"
+                android:text="문제가 발생했습니다. \n 새로고침 해주세요"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:ignore="HardcodedText" />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/view_shimmer_item_photo"/>
+
+                <include layout="@layout/view_shimmer_item_photo"/>
+            </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </FrameLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
