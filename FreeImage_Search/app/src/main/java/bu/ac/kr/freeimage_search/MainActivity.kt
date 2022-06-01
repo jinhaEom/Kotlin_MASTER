@@ -1,8 +1,10 @@
 package bu.ac.kr.freeimage_search
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -13,6 +15,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bu.ac.kr.freeimage_search.data.Repository
@@ -38,12 +41,34 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
         bindViews()
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            fetchRandomPhotos()
+        }else{
+            requestWriteStoragePermission()
+        }
         fetchRandomPhotos()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         scope.cancel()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        val writeExternalStoragePermissionGranted =
+            requestCode == REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+
+        if(writeExternalStoragePermissionGranted){
+            fetchRandomPhotos()
+        }
     }
 
     private fun initViews() {
@@ -73,6 +98,13 @@ class MainActivity : AppCompatActivity() {
         (binding.recyclerView.adapter as? PhotoAdapter)?.onClickPhoto = { photo ->
             showDownloadPhotoConfirmationDialog(photo)
         }
+    }
+    private fun requestWriteStoragePermission(){
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION
+        )
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -180,5 +212,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         Snackbar.make(binding.root, "다운로드 완료", Snackbar.LENGTH_SHORT).show()
+    }
+    companion object{
+        private const val REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION = 101
     }
 }
