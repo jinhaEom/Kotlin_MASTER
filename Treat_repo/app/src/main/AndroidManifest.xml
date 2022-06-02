@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Treat_repo">
         <activity
-            android:name=".MainActivity"
+            android:name=".SiginInActivity"
             android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
@@ -29,6 +29,7 @@
                     android:scheme="treat-repo"/>
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>
