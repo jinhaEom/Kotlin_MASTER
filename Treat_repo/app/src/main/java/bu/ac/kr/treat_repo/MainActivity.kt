@@ -17,7 +17,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    val repositoryDao by lazy{ DataBaseProvider.provideDB(applicationContext).repositoryDao()}
+    val repositoryDao by lazy{ DataBaseProvider.provideDB(applicationContext).searchHistoryDao()}
 
     private lateinit var binding: ActivityMainBinding
 
@@ -51,7 +51,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                 stargazersCount = it
                 )
         }
-        DataBaseProvider.provideDB(applicationContext).repositoryDao().insertAll(mockData)
+        DataBaseProvider.provideDB(applicationContext).searchHistoryDao().insertAll(mockData)
     }
     private suspend fun loadGithubRepositories() = withContext(Dispatchers.IO){
         val repositories = repositoryDao.getHistory()

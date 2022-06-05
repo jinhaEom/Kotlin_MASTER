@@ -5,7 +5,7 @@ import androidx.room.*
 import bu.ac.kr.treat_repo.data.response.entity.GithubRepoEntity
 
 @Dao
-interface repositoryDao {
+interface SearchHistoryDao {
 
     @Insert
     suspend fun insert(repo: GithubRepoEntity)
