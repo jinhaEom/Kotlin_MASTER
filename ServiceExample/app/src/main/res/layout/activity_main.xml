@@ -53,4 +53,14 @@
         app:layout_constraintStart_toStartOf="@id/bindService"
         app:layout_constraintTop_toBottomOf="@+id/stop" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="callServiceFunction"
+        android:text="서비스 함수 호출"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bindService" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
             val binder = service as MyService.MyBinder
             myService = binder.getService()
             isService = true
+            Log.d("BoundService","연결되었습니다.")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -51,6 +53,14 @@ class MainActivity : AppCompatActivity() {
         if(isService){
             unbindService(connection)
             isService = false
+        }
+    }
+    fun callServiceFunction(view:View){
+        if(isService){
+            val message = myService?.serviceMessage()
+            Toast.makeText(this,"message=${message}",Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this,"서비스가 연결되지 않았습니다.",Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -9,7 +9,7 @@ import android.util.Log
 class MyService : Service() {
 
     override fun onBind(intent: Intent): IBinder {
-        
+
         return binder
     }
 
@@ -29,10 +29,15 @@ class MyService : Service() {
         Log.d("Service", "서비스가 종료되었습니다.")
         super.onDestroy()
     }
+    //Bound Service는 Started Service와 달리 Activity에서 서비스의 Method를 직접 호출해 사용 가능
+
     inner class MyBinder: Binder(){
         fun getService(): MyService{
             return this@MyService
         }
     }
     val binder = MyBinder()
+    fun serviceMessage(): String{
+        return "Hello Service"
+    }
 }
