@@ -23,4 +23,8 @@ class MyService : Service() {
         val ACTION_RUN = "bu.ac.kr.serviceexample.RUN"
         val ACTION_STOP = "bu.ac.kr.serviceexample.STOP"
     }
+    override fun onDestroy() {
+        Log.d("Service", "서비스가 종료되었습니다.")
+        super.onDestroy()
+    }
 }

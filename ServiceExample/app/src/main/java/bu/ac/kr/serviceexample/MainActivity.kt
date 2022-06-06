@@ -22,8 +22,5 @@ class MainActivity : AppCompatActivity() {
         stopService(intent)
     }
 
-    override fun onDestroy() {
-        Log.d("Service", "서비스가 종료되었습니다.")
-        super.onDestroy()
-    }
+
 }
