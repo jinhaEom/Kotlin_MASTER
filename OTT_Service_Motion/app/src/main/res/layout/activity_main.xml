@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +24,7 @@
                 android:layout_height="600dp"
                 android:background="@color/black"/>
             <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/gatheringDigitalThingsLayout"
                 android:layout_width="480dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center_horizontal"
