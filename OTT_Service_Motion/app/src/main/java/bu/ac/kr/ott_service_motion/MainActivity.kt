@@ -41,11 +41,13 @@ class MainActivity : AppCompatActivity() {
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
             if (binding.scrollView.scrollY > 150f.dpToPx(this).toInt()) {
                 if (isGatheringMotionAnimating.not()) {
+                    binding.gatheringDigitalThingsBackgroundMotionLayout.transitionToEnd()
                     binding.gatheringDigitalThingsLayout.transitionToEnd()
                     binding.buttonShownMotionLayout.transitionToEnd()
                 }
             } else {
                 if (isGatheringMotionAnimating.not()) {
+                    binding.gatheringDigitalThingsBackgroundMotionLayout.transitionToStart()
                     binding.gatheringDigitalThingsLayout.transitionToStart()
                     binding.buttonShownMotionLayout.transitionToStart()
 
