@@ -1,5 +1,6 @@
 package bu.ac.kr.ott_service_motion
 
+import android.animation.LayoutTransition
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
@@ -18,8 +19,8 @@ import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
+    val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private var isGatheringMotionAnimating : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,38 @@ class MainActivity : AppCompatActivity() {
         initActionBar()
         initInsetMargin()
 
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
+            if(binding.scrollView.scrollY > 150f.dpToPx(this).toInt()){
+                if(isGatheringMotionAnimating.not()){
+                    binding.gatheringDigitalThingsLayout.transitionToEnd()
+                    binding.buttonShownMotionLayout.transitionToEnd()
+                }
+            }else{
+                    if(isGatheringMotionAnimating.not()){
+                        binding.gatheringDigitalThingsLayout.transitionToStart()
+                        binding.buttonShownMotionLayout.transitionToStart()
+
+
+                }
+            }
+        }
+        binding.gatheringDigitalThingsLayout.setTransitionListener(object: MotionLayout.TransitionListener{
+            override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int, ) {
+                isGatheringMotionAnimating = true
+            }
+
+            override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float, ) = Unit
+
+            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                isGatheringMotionAnimating = false
+            }
+
+            override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) =Unit
+
+        })
+
     }
+
 
     private fun initAppBar() {
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
