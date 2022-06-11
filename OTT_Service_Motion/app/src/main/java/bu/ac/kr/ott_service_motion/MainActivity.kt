@@ -20,7 +20,7 @@ import kotlin.math.abs
 class MainActivity : AppCompatActivity() {
 
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private var isGatheringMotionAnimating : Boolean = false
+    private var isGatheringMotionAnimating: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,37 +31,60 @@ class MainActivity : AppCompatActivity() {
         initAppBar()
         initActionBar()
         initInsetMargin()
+        initScrollViewListeners()
+        initMotionLayoutListeners()
 
+
+    }
+
+    private fun initScrollViewListeners() {
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
-            if(binding.scrollView.scrollY > 150f.dpToPx(this).toInt()){
-                if(isGatheringMotionAnimating.not()){
+            if (binding.scrollView.scrollY > 150f.dpToPx(this).toInt()) {
+                if (isGatheringMotionAnimating.not()) {
                     binding.gatheringDigitalThingsLayout.transitionToEnd()
                     binding.buttonShownMotionLayout.transitionToEnd()
                 }
-            }else{
-                    if(isGatheringMotionAnimating.not()){
-                        binding.gatheringDigitalThingsLayout.transitionToStart()
-                        binding.buttonShownMotionLayout.transitionToStart()
+            } else {
+                if (isGatheringMotionAnimating.not()) {
+                    binding.gatheringDigitalThingsLayout.transitionToStart()
+                    binding.buttonShownMotionLayout.transitionToStart()
 
 
                 }
             }
         }
-        binding.gatheringDigitalThingsLayout.setTransitionListener(object: MotionLayout.TransitionListener{
-            override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int, ) {
+    }
+
+    private fun initMotionLayoutListeners() {
+        binding.gatheringDigitalThingsLayout.setTransitionListener(object :
+            MotionLayout.TransitionListener {
+            override fun onTransitionStarted(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int,
+            ) {
                 isGatheringMotionAnimating = true
             }
 
-            override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float, ) = Unit
+            override fun onTransitionChange(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int,
+                progress: Float,
+            ) = Unit
 
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
                 isGatheringMotionAnimating = false
             }
 
-            override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) =Unit
+            override fun onTransitionTrigger(
+                motionLayout: MotionLayout?,
+                triggerId: Int,
+                positive: Boolean,
+                progress: Float,
+            ) = Unit
 
         })
-
     }
 
 
@@ -71,14 +94,16 @@ class MainActivity : AppCompatActivity() {
             val realAlphaScrollHeight = appBarLayout.measuredHeight - appBarLayout.totalScrollRange
             val abstractOffset = abs(verticalOffset)
 
-            val realAlphaVerticalOffset = if (abstractOffset - topPadding < 0) 0f else abstractOffset - topPadding
+            val realAlphaVerticalOffset =
+                if (abstractOffset - topPadding < 0) 0f else abstractOffset - topPadding
 
             if (abstractOffset < topPadding) {
                 binding.toolbarBackgroundView.alpha = 0f
                 return@OnOffsetChangedListener
             }
             val percentage = realAlphaVerticalOffset / realAlphaScrollHeight
-            binding.toolbarBackgroundView.alpha = 1 - (if (1 - percentage * 2 < 0) 0f else 1 - percentage * 2)
+            binding.toolbarBackgroundView.alpha =
+                1 - (if (1 - percentage * 2 < 0) 0f else 1 - percentage * 2)
         })
         initActionBar()
     }
@@ -93,16 +118,19 @@ class MainActivity : AppCompatActivity() {
             it.setDisplayShowHomeEnabled(false)
         }
     }
+
     private fun initInsetMargin() = with(binding) {
         ViewCompat.setOnApplyWindowInsetsListener(coordinator) { v: View, insets: WindowInsetsCompat ->
             val params = v.layoutParams as ViewGroup.MarginLayoutParams
             params.bottomMargin = insets.systemWindowInsetBottom
-            toolbarContainer.layoutParams = (toolbarContainer.layoutParams as ViewGroup.MarginLayoutParams).apply {
-                setMargins(0, insets.systemWindowInsetTop, 0, 0)
-            }
-            collapsingToolbarContainer.layoutParams = (collapsingToolbarContainer.layoutParams as ViewGroup.MarginLayoutParams).apply {
-                setMargins(0, 0, 0, 0)
-            }
+            toolbarContainer.layoutParams =
+                (toolbarContainer.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                    setMargins(0, insets.systemWindowInsetTop, 0, 0)
+                }
+            collapsingToolbarContainer.layoutParams =
+                (collapsingToolbarContainer.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                    setMargins(0, 0, 0, 0)
+                }
 
             insets.consumeSystemWindowInsets()
         }

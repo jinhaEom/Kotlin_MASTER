@@ -28,64 +28,97 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:background="@color/black">
+                    <TextView
+                        android:id="@+id/introduceContentsTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="영화, 드라마 ,예능 등 8만 편의 작품"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+                    <Button
+                        android:id="@+id/useTwoWeeksButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="200dp"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="12dp"
+                        android:text="2주 무료 이용"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/introduceContentsTitleTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.motion.widget.MotionLayout
+                        android:id="@+id/gatheringDigitalThingsLayout"
+                        android:layout_width="480dp"
+                        android:layout_height="300dp"
+                        android:layout_gravity="center_horizontal"
+                        app:layoutDescription="@xml/gathering_digital_things_scene"
+                        tools:ignore="MissingConstraints">
+
+                        <ImageView
+                            android:id="@+id/tvImageView"
+                            android:layout_width="400dp"
+                            android:layout_height="250dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_tv"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/tabletImageView"
+                            android:layout_width="200dp"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_tablet"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/laptopImageView"
+                            android:layout_width="200dp"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_laptop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/phoneImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="130dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_phone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.motion.widget.MotionLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="600dp"
-                    android:background="@color/black" />
-
-                <androidx.constraintlayout.motion.widget.MotionLayout
-                    android:id="@+id/gatheringDigitalThingsLayout"
-                    android:layout_width="480dp"
-                    android:layout_height="300dp"
-                    android:layout_gravity="center_horizontal"
-                    app:layoutDescription="@xml/gathering_digital_things_scene">
-
-                    <ImageView
-                        android:id="@+id/tvImageView"
-                        android:layout_width="400dp"
-                        android:layout_height="250dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_tv"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/tabletImageView"
-                        android:layout_width="200dp"
-                        android:layout_height="100dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_tablet"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/laptopImageView"
-                        android:layout_width="200dp"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_laptop"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/phoneImageView"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_phone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.motion.widget.MotionLayout>
+                    android:layout_height="400dp"
+                    android:background="@color/black"/>
             </LinearLayout>
+
         </androidx.core.widget.NestedScrollView>
 
         <Button
