@@ -21,7 +21,7 @@ import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
 @ExperimentalCoroutinesApi
-internal  class ViewModelTest : KoinTest{
+internal abstract class ViewModelTest : KoinTest{
     @get: Rule
     val mockitoRule : MockitoRule = MockitoJUnit.rule()
 
