@@ -15,3 +15,5 @@ SharedPreferences
 - 1: SharedPreferences 생성
 - 2: getInt(),getString() 메서드로 값 읽어오기
 
+- 문서 참고할 것: https://developer.android.com/guide/topics/ui/settings/use-saved-values?hl=ko
+

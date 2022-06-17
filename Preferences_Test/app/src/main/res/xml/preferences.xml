@@ -10,6 +10,11 @@
             android:icon="@mipmap/ic_launcher"
             android:key="key_add_shortcut"
             android:title="바로가기 아이콘" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@mipmap/ic_launcher"
+            android:key="key_switch_on"
+            android:title="화면 켜짐" />
     </PreferenceCategory>
     <PreferenceCategory
         android:iconSpaceReserved="false"
