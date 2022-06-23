@@ -11,7 +11,6 @@ import kotlin.concurrent.thread
  *
  */
 class MainActivity : AppCompatActivity() {
-ㅎㅊㅇ
     val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
