@@ -62,5 +62,13 @@ class SqliteHelper(context: Context, name: String, version: Int) :
         wd.update("memo", values, "no=${memo.no}",null)
         wd.close()
     }
+
+    fun deleteMemo(memo : Memo){
+        val delete = "delete from memo where no = ${memo.no}"  // 조건식 -> "컬럼명=값"
+        val db = writableDatabase
+        db.execSQL(delete)
+        db.close()
+
+    }
 }
 data class Memo(var no: Long?,var content:String, var datetime: Long)
