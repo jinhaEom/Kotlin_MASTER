@@ -53,5 +53,14 @@ class SqliteHelper(context: Context, name: String, version: Int) :
 
         return list
     }
+    fun updateMemo(memo: Memo){
+        val values= ContentValues() // 수정할 값 저장
+        values.put("content", memo.content)
+        values.put("datetime", memo.datetime)
+
+        val wd = writableDatabase // writableDatabase 의 Update() 메소드를 사용해 수정한 다음 close() 호출
+        wd.update("memo", values, "no=${memo.no}",null)
+        wd.close()
+    }
 }
 data class Memo(var no: Long?,var content:String, var datetime: Long)
