@@ -10,11 +10,14 @@ class MainActivity : AppCompatActivity() {
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater)}
     val helper = SqliteHelper(this, "memo",1)
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         val adapter = RecyclerAdapter()
+        adapter.helper = helper //helper 를 adapter 에 전달
 
         adapter.listData.addAll(helper.selectMemo()) //adapter의 listdata에 데이터베이스에서 가져온 데이터 세팅
         binding.recyclerMemo.adapter = adapter  //리사이클러 뷰 위젯에 adapter 연결 후 레이아웃 매니저 설정
