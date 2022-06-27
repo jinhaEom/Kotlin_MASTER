@@ -21,7 +21,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.Holder>(){
         holder.setMemo(memo)
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int {1
         return listData.size
     }
 

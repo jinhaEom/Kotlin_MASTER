@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 * 테이블 명을 클래스와 다르게 하고싶으면  @Entity(tableName="테이블명") 과 같이 작성
 * @Ignore 어노테이션을 적용하면 해당 변수가 테이블과 관계 없는 변수라는 정보를 알릴 수 있음.
  */
-@Entity
+@Entity(tableName = "room_memo")
 class RoomMemo {
 
     //멤버 변수 nom content, date 선언

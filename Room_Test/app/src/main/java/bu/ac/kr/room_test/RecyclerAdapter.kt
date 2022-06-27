@@ -7,8 +7,8 @@ import bu.ac.kr.room_test.databinding.ItemRecyclerBinding
 import java.text.SimpleDateFormat
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.Holder>(){
-    var listData = mutableListOf<Memo>()
-    var helper : SqliteHelper? = null
+    var listData = mutableListOf<RoomMemo>()
+    var helper : RoomHelper? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemRecyclerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,18 +28,19 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.Holder>(){
     inner class Holder(val binding: ItemRecyclerBinding): RecyclerView.ViewHolder(binding.root){
         //holder는 한 화면에 그려지는 갯수만큼 만든 후 재사용 함.
 
-        var mMemo: Memo? = null
+        var mMemo: RoomMemo? = null
 
         init {
             binding.buttonDelete.setOnClickListener {
-                helper?.deleteMemo(mMemo!!)  // deleteMemo는 null허용하지 않았는데 mMemo는 null허용을 했으므로 !!로 강제사용
+                helper?.roomMemoDao()?.delete(mMemo!!)  // deleteMemo는 null허용하지 않았는데 mMemo는 null허용을 했으므로 !!로 강제사용
+                //RoomHelper 를 사용할땐 여러개의 Dao가 있을 수 있기 때문에 어떤 Dao를 쓸것인지 명시해야함
                 listData.remove(mMemo)
                 notifyDataSetChanged()
 
             }
 
         }
-        fun setMemo(memo: Memo){
+        fun setMemo(memo: RoomMemo){
             binding.textNo.text ="${memo.no}"
             binding.textContent.text = memo.content
             val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm")
