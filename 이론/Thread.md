@@ -13,10 +13,42 @@
 
 Thread 객체
 - Thread 클래스를 상속받아 스레드 생성
-1.
+
     class WorkerThread  : Thread() { 
         override fun run() {
-
         }
     }
     -> 스레드가 처리할 로직을 정의하는  run() 메소드 오버라이드
+
+- Runnable 인터페이스
+    + 다중 상속을 허용치 않는 코틀린 언어 특성상 상속관계에 있는 클래스도 구현할 수 있도록 지원하는 모델
+    + Runnable 인터페이스를 구현한 객체는 Thread 클래스의 생성자로 전달하고 Thread 클래스의 start() 메서드를 호출해야 스레드가 생성됨
+
+    - 유의점
+        + 백그라운드 스레드는 UI 구성요소에 접근하면 안된다.
+    
+## 핸들러 & 루퍼
++ Android 는 Main스레드와 Background 스레드 간의 통신을 위해 사용
++ 작동원리
+    - Main 스레드는 내부적으로 Looper를 가지며 Message Queue를 포함
+    - Message Queue는 다른 스레드 혹은 스레드 자기 자신으로부터 전달받은 메시지를 보관하는 Queue임
+    - Looper는 Message Queue에서 메시지,Runnable 객체를 차례로 꺼내서 핸들러가 처리하도록 전달
+    - 핸들러는 Looper로부터 받은 메시지,Runnable 객체를 처리하거나 메시지를 받아서 Message Queue에 넣는 스레드 간의 통신 장치임
+    &nbsp;
+    &nbsp;
+    - <img src="https://user-images.githubusercontent.com/84216838/176210023-8e4282ae-e112-4863-88eb-64d47c84d413.png" width=600 height = 300>
+
+    - Looper
+        + MainActivity가 실행됨과 동시에 for 문 하나가 무한루프 돌고 있는 서브 스레드라고 생각
+        + 이 무한 루프는 대기하고 있다가 자신의 큐에 쌓인 메시지를 핸들러에 전달
+        + 여러개의 Background에서 큐에 메시지를 입력하면 입력된 순서대로 하나씩 꺼내서 핸들러에 전달
+
+    - Handler
+        + 루퍼가 있는 MainActivity에서 주로 사용되며 새로 생성된 스레드들과 메인 스레드와의 통신 담당
+        + 핸들러는 루퍼를 통해 전달되는 메시지를 받아 처리하는 일종의 명령어 처리기로 사용
+        + 루퍼는 앱이 실행되면 자동으로 하나 생성되어 무한루프를 돌지만 ,핸들러는 개발자가 직접 생성해서 사용해야 함
+
+    - Message
+        + Looper의 큐에 값을 전달하기 위해 사용되는 클래스
+        + 메시지 객체에 미리 정의해둔 코드를 입력하고 큐에 담아두면 루퍼가 꺼내서 핸들러에 전달
+    
