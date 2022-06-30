@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.listData.clear()  //어댑터의 데이터 초기화
 
                 adapter.listData.addAll(helper?.roomMemoDao()?.getAll()?: listOf())
+
                 adapter.notifyDataSetChanged()
                 binding.editMemo.setText("")
             }
