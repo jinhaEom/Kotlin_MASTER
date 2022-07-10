@@ -10,30 +10,40 @@
         android:id="@+id/viewFinderContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/controllerGuideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/controllerGuideLine"
-        >
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.camera.view.PreviewView
+            android:id="@+id/viewFinder"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/viewFinder"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:clickable="false"
-            app:layout_constraintHeight_default="percent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,4:3"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/controllerGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/controllerGuideLine"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75"/>
+        app:layout_constraintGuide_percent="0.75" />
+    <Button
+        android:id="@+id/captureButton"
+        android:text="촬영"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/controllerGuideLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
