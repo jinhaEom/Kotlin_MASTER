@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var cameraExecutor : ExecutorService
+    private val cameraMainExecutor by lazy { ContextCompat.getMainExecutor(this)}
 
     private val cameraProviderFuture by lazy { ProcessCameraProvider.getInstance(this)} // 카메라 얻어오면 이후 실행 리스너 등록
 
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 setTargetAspectRatio(AspectRatio.RATIO_4_3)
                 setTargetRotation(rotation)
 
-            }
+            }.build()
             val imageCaptureBuilder = ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .setTargetAspectRatio(AspectRatio.RATIO_4_3)
@@ -90,9 +91,14 @@ class MainActivity : AppCompatActivity() {
             imageCapture = imageCaptureBuilder.build()
             try{
                 cameraProvider.unbindAll()  //  기존에 바인딩 되어있는 카메라는 해제
-                
+                camera = cameraProvider.bindToLifecycle(
+                    this@MainActivity, cameraSelector,preview, imageCapture
+                )
+                preview.setSurfaceProvider(viewFinder.surfaceProvider)
+            }catch(e: Exception){
+                e.printStackTrace()
             }
-        })
+        }, cameraExecutor)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
