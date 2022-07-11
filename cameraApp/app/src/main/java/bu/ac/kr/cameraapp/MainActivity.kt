@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             if(allPermissionsGranted()){
                 startCamera(binding.viewFinder)
             }else{
-                Toast.makeText(this,"카메라 궈난이 없습니다.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"카메라 권한이 없습니다.",Toast.LENGTH_SHORT).show()
             }
         }
     }
