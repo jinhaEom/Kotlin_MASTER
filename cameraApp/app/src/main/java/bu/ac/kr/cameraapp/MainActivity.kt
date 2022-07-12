@@ -9,13 +9,18 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import androidx.camera.core.*
+import androidx.camera.core.impl.ImageOutputConfig
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import bu.ac.kr.cameraapp.databinding.ActivityMainBinding
+import bu.ac.kr.cameraapp.extensions.loadCenterCrop
 import bu.ac.kr.cameraapp.util.PathUtil
 import java.io.File
 import java.io.FileNotFoundException
@@ -40,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private var displayId: Int = -1
 
     private var camera: Camera? = null
+    private var root: View? =null
     private var isCapturing: Boolean = false
     private val displayListener = object : DisplayManager.DisplayListener {
         override fun onDisplayAdded(p0: Int) = Unit
@@ -48,16 +54,20 @@ class MainActivity : AppCompatActivity() {
 
         override fun onDisplayChanged(p0: Int) {
             if (this@MainActivity.displayId == displayId) {
-
+                if(::imageCapture.isInitialized && root != null){
+                    imageCapture.targetRotation = root?.display?.rotation ?: ImageOutputConfig.INVALID_ROTATION
+                }
             }
         }
 
     }
+    private var uriList = mutableListOf<Uri>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        root = binding.root
         if (allPermissionsGranted()) {
             startCamera(binding.viewFinder)
         } else {
@@ -130,6 +140,10 @@ class MainActivity : AppCompatActivity() {
                     arrayOf(file.path),
                     arrayOf("image/jpeg"),
                     null) //외부에서도 파일 읽히게 하기
+                Handler(Looper.getMainLooper()).post{
+                    binding.previewImageView.loadCenterCrop(url=it.toString(), corner= 4f)
+                }
+                uriList.add(it)
                 false
             } catch (e: Exception) {
                 e.printStackTrace()
