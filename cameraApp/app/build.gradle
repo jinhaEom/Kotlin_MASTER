@@ -59,5 +59,4 @@ dependencies {
 
     implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
 
-    implementation 'me.relax:circleindicator:2.1.6'
-}
+    implementation 'me.relex:circleindicator:2.1.6'}
