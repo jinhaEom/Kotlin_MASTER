@@ -10,10 +10,7 @@ import bu.ac.kr.cameraapp.extensions.loadCenterCrop
 class ImageViewPagerAdapter(
     var uriList: List<Uri>
 ): RecyclerView.Adapter<ImageViewPagerAdapter.ImageViewHolder>(){
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ImageViewPagerAdapter.ImageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val binding = ViewholderImageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ImageViewHolder(binding)
     }

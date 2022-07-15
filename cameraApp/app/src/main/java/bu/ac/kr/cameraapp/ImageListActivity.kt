@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.viewpager2.widget.ViewPager2
+import bu.ac.kr.cameraapp.adapter.ImageViewPagerAdapter
 import bu.ac.kr.cameraapp.databinding.ActivityImageListBinding
 
 class ImageListActivity : AppCompatActivity() {
@@ -18,6 +20,8 @@ class ImageListActivity : AppCompatActivity() {
     }
 
     private lateinit var binding : ActivityImageListBinding
+    private lateinit var imageViewPagerAdapter : ImageViewPagerAdapter
+
     private val uriList by lazy<List<Uri>> { intent.getParcelableArrayListExtra(URI_LIST_KEY)!!}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +32,19 @@ class ImageListActivity : AppCompatActivity() {
     }
     private fun initViews() {
         setSupportActionBar(binding.toolbar)
+        setUpImageList()
     }
-    private fun setUpImageList() =with(binding){
-        uriList
+    private fun setUpImageList() = with(binding){
+        if(::imageViewPagerAdapter.isInitialized.not()){
+            imageViewPagerAdapter = ImageViewPagerAdapter(uriList)
+        }
+        imageViewPager.adapter = imageViewPagerAdapter
+        indicator.setViewPager(imageViewPager)
+        imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                toolbar.title = getString(R.string.images_page, position+1 ,imageViewPagerAdapter.uriList.size)
+            }
+        })
     }
 }

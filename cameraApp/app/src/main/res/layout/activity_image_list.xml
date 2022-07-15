@@ -36,7 +36,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/imageviewPager"
+        android:id="@+id/imageViewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/indicator"

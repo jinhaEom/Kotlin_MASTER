@@ -15,7 +15,7 @@
         android:theme="@style/Theme.CameraApp">
         <activity
             android:name=".ImageListActivity"
-            android:exported="false" />
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"g />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -25,9 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImageListActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-            />
+
     </application>
 
 </manifest>
