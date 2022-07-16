@@ -15,7 +15,7 @@
         android:theme="@style/Theme.CameraApp">
         <activity
             android:name=".ImageListActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"g />
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
