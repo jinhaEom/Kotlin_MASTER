@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "11630318145",
+    "firebase_url": "https://usedgoods-85629-default-rtdb.firebaseio.com",
+    "project_id": "usedgoods-85629",
+    "storage_bucket": "usedgoods-85629.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11630318145:android:3d844c3e7925961d5f2cc0",
+        "android_client_info": {
+          "package_name": "bu.ac.kr.sns_upload"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11630318145-una8q8r0tc5tmevk0kjpf2auuem6duv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0D2in99Nl9e_AhZsbH8zQFrTD4K2WwRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11630318145-una8q8r0tc5tmevk0kjpf2auuem6duv1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11630318145:android:d122d237ef27636c5f2cc0",
+        "android_client_info": {
+          "package_name": "bu.ac.kr.usedgoods_trade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11630318145-una8q8r0tc5tmevk0kjpf2auuem6duv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0D2in99Nl9e_AhZsbH8zQFrTD4K2WwRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11630318145-una8q8r0tc5tmevk0kjpf2auuem6duv1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
