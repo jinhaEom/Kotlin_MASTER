@@ -60,6 +60,7 @@ dependencies {
 
     implementation "androidx.camera:camera-view:${camerax_view_version}"
 
+    implementation 'me.relex:circleindicator:2.1.6'
 
 
 }

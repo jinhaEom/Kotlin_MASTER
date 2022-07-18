@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import bu.ac.kr.sns_upload.CameraActivity
 import bu.ac.kr.sns_upload.DBKey.Companion.DB_ARTICLES
 import bu.ac.kr.sns_upload.databinding.ActivityAddArticleBinding
 
@@ -23,6 +24,11 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
 class AddArticleActivity : AppCompatActivity() {
+    companion object {
+        const val PERMISSION_REQUEST_CODE = 1000
+        const val GALLERY_REQUEST_CODE = 1001
+        const val  CAMERA_REQUEST_CODE = 1002
+    }
 
     private var selectedUri: Uri? = null
 
@@ -64,7 +70,7 @@ class AddArticleActivity : AppCompatActivity() {
                         uploadArticle(sellerId,title,content,uri)
                     },
                     errorHandler = {
-                        Toast.makeText(this,"사진 업로드에  실패하였습니다.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddArticleActivity,"사진 업로드에  실패하였습니다.",Toast.LENGTH_SHORT).show()
                         hideProgress()
                     }
                 )
@@ -106,7 +112,7 @@ class AddArticleActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            1010 ->
+            PERMISSION_REQUEST_CODE ->
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startContentProvider()
                 } else {
@@ -118,16 +124,19 @@ class AddArticleActivity : AppCompatActivity() {
     private fun startGalleryScreen(){
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type="image/*"
-        startActivityForResult(intent,2020)
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
-    private fun startcamneraScreen(){
-
+    private fun startCameraScreen(){
+        startActivityForResult(
+            CameraActivity.newIntent(),
+            CAMERA_REQUEST_CODE
+        )
     }
 
     private fun startContentProvider() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, 2020)
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
     private fun showProgress(){
         binding.progressBar.isVisible=true
@@ -145,7 +154,7 @@ class AddArticleActivity : AppCompatActivity() {
         }
 
         when (requestCode) {
-            2020 -> {
+            GALLERY_REQUEST_CODE -> {
                 val uri = data?.data
                 if (uri != null) {
                     binding.photoImageView.setImageURI(uri)
@@ -153,6 +162,9 @@ class AddArticleActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
+            }
+            CAMERA_REQUEST_CODE -> {
+
             }
             else -> {
                 Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
@@ -185,7 +197,7 @@ class AddArticleActivity : AppCompatActivity() {
             else -> {
                 requestPermissions(
                     arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                    1010
+                    PERMISSION_REQUEST_CODE
                 )
             }
         }

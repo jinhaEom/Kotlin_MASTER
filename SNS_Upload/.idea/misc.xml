@@ -12,6 +12,7 @@
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/activity_add_article.xml" value="0.1940222897669706" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/activity_camera.xml" value="0.39947916666666666" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/activity_chatroom.xml" value="0.1940222897669706" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/activity_image_preview_list.xml" value="0.39947916666666666" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/activity_main.xml" value="0.1940222897669706" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/activity_signup.xml" value="0.1940222897669706" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/fragment_chatlist.xml" value="0.1940222897669706" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/item_article.xml" value="0.1940222897669706" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/item_chat.xml" value="0.1940222897669706" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/item_chat_list.xml" value="0.1940222897669706" />
+        <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/layout/viewholder_image.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/umjin/AndroidStudioProjects/SNS_Upload/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.23333333333333334" />
       </map>
     </option>
