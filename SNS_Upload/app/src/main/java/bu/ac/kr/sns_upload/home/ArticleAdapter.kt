@@ -22,7 +22,7 @@ class ArticleAdapter(val onItemClicked:(ArticleModel) -> Unit) : ListAdapter<Art
             val date = Date(articleModel.createdAt)
             binding.titleTextView.text = articleModel.title
             binding.dateTextView.text = format.format(date).toString()
-            binding.priceTextView.text = articleModel.price
+            binding.contentTextView.text = articleModel.content
 
 
             if (articleModel.imageUrl.isNotEmpty()) {

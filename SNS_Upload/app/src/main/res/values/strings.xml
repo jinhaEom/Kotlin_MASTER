@@ -3,4 +3,6 @@
     <string name="add_feed">피드 등록</string>
     <string name="feed_content">피드 내용</string>
     <string name="feed_title">피드 제목</string>
+    <string name="image_preview">이미지 미리보기</string>
+
 </resources>
