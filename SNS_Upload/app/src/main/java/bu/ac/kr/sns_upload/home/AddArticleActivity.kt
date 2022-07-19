@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.widget.*
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -28,9 +27,10 @@ class AddArticleActivity : AppCompatActivity() {
         const val PERMISSION_REQUEST_CODE = 1000
         const val GALLERY_REQUEST_CODE = 1001
         const val  CAMERA_REQUEST_CODE = 1002
+        private const val URI_LIST_KEY = "uriList"
     }
 
-    private var selectedUri: Uri? = null
+    private var imageUriList: ArrayList<Uri> = arrayListOf()
 
     private val auth: FirebaseAuth by lazy {
         Firebase.auth
@@ -63,11 +63,11 @@ class AddArticleActivity : AppCompatActivity() {
 
             showProgress()
             //중간에 이미지가 있으면 업로드 과정 추가
-            if(selectedUri != null){
-                val photoUri = selectedUri ?: return@setOnClickListener
-                uploadPhoto(photoUri,
-                    successHandler = {uri->
-                        uploadArticle(sellerId,title,content,uri)
+            if(imageUriList.isNotEmpty()){
+                uploadPhoto(imageUriList.first(),
+                successHandler = { uri ->
+                    uploadArticle(sellerId,title,content,uri)
+
                     },
                     errorHandler = {
                         Toast.makeText(this@AddArticleActivity,"사진 업로드에  실패하였습니다.",Toast.LENGTH_SHORT).show()
@@ -128,7 +128,7 @@ class AddArticleActivity : AppCompatActivity() {
     }
     private fun startCameraScreen(){
         startActivityForResult(
-            CameraActivity.newIntent(),
+            CameraActivity.newIntent(this),
             CAMERA_REQUEST_CODE
         )
     }
@@ -157,14 +157,21 @@ class AddArticleActivity : AppCompatActivity() {
             GALLERY_REQUEST_CODE -> {
                 val uri = data?.data
                 if (uri != null) {
-                    binding.photoImageView.setImageURI(uri)
-                    selectedUri = uri
+                    imageUriList.add(uri)
+                    //todo RecyclerView Adapter에 데이터 반영
                 } else {
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
             CAMERA_REQUEST_CODE -> {
+                data?.let{ intent ->
+                    val uriList = intent.getParcelableArrayListExtra<Uri>(URI_LIST_KEY)
+                    uriList?.let{ list ->
+                        imageUriList.addAll(list)
+                        //todo RecyclerView Adapter에 데이터 반영
 
+                    }
+                }
             }
             else -> {
                 Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()

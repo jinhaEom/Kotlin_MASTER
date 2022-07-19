@@ -1,4 +1,4 @@
-package bu.ac.kr.sns_upload
+package bu.ac.kr.sns_upload.photo
 
 import android.app.Activity
 import android.content.Intent
@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
+import bu.ac.kr.sns_upload.R
 import bu.ac.kr.sns_upload.databinding.ActivityImagePreviewListBinding
-import bu.ac.kr.sns_upload.photo.ImageViewPagerAdapter
 
 import bu.ac.kr.sns_upload.util.PathUtil
 import java.io.File
@@ -19,7 +19,6 @@ import java.io.FileNotFoundException
 class ImagePreviewListActivity : AppCompatActivity() {
 
     companion object {
-        private const val URI_LIST_KEY = "uriList"
 
         fun newIntent(activity: Activity, uriList: List<Uri>) =
             Intent(activity, ImagePreviewListActivity::class.java).apply {
@@ -60,7 +59,7 @@ class ImagePreviewListActivity : AppCompatActivity() {
         }
         confirmButton.setOnClickListener {
             setResult(Activity.RESULT_OK, Intent().apply {
-                putExtra(URI_LIST_KEY, ArrayList<Uri>(imageViewPagerAdapter.uriList))
+                putExtra(URI_LIST_KEY, ArrayList<Uri>(imageViewPagerAdapter.uriList)
             })
             finish()
         }

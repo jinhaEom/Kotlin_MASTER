@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import bu.ac.kr.sns_upload.databinding.ActivityCameraBinding
 import bu.ac.kr.sns_upload.extensions.loadCenterCrop
+import bu.ac.kr.sns_upload.photo.ImagePreviewListActivity
 import bu.ac.kr.sns_upload.util.PathUtil
 import java.io.File
 import java.io.FileNotFoundException
