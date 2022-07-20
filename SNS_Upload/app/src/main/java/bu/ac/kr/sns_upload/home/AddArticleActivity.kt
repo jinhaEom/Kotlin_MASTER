@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import bu.ac.kr.sns_upload.CameraActivity
 import bu.ac.kr.sns_upload.DBKey.Companion.DB_ARTICLES
 import bu.ac.kr.sns_upload.databinding.ActivityAddArticleBinding
+import bu.ac.kr.sns_upload.photo.PhotoListAdapter
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -41,6 +42,7 @@ class AddArticleActivity : AppCompatActivity() {
     private val articleDB: DatabaseReference by lazy {
         Firebase.database.reference.child(DB_ARTICLES)
     }
+    private val photoListAdapter = PhotoListAdapter{ uri -> removePhoto(uri)}
     private lateinit var binding: ActivityAddArticleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +55,8 @@ class AddArticleActivity : AppCompatActivity() {
 
 
     private fun initViews() = with(binding){
+        photoRecyclerview.adapter = photoListAdapter
+
         imageAddButton.setOnClickListener {
            showPictureUploadDialog()
         }
@@ -158,7 +162,7 @@ class AddArticleActivity : AppCompatActivity() {
                 val uri = data?.data
                 if (uri != null) {
                     imageUriList.add(uri)
-                    //todo RecyclerView Adapter에 데이터 반영
+                    photoListAdapter.setPhotoList(imageUriList)
                 } else {
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -168,7 +172,7 @@ class AddArticleActivity : AppCompatActivity() {
                     val uriList = intent.getParcelableArrayListExtra<Uri>(URI_LIST_KEY)
                     uriList?.let{ list ->
                         imageUriList.addAll(list)
-                        //todo RecyclerView Adapter에 데이터 반영
+                        photoListAdapter.setPhotoList(imageUriList)
 
                     }
                 }
@@ -226,5 +230,9 @@ class AddArticleActivity : AppCompatActivity() {
             }
             .create()
             .show()
+    }
+    private fun removePhoto(uri: Uri){
+        imageUriList.remove(uri)
+        photoListAdapter.setPhotoList(imageUriList)
     }
 }

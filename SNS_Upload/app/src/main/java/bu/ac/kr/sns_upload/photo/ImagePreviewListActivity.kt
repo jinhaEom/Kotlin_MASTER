@@ -19,6 +19,8 @@ import java.io.FileNotFoundException
 class ImagePreviewListActivity : AppCompatActivity() {
 
     companion object {
+        private const val URI_LIST_KEY = "uriList"
+
 
         fun newIntent(activity: Activity, uriList: List<Uri>) =
             Intent(activity, ImagePreviewListActivity::class.java).apply {
@@ -59,7 +61,7 @@ class ImagePreviewListActivity : AppCompatActivity() {
         }
         confirmButton.setOnClickListener {
             setResult(Activity.RESULT_OK, Intent().apply {
-                putExtra(URI_LIST_KEY, ArrayList<Uri>(imageViewPagerAdapter.uriList)
+                putExtra(URI_LIST_KEY, ArrayList<Uri>(imageViewPagerAdapter.uriList))
             })
             finish()
         }
