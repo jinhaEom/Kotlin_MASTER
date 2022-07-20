@@ -72,19 +72,12 @@ class AddArticleActivity : AppCompatActivity() {
             showProgress()
             //중간에 이미지가 있으면 업로드 과정 추가
             if(imageUriList.isNotEmpty()){
-                uploadPhoto(imageUriList.first(),
-                successHandler = { uri ->
-                    uploadArticle(sellerId,title,content,uri)
-
-                    },
-                    errorHandler = {
-                        Toast.makeText(this@AddArticleActivity,"사진 업로드에  실패하였습니다.",Toast.LENGTH_SHORT).show()
-                        hideProgress()
-                    }
-                )
-
+                lifecycleScope.launch{
+                    val results = uploadPhoto(imageUriList)
+                    uploadArticle(sellerId,title,content, results.filterIsInstance<String>())
+                }
             }else{
-                uploadArticle(sellerId,title,content,"")
+                uploadArticle(sellerId,title,content, listOf())
             }
 
     }
@@ -113,8 +106,8 @@ class AddArticleActivity : AppCompatActivity() {
         }
         return@withContext uploadDeferred.awaitAll()
     }
-    private fun uploadArticle(sellerId:String, title:String, content:String, imageUrl:String){
-        val model = ArticleModel(sellerId, title, System.currentTimeMillis(),"$content 원",imageUrl)
+    private fun uploadArticle(sellerId:String, title:String, content:String, imageUrlList: List<String>){
+        val model = ArticleModel(sellerId, title, System.currentTimeMillis(),"$content 원",imageUrlList)
         articleDB.push().setValue(model)
 
         hideProgress()
