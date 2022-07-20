@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import bu.ac.kr.sns_upload.databinding.ViewholderImageBinding
+import bu.ac.kr.sns_upload.databinding.ViewholderPhotoItemBinding
+import bu.ac.kr.sns_upload.extensions.loadCenterCrop
 
 class PhotoListAdapter(
     private val removePhotoListener: (Uri) -> Unit
@@ -13,7 +15,7 @@ class PhotoListAdapter(
     private var imageUriList: List<Uri> = listOf()
 
     inner class ProductItemViewHolder(
-        private val binding: ViewholderImageBinding
+        private val binding: ViewholderPhotoItemBinding
     ): RecyclerView.ViewHolder(binding.root){
         fun bindData(data: Uri) = with(binding){
             photoImageView.loadCenterCrop(data.toString(),8f)
@@ -27,7 +29,7 @@ class PhotoListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductItemViewHolder {
-        val view = ViewholderImageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = ViewholderPhotoItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ProductItemViewHolder(view)
     }
 
