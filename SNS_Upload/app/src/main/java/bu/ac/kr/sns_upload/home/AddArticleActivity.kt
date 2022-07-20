@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import bu.ac.kr.sns_upload.CameraActivity
 import bu.ac.kr.sns_upload.DBKey.Companion.DB_ARTICLES
 import bu.ac.kr.sns_upload.databinding.ActivityAddArticleBinding
@@ -22,6 +23,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 
 class AddArticleActivity : AppCompatActivity() {
     companion object {
@@ -85,22 +89,29 @@ class AddArticleActivity : AppCompatActivity() {
 
     }
     }
-    private fun uploadPhoto(uri :Uri, successHandler:(String) -> Unit, errorHandler: () ->Unit){
-        val fileName = "${System.currentTimeMillis()}.png"
-        storage.reference.child("article/photo").child(fileName)
-            .putFile(uri)
-            .addOnCompleteListener{
-                if(it.isSuccessful){
-                    storage.reference.child("article/photo").child(fileName).downloadUrl
-                        .addOnSuccessListener { uri ->
-                            successHandler(uri.toString())
-                        }.addOnFailureListener{
-                            errorHandler()
-                        }
-                }else{
-                    errorHandler()
+    private suspend fun uploadPhoto(uriList : List<Uri>) = withContext(Dispatchers.IO){
+        val uploadDeferred : List<Deferred<Any>> = uriList.mapIndexed { index, uri ->
+            lifecycleScope.async{
+                try{
+                    val fileName = "image_${index}.png"
+                    return@async storage
+                        .reference
+                        .child("article/photo")
+                        .child(fileName)
+                        .putFile(uri)
+                        .await()
+                        .storage
+                        .downloadUrl
+                        .await()
+                        .toString()
+
+                }catch(e:Exception){
+                    e.printStackTrace()
+                    return@async Pair(uri, e)
                 }
             }
+        }
+        return@withContext uploadDeferred.awaitAll()
     }
     private fun uploadArticle(sellerId:String, title:String, content:String, imageUrl:String){
         val model = ArticleModel(sellerId, title, System.currentTimeMillis(),"$content 원",imageUrl)
