@@ -74,7 +74,7 @@ class AddArticleActivity : AppCompatActivity() {
             if(imageUriList.isNotEmpty()){
                 lifecycleScope.launch{
                     val results = uploadPhoto(imageUriList)
-                    uploadArticle(sellerId,title,content, results.filterIsInstance<String>())
+                    afterUploadPhoto(results, title, content, userId)
                 }
             }else{
                 uploadArticle(sellerId,title,content, listOf())
@@ -105,6 +105,22 @@ class AddArticleActivity : AppCompatActivity() {
             }
         }
         return@withContext uploadDeferred.awaitAll()
+    }
+    private fun afterUploadPhoto(results: List<Any>, title:String, content:String, userId:String){
+        val errorResults = results.filterIsInstance<Pair<Uri, Exception>>()
+        val successResult = results.filterIsInstance<String>()
+
+        when{
+            errorResults.isNotEmpty() && successResult.isNotEmpty() -> {
+                photoUploadErrorButContinueDialog(errorResults, successResult, title, content, userId)
+            }
+            errorResults.isNotEmpty() && successResult.isEmpty() ->{
+                uploadError()
+            }
+            else -> {
+                uploadArticle(userId, title, content, results.filterIsInstance<String>())
+            }
+        }
     }
     private fun uploadArticle(sellerId:String, title:String, content:String, imageUrlList: List<String>){
         val model = ArticleModel(sellerId, title, System.currentTimeMillis(),"$content 원",imageUrlList)
@@ -234,6 +250,28 @@ class AddArticleActivity : AppCompatActivity() {
             }
             .create()
             .show()
+    }
+    private fun photoUploadErrorButContinueDialog(
+        errorResults: List<Pair<Uri,Exception>>,
+        successResults: List<String>,
+        title:String,
+        content:String,
+        userId:String
+    ){
+        AlertDialog.Builder(this)
+            .setTitle("특정 이미지 업로드 실패")
+            .setMessage("업로드에 실패한 이미지가 있습니다."+ errorResults.map { (uri,_) ->
+                "$uri\n"
+            } + "그럼에도 불구하고 업로드 하시겠습니까?")
+            .setPositiveButton("업로드") { _,_ ->
+                 uploadArticle(userId, title,content, successResults)
+
+            }
+            .create()
+            .show()
+    }
+    private fun uploadError(){
+        Toast.makeText(this,"사진 업로드에 실패했습니다.",Toast.LENGTH_SHORT).show()
     }
     private fun removePhoto(uri: Uri){
         imageUriList.remove(uri)
