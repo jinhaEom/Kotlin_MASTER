@@ -67,7 +67,7 @@ class AddArticleActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
             val title = binding.titleEditText.text.toString()
             val content = binding.contentEditText.text.toString()
-            val sellerId = auth.currentUser?.uid.orEmpty()
+            val userId = auth.currentUser?.uid.orEmpty()
 
             showProgress()
             //중간에 이미지가 있으면 업로드 과정 추가
@@ -77,7 +77,7 @@ class AddArticleActivity : AppCompatActivity() {
                     afterUploadPhoto(results, title, content, userId)
                 }
             }else{
-                uploadArticle(sellerId,title,content, listOf())
+                uploadArticle(userId,title,content, listOf())
             }
 
     }
@@ -86,18 +86,21 @@ class AddArticleActivity : AppCompatActivity() {
         val uploadDeferred : List<Deferred<Any>> = uriList.mapIndexed { index, uri ->
             lifecycleScope.async{
                 try{
-                    val fileName = "image_${index}.png"
-                    return@async storage
-                        .reference
-                        .child("article/photo")
-                        .child(fileName)
-                        .putFile(uri)
-                        .await()
-                        .storage
-                        .downloadUrl
-                        .await()
-                        .toString()
-
+                    if(index %3 ==0){
+                        throw Exception()
+                    }else{
+                        val fileName = "image_${index}.png"
+                        return@async storage
+                            .reference
+                            .child("article/photo")
+                            .child(fileName)
+                            .putFile(uri)
+                            .await()
+                            .storage
+                            .downloadUrl
+                            .await()
+                            .toString()
+                    }
                 }catch(e:Exception){
                     e.printStackTrace()
                     return@async Pair(uri, e)
@@ -122,8 +125,8 @@ class AddArticleActivity : AppCompatActivity() {
             }
         }
     }
-    private fun uploadArticle(sellerId:String, title:String, content:String, imageUrlList: List<String>){
-        val model = ArticleModel(sellerId, title, System.currentTimeMillis(),"$content 원",imageUrlList)
+    private fun uploadArticle(userId:String, title:String, content:String, imageUrlList: List<String>){
+        val model = ArticleModel(userId, title, System.currentTimeMillis(),"$content 원",imageUrlList)
         articleDB.push().setValue(model)
 
         hideProgress()
