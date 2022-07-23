@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import bu.ac.kr.sns_upload.CameraActivity
 import bu.ac.kr.sns_upload.DBKey.Companion.DB_ARTICLES
 import bu.ac.kr.sns_upload.databinding.ActivityAddArticleBinding
+import bu.ac.kr.sns_upload.gallery.GalleryActivity
 import bu.ac.kr.sns_upload.photo.PhotoListAdapter
 
 import com.google.firebase.auth.FirebaseAuth
@@ -149,9 +150,13 @@ class AddArticleActivity : AppCompatActivity() {
         }
     }
     private fun startGalleryScreen(){
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type="image/*"
-        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+      //  val intent = Intent(Intent.ACTION_GET_CONTENT)
+      //  intent.type="image/*"
+       // startActivityForResult(intent, GALLERY_REQUEST_CODE)
+        startActivityForResult(
+            GalleryActivity.newIntent(this),
+            GALLERY_REQUEST_CODE
+        )
     }
     private fun startCameraScreen(){
         startActivityForResult(
