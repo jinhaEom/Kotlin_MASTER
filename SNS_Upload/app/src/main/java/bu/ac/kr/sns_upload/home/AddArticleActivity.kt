@@ -150,9 +150,7 @@ class AddArticleActivity : AppCompatActivity() {
         }
     }
     private fun startGalleryScreen(){
-      //  val intent = Intent(Intent.ACTION_GET_CONTENT)
-      //  intent.type="image/*"
-       // startActivityForResult(intent, GALLERY_REQUEST_CODE)
+
         startActivityForResult(
             GalleryActivity.newIntent(this),
             GALLERY_REQUEST_CODE
@@ -187,12 +185,13 @@ class AddArticleActivity : AppCompatActivity() {
 
         when (requestCode) {
             GALLERY_REQUEST_CODE -> {
-                val uri = data?.data
-                if (uri != null) {
-                    imageUriList.add(uri)
-                    photoListAdapter.setPhotoList(imageUriList)
-                } else {
-                    Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                data?.let{ intent ->
+                    val uriList = intent.getParcelableArrayListExtra<Uri>(URI_LIST_KEY)
+                    uriList?.let{ list ->
+                        imageUriList.addAll(list)
+                        photoListAdapter.setPhotoList(imageUriList)
+
+                    }
                 }
             }
             CAMERA_REQUEST_CODE -> {
@@ -203,6 +202,8 @@ class AddArticleActivity : AppCompatActivity() {
                         photoListAdapter.setPhotoList(imageUriList)
 
                     }
+                } ?: kotlin.run{
+                    Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
                 }
             }
             else -> {

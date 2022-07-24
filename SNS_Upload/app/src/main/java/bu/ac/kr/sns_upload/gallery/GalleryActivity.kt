@@ -20,7 +20,12 @@ class GalleryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGalleryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initViews()
     }
-    private fun initViews() = with(binding){}
+    private fun initViews() = with(binding){
+
+
+    }
 }
 
