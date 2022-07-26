@@ -25,9 +25,6 @@ class GalleryViewModel : ViewModel() {
         )
     }
 
-    private fun setState(state: GalleryState) {
-        galleryStateLiveData.postValue(state)
-    }
 
     fun selectPhoto(galleryPhoto: GalleryPhoto) {
         val findGalleryPhoto = photoList.find { it.id == galleryPhoto.id }
@@ -46,5 +43,17 @@ class GalleryViewModel : ViewModel() {
     }
 
     fun confirmCheckedPhotos() {
+        setState(
+            GalleryState.Loading
+        )
+        setState(
+            GalleryState.Confirm(
+                photoList = photoList.filter{ it.isSelected}
+            )
+        )
+    }
+
+    private fun setState(state: GalleryState) {
+        galleryStateLiveData.postValue(state)
     }
 }

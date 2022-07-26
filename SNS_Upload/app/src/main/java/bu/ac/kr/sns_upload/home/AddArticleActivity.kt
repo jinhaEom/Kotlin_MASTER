@@ -87,21 +87,17 @@ class AddArticleActivity : AppCompatActivity() {
         val uploadDeferred : List<Deferred<Any>> = uriList.mapIndexed { index, uri ->
             lifecycleScope.async{
                 try{
-                    if(index %3 ==0){
-                        throw Exception()
-                    }else{
-                        val fileName = "image_${index}.png"
-                        return@async storage
-                            .reference
-                            .child("article/photo")
-                            .child(fileName)
-                            .putFile(uri)
-                            .await()
-                            .storage
-                            .downloadUrl
-                            .await()
-                            .toString()
-                    }
+                    val fileName = "image_${index}.png"
+                    return@async storage
+                        .reference
+                        .child("article/photo")
+                        .child(fileName)
+                        .putFile(uri)
+                        .await()
+                        .storage
+                        .downloadUrl
+                        .await()
+                        .toString()
                 }catch(e:Exception){
                     e.printStackTrace()
                     return@async Pair(uri, e)
