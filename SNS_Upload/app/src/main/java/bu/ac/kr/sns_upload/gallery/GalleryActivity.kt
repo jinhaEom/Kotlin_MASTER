@@ -19,12 +19,16 @@ class GalleryActivity : AppCompatActivity() {
     }
     private val viewModel by viewModels<GalleryViewModel>()
     private lateinit var binding: ActivityGalleryBinding
+    private val adapter = GalleryPhotoListAdapter{
+        viewModel.selectPhoto(it)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGalleryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.fetchData()
         initViews()
         observeState()
     }
@@ -41,7 +45,7 @@ class GalleryActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(GridDividerDecoration(this@GalleryActivity, R.drawable.bg_frame_gallery))
         confirmButton.setOnClickListener {
-            viewModel.confirmCheckPhotos()
+            viewModel.confirmCheckedPhotos()
         }
 
     }
