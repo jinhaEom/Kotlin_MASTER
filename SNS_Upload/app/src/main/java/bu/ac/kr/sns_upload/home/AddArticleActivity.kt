@@ -118,7 +118,7 @@ class AddArticleActivity : AppCompatActivity() {
                 uploadError()
             }
             else -> {
-                uploadArticle(userId, title, content, results.filterIsInstance<String>())
+                uploadArticle(userId, title, content, successResult)
             }
         }
     }
@@ -129,16 +129,12 @@ class AddArticleActivity : AppCompatActivity() {
         hideProgress()
         finish()
     }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_CODE ->
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startContentProvider()
+                    startGalleryScreen()
                 } else {
                     Toast.makeText(this, "권한을 거부하셨습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -182,7 +178,7 @@ class AddArticleActivity : AppCompatActivity() {
         when (requestCode) {
             GALLERY_REQUEST_CODE -> {
                 data?.let{ intent ->
-                    val uriList = intent.getParcelableArrayListExtra<Uri>(URI_LIST_KEY)
+                    val uriList = intent.getParcelableArrayListExtra<Uri>("uriList")
                     uriList?.let{ list ->
                         imageUriList.addAll(list)
                         photoListAdapter.setPhotoList(imageUriList)
@@ -192,7 +188,7 @@ class AddArticleActivity : AppCompatActivity() {
             }
             CAMERA_REQUEST_CODE -> {
                 data?.let{ intent ->
-                    val uriList = intent.getParcelableArrayListExtra<Uri>(URI_LIST_KEY)
+                    val uriList = intent.getParcelableArrayListExtra<Uri>("uriList")
                     uriList?.let{ list ->
                         imageUriList.addAll(list)
                         photoListAdapter.setPhotoList(imageUriList)
@@ -277,6 +273,7 @@ class AddArticleActivity : AppCompatActivity() {
     }
     private fun uploadError(){
         Toast.makeText(this,"사진 업로드에 실패했습니다.",Toast.LENGTH_SHORT).show()
+        hideProgress()
     }
     private fun removePhoto(uri: Uri){
         imageUriList.remove(uri)
