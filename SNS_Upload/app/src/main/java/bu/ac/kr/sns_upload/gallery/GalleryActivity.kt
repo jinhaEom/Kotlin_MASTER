@@ -18,7 +18,9 @@ class GalleryActivity : AppCompatActivity() {
         private const val URI_LIST_KEY = "uriList"
     }
     private val viewModel by viewModels<GalleryViewModel>()
+
     private lateinit var binding: ActivityGalleryBinding
+
     private val adapter = GalleryPhotoListAdapter{
         viewModel.selectPhoto(it)
     }
