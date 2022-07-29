@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "56056389059",
+    "project_id": "subway-2a69c",
+    "storage_bucket": "subway-2a69c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56056389059:android:82920a31d14c1c3a9a3176",
+        "android_client_info": {
+          "package_name": "bu.ac.kr.subway_arriveinfo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56056389059-j1lafbrvge7uoi01d6q3nckg57bsdu7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6moiGIkznfjNaIOccbj5tXYvd_Da7ZME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56056389059-j1lafbrvge7uoi01d6q3nckg57bsdu7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
