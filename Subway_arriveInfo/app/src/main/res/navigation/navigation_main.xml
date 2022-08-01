@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/stations_dest"
-        android:name="bu.ac.kr.subway_arriveinfo.stations.StationsFragment"
+        android:name="bu.ac.kr.subway_arriveinfo.stationarrivals.stations.StationsFragment"
         tools:layout="@layout/fragment_stations">
 
         <action

@@ -6,6 +6,8 @@ import bu.ac.kr.subway_arriveinfo.data.api.StationStorageApi
 import bu.ac.kr.subway_arriveinfo.data.db.entity.AppDatabase
 import bu.ac.kr.subway_arriveinfo.preferences.PreferenceManager
 import bu.ac.kr.subway_arriveinfo.preferences.SharedPreferenceManager
+import bu.ac.kr.subway_arriveinfo.repository.StationRepository
+import bu.ac.kr.subway_arriveinfo.repository.StationRepositoryImpl
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
@@ -28,5 +30,8 @@ val appModule = module{
 
     //API
     single<StationApi>{ StationStorageApi(Firebase.storage)}
+
+    //Repository
+    single<StationRepository> { StationRepositoryImpl(get(), get(), get(), get())}
 
 }
