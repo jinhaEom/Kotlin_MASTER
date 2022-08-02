@@ -8,6 +8,9 @@ import bu.ac.kr.subway_arriveinfo.preferences.PreferenceManager
 import bu.ac.kr.subway_arriveinfo.preferences.SharedPreferenceManager
 import bu.ac.kr.subway_arriveinfo.repository.StationRepository
 import bu.ac.kr.subway_arriveinfo.repository.StationRepositoryImpl
+import bu.ac.kr.subway_arriveinfo.stationarrivals.stations.StationsContract
+import bu.ac.kr.subway_arriveinfo.stationarrivals.stations.StationsFragment
+import bu.ac.kr.subway_arriveinfo.stationarrivals.stations.StationsPresenter
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
@@ -34,4 +37,7 @@ val appModule = module{
     //Repository
     single<StationRepository> { StationRepositoryImpl(get(), get(), get(), get())}
 
+    scope<StationsFragment> {
+        scoped<StationsContract.Presenter>{ StationsPresenter(getSource(), get()) }
+    }
 }

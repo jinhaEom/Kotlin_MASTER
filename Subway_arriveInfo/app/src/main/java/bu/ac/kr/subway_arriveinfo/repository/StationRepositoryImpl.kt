@@ -25,23 +25,14 @@ class StationRepositoryImpl(
             .map{ it.toStations()}
             .flowOn(dispatcher)
 
-    override suspend fun refreshStations() = withContext(dispatcher){
+    override suspend fun refreshStations()= withContext(dispatcher){
         val fileUpdatedTimeMillis = stationApi.getStationDataUpdatedTimeMillis()
-        val lastDatabaseUpdatedTimeMillis = preferenceManager.getLong(KEY_LAST_DATABASE_UPDATED_TIME_MILLIS)
+        val lastDatabaseUpdatedTimeMillis = preferenceManager.getLong(
+            KEY_LAST_DATABASE_UPDATED_TIME_MILLIS)
 
         if(lastDatabaseUpdatedTimeMillis == null || fileUpdatedTimeMillis > lastDatabaseUpdatedTimeMillis){
-            val stationSubways = stationApi.getStationSubways()
-            stationDao.insertStations(stationSubways.map{ it.first})
-            stationDao.insertSubways(stationSubways.map { it.second})
-            stationDao.insertCrossReferences(
-                stationSubways.map { (station,subway) ->
-                    StationsSubwayCrossRefEntity(
-                        station.stationName,
-                        subway.subwayId
-                    )
-                }
-            )
-            preferenceManager.putLong(KEY_LAST_DATABASE_UPDATED_TIME_MILLIS, fileUpdatedTimeMillis)
+            stationDao.insertStationSubways(stationApi.getStationSubways())
+            preferenceManager.putLong(KEY_LAST_DATABASE_UPDATED_TIME_MILLIS,fileUpdatedTimeMillis)
         }
     }
     companion object {
