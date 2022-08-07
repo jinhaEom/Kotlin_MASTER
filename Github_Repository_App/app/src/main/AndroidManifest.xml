@@ -26,7 +26,7 @@
 
                 <data
                     android:host="github-auth"
-                    android:scheme="Github_Repository_App" />
+                    android:scheme="git_repository_app" />
             </intent-filter>
         </activity>
     </application>
