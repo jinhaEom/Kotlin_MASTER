@@ -11,7 +11,8 @@ interface AuthApiService {
     @Headers("Accept: application/json")
     suspend fun getAccessToken(
         @Field("client_id") clientId: String,
-        @Field("client_secret") clientSecret : String,
-        @Field("code") code : String
-    ) : Response<GithubAccessTokenResponse>
+        @Field("client_secret") clientSecret: String,
+        @Field("code") code: String
+    ): Response<GithubAccessTokenResponse>
+
 }
