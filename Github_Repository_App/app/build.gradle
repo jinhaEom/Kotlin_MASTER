@@ -1,15 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "bu.ac.kr.github_repository_app"
         minSdk 29
-        targetSdk 32
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -60,5 +61,8 @@ dependencies {
 
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
+    implementation 'androidx.room:room-runtime:2.2.6'
+    kapt 'androidx.room:room-compiler:2.2.6'
+    implementation "androidx.room:room-ktx:2.2.6"
 
 }
