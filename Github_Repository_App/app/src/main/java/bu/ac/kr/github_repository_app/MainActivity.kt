@@ -2,6 +2,8 @@ package bu.ac.kr.github_repository_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import bu.ac.kr.github_repository_app.data.database.DataBaseProvider
 import bu.ac.kr.github_repository_app.data.entity.GithubOwner
 import bu.ac.kr.github_repository_app.data.entity.GithubRepoEntity
 import bu.ac.kr.github_repository_app.databinding.ActivityMainBinding
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
+    val repositoryDao by lazy{ DataBaseProvider.provideDB(applicationContext).repositoryDao()}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,7 +28,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setContentView(binding.root)
 
         launch{
-            val dataJob = addMockData()
+            addMockData()
+            val githubRepositories = loadGithubRepositories()
+            withContext(coroutineContext){
+                Log.e("repositories", githubRepositories.toString())
+            }
         }
 
     }
@@ -44,6 +52,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 stargazersCount = it
             )
         }
+        repositoryDao.insertAll(mockData)
+    }
+    private suspend fun loadGithubRepositories() = withContext(Dispatchers.IO){
+        val repositories = repositoryDao.getHistory()
+        return@withContext repositories
     }
 
 
