@@ -19,12 +19,10 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var binding: ActivitySignInBinding
 
-    private val authTokenProvider by lazy{ AuthTokenProvider(this)}
-
-    val job : Job = Job()
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+        get() = Dispatchers.Main + Job()
 
+    private val authTokenProvider by lazy { AuthTokenProvider(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +34,11 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
             launchMainActivity()
         }else {
             initViews()
-
         }
-
-
     }
 
-    private fun launchMainActivity()  {
-        startActivity(Intent(this,MainActivity::class.java).apply{
+    private fun launchMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
@@ -57,7 +52,6 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
-    //todo https:///github.com/login/oiauth/authorize?cliend_id=asdfasdf
     private fun loginGithub() {
         val loginUri = Uri.Builder().scheme("https").authority("github.com")
             .appendPath("login")
@@ -70,14 +64,13 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
             it.launchUrl(this, loginUri)
         }
     }
-
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
         intent?.data?.getQueryParameter("code")?.let {
             launch(coroutineContext){
                 showProgress()
-                val getAccessTokenJob = getAccessToken(it)
+                getAccessToken(it)
                 dismissProgress()
             }
         }
@@ -104,7 +97,7 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
         )
         if (response.isSuccessful) {
             val accessToken = response.body()?.accessToken ?: ""
-            Log.e("accessToken", accessToken)
+            Log.d("accessToken", accessToken)
             if(accessToken.isNotEmpty()){
                 authTokenProvider.updateToken(accessToken)
             }else{

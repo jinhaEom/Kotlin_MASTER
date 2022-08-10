@@ -15,9 +15,9 @@ interface RepositoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(repoList: List<GithubRepoEntity>)
 
-    @Query("SELECT * FROM GithubRepository")
+    @Query("SELECT * FROM githubrepository")
     suspend fun getHistory() : List<GithubRepoEntity>
 
-    @Query("DELETE FROM githubRepository")
+    @Query("DELETE FROM githubrepository")
     suspend fun clearAll()
 }

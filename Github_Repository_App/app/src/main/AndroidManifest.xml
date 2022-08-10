@@ -29,12 +29,10 @@
 
                 <data
                     android:host="github-auth"
-                    android:scheme="git_repository_app" />
+                    android:scheme="git-repository-app" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
