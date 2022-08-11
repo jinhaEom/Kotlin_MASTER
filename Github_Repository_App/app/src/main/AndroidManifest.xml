@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Github_Repository_App">
-
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
         <activity
             android:name=".SignInActivity"
             android:exported="true"
