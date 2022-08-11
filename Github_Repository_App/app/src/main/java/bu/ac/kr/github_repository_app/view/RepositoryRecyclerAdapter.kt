@@ -2,8 +2,11 @@ package bu.ac.kr.github_repository_app.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import bu.ac.kr.github_repository_app.data.entity.GithubRepoEntity
+import bu.ac.kr.github_repository_app.databinding.ViewholderRepositoryItemBinding
+import bu.ac.kr.github_repository_app.extensions.loadCenterInside
 
 class RepositoryRecyclerAdapter : RecyclerView.Adapter<RepositoryRecyclerAdapter.RepositoryItemViewHolder>() {
 
