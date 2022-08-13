@@ -3,7 +3,6 @@ package bu.ac.kr.github_repository_app.data.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
 @Entity(tableName = "GithubRepository")
 data class GithubRepoEntity(
     val name: String,

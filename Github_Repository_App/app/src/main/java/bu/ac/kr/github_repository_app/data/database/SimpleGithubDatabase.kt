@@ -9,4 +9,8 @@ import bu.ac.kr.github_repository_app.data.entity.GithubRepoEntity
 abstract class SimpleGithubDatabase : RoomDatabase() {
 
     abstract fun repositoryDao() : RepositoryDao
+
 }
+
+
+

@@ -1,5 +1,6 @@
 package bu.ac.kr.github_repository_app
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,16 +16,13 @@ import kotlin.coroutines.CoroutineContext
 
 class SearchActivity : AppCompatActivity(), CoroutineScope {
 
-    private val job = Job()
+    private lateinit var binding: ActivitySearchBinding
+    private lateinit var adapter: RepositoryRecyclerAdapter
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
-    private lateinit var binding : ActivitySearchBinding
-    private lateinit var adapter : RepositoryRecyclerAdapter
+        get() = Dispatchers.Main + Job()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -32,39 +30,55 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
         initAdapter()
         initViews()
         bindViews()
-
     }
+
     private fun initAdapter() {
         adapter = RepositoryRecyclerAdapter()
-
     }
-    private fun initViews() = with(binding){
+
+    private fun initViews() = with(binding) {
         emptyResultTextView.isGone = true
         recyclerView.adapter = adapter
-
     }
 
-    private fun bindViews() = with(binding){
-        searchButton.setOnClickListener{
+    private fun bindViews() = with(binding) {
+        searchButton.setOnClickListener {
             searchKeyword(searchBarInputView.text.toString())
         }
-
     }
-    private fun searchKeyword(keywordString : String) = launch{
-        withContext(Dispatchers.IO) {
-           val response = RetrofitUtil.githubApiService.searchRepositories(keywordString)
-            if(response.isSuccessful){
-                val body = response.body()
-                withContext(Dispatchers.Main){
-                    Log.e("response", body.toString())
-                    setData(it.items)
+
+    private fun searchKeyword(keywordString: String) {
+        showLoading(true)
+        launch(coroutineContext) {
+            try {
+                withContext(Dispatchers.IO) {
+                    val response = RetrofitUtil.githubApiService.searchRepositories(
+                        query = keywordString
+                    )
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        withContext(Dispatchers.Main) {
+                            body?.let { searchResponse ->
+                                setData(searchResponse.items)
+                            }
+                        }
+                    }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@SearchActivity, "검색하는 과정에서 에러가 발생했습니다. : ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
     private fun setData(items: List<GithubRepoEntity>){
-        adapter.setRepositoryList(items){
-            Toast.makeText(this, "entity: $it", Toast.LENGTH_SHORT).show()
+        adapter.setSearchResultList(items){
+            Toast.makeText(this, "entity : $it", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun showLoading(isShown: Boolean) = with(binding) {
+        progressBar.isGone = isShown.not()
+    }
+
 }

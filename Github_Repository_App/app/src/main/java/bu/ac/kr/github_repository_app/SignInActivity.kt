@@ -26,14 +26,19 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if(checkAuthCodeExist()){
+        if (checkAuthCodeExist()) {
             launchMainActivity()
-        }else {
+        } else {
             initViews()
+        }
+    }
+
+    private fun initViews() = with(binding) {
+        loginButton.setOnClickListener {
+            loginGithub()
         }
     }
 
@@ -43,14 +48,8 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
     }
-    private fun checkAuthCodeExist() : Boolean = authTokenProvider.token.isNullOrEmpty().not()
 
-
-    private fun initViews() = with(binding) {
-        loginButton.setOnClickListener {
-            loginGithub()
-        }
-    }
+    private fun checkAuthCodeExist() = authTokenProvider.token.isNullOrEmpty().not()
 
     private fun loginGithub() {
         val loginUri = Uri.Builder().scheme("https").authority("github.com")
@@ -64,45 +63,64 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
             it.launchUrl(this, loginUri)
         }
     }
-    override fun onNewIntent(intent: Intent?) {
+
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
 
-        intent?.data?.getQueryParameter("code")?.let {
-            launch(coroutineContext){
+        intent.data?.getQueryParameter("code")?.let { code ->
+            GlobalScope.launch {
                 showProgress()
-                getAccessToken(it)
+                val progressJob = getAccessToken(code)
+                progressJob.join()
                 dismissProgress()
+                if (checkAuthCodeExist()) {
+                    launchMainActivity()
+                }
+            }
+        }
+
+    }
+
+    private suspend fun showProgress() = GlobalScope.launch {
+        withContext(Dispatchers.Main) {
+            with(binding) {
+                loginButton.isGone = true
+                progressBar.isGone = false
+                progressTextView.isGone = false
             }
         }
     }
-    private suspend fun showProgress() = withContext(coroutineContext){
-        with(binding){
-            loginButton.isGone = true
-            progressBar.isGone = false
-            progressTextView.isGone = false
+
+    private fun getAccessToken(code: String) = launch(coroutineContext) {
+        try {
+            withContext(Dispatchers.IO) {
+                val response = RetrofitUtil.authApiService.getAccessToken(
+                    clientId = BuildConfig.GITHUB_CLIENT_ID,
+                    clientSecret = BuildConfig.GITHUB_CLIENT_SECRET,
+                    code = code
+                )
+                val accessToken = response.accessToken
+                Log.e("accessToken", accessToken)
+                if (accessToken.isNotEmpty()) {
+                    withContext(coroutineContext) {
+                        authTokenProvider.updateToken(accessToken)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this@SignInActivity, "로그인 과정에서 에러가 발생했습니다. : ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
-    private suspend fun dismissProgress() = withContext(coroutineContext){
-        with(binding){
-            loginButton.isGone = false
-            progressBar.isGone = true
-            progressTextView.isGone = true
-        }
-    }
-    private suspend fun getAccessToken(code : String) = withContext(Dispatchers.IO) {
-        val response = RetrofitUtil.authApiService.getAccessToken(
-            clientId = BuildConfig.GITHUB_CLIENT_ID,
-            clientSecret = BuildConfig.GITHUB_CLIENT_SECRET,
-            code = code
-        )
-        if (response.isSuccessful) {
-            val accessToken = response.body()?.accessToken ?: ""
-            Log.d("accessToken", accessToken)
-            if(accessToken.isNotEmpty()){
-                authTokenProvider.updateToken(accessToken)
-            }else{
-                Toast.makeText(this@SignInActivity,"access 토큰이 존재하지 않습니다", Toast.LENGTH_SHORT).show()
+
+    private fun dismissProgress() = GlobalScope.launch {
+        withContext(Dispatchers.Main) {
+            with(binding) {
+                loginButton.isGone = false
+                progressBar.isGone = true
+                progressTextView.isGone = true
             }
         }
     }
+
 }

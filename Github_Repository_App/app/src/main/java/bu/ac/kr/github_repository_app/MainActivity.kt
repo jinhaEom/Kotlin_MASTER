@@ -14,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity(), CoroutineScope {
 
-    val job = Job()
+    private val job = Job()
     private lateinit var binding : ActivityMainBinding
 
     override val coroutineContext: CoroutineContext
@@ -42,7 +42,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private fun initViews() = with(binding){
         searchButton.setOnClickListener{
-            Intent(this@MainActivity,SearchActivity::class.java)
+            startActivity(
+                Intent(this@MainActivity,SearchActivity::class.java)
+            )
         }
 
     }
