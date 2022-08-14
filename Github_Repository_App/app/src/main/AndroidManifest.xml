@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Github_Repository_App">
         <activity
+            android:name=".RepositoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchActivity"
             android:exported="false" />
         <activity

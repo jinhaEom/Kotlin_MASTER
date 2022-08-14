@@ -74,6 +74,13 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
     private fun setData(items: List<GithubRepoEntity>){
         adapter.setSearchResultList(items){
             Toast.makeText(this, "entity : $it", Toast.LENGTH_SHORT).show()
+            startActivity(
+                Intent(this, RepositoryActivity::class.java).apply{
+                    putExtra(RepositoryActivity.REPOSITORY_OWNER_KEY, it.owner.login)
+                    putExtra(RepositoryActivity.REPOSITORY_NAME_KEY, it.name)
+
+                }
+            )
         }
     }
 
