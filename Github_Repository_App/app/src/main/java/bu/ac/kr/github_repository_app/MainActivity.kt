@@ -21,8 +21,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-
-    private val repositoryDao by lazy{ DataBaseProvider.provideDB(applicationContext).repositoryDao()}
+    private val repositoryDao by lazy {
+        DataBaseProvider.provideDB(applicationContext).repositoryDao()
+    }
 
     private lateinit var adapter: RepositoryRecyclerAdapter
 
