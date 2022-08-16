@@ -37,6 +37,7 @@ class RepositoryActivity : AppCompatActivity(), CoroutineScope {
         binding = ActivityRepositoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val repositoryOwner = intent.getStringExtra(REPOSITORY_OWNER_KEY) ?: kotlin.run {
             toast("Repository Owner 이름이 없습니다.")
             finish()
@@ -83,7 +84,7 @@ class RepositoryActivity : AppCompatActivity(), CoroutineScope {
         }
 
     private fun setData(githubRepoEntity: GithubRepoEntity) = with(binding) {
-        showLoading(false)
+        showLoading(isShown = false)
         ownerProfileImageView.loadCenterInside(githubRepoEntity.owner.avatarUrl, 42f)
         ownerNameAndRepoNameTextView.text =
             "${githubRepoEntity.owner.login}/ ${githubRepoEntity.name}"

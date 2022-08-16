@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.view.isEmpty
 import androidx.core.view.isGone
+import androidx.core.view.isNotEmpty
 import bu.ac.kr.github_repository_app.data.database.DataBaseProvider
 import bu.ac.kr.github_repository_app.data.entity.GithubOwner
 import bu.ac.kr.github_repository_app.data.entity.GithubRepoEntity
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private fun initViews() = with(binding) {
         emptyResultTextView.isGone = true
         recyclerView.adapter = adapter
+
         searchButton.setOnClickListener {
             startActivity(
                 Intent(this@MainActivity, SearchActivity::class.java)
