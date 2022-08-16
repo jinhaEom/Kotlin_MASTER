@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.view.isGone
 import bu.ac.kr.github_repository_app.data.database.DataBaseProvider
 import bu.ac.kr.github_repository_app.data.entity.GithubOwner
 import bu.ac.kr.github_repository_app.data.entity.GithubRepoEntity
 import bu.ac.kr.github_repository_app.databinding.ActivityMainBinding
+import bu.ac.kr.github_repository_app.view.RepositoryRecyclerAdapter
 import kotlinx.coroutines.*
 import java.util.*
 import kotlin.coroutines.CoroutineContext
@@ -22,53 +24,61 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private val repositoryDao by lazy{ DataBaseProvider.provideDB(applicationContext).repositoryDao()}
 
+    private lateinit var adapter: RepositoryRecyclerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initAdapter()
         initViews()
 
-        launch{
-            addMockData()
-            val githubRepositories = loadGithubRepositories()
-            withContext(coroutineContext){
-                Log.e("repositories", githubRepositories.toString())
+
+    }
+    private fun initAdapter(){
+        adapter = RepositoryRecyclerAdapter()
+
+    }
+
+    private fun initViews() = with(binding) {
+        emptyResultTextView.isGone = true
+        recyclerView.adapter = adapter
+        searchButton.setOnClickListener {
+            startActivity(
+                Intent(this@MainActivity, SearchActivity::class.java)
+            )
+        }
+    }
+    override fun onResume(){
+        super.onResume()
+        launch(coroutineContext){
+            loadLikedRepositoryList()
+        }
+    }
+    private suspend fun loadLikedRepositoryList() = withContext(Dispatchers.IO){
+        val repoList = repositoryDao.getHistory()
+        withContext(Dispatchers.Main){
+            setData(repoList)
+        }
+    }
+    private fun setData(githubRepoList: List<GithubRepoEntity>) = with(binding) {
+        if (githubRepoList.isEmpty()) {
+            emptyResultTextView.isGone = false
+            recyclerView.isGone = true
+        } else {
+            emptyResultTextView.isGone = true
+            recyclerView.isGone = false
+            adapter.setSearchResultList(githubRepoList) {
+                startActivity(
+                    Intent(this@MainActivity, RepositoryActivity::class.java).apply {
+                        putExtra(RepositoryActivity.REPOSITORY_OWNER_KEY, it.owner.login)
+                        putExtra(RepositoryActivity.REPOSITORY_NAME_KEY, it.name)
+                    }
+                )
             }
         }
-
     }
-
-    private fun initViews() = with(binding){
-        searchButton.setOnClickListener{
-            startActivity(
-                Intent(this@MainActivity,SearchActivity::class.java)
-            )
-        }
-
-    }
-    private suspend fun addMockData() = withContext(Dispatchers.IO) {
-        val mockData = (0 until 9).map {
-            GithubRepoEntity(
-                name = "repo $it",
-                fullName = "name $it",
-                owner = GithubOwner(
-                    "login",
-                    "avatarUrl"
-                ),
-                description = null,
-                language = null,
-                updatedAt = Date().toString(),
-                stargazersCount = it
-            )
-        }
-        repositoryDao.insertAll(mockData)
-    }
-    private suspend fun loadGithubRepositories() = withContext(Dispatchers.IO){
-        val repositories = repositoryDao.getHistory()
-        return@withContext repositories
-    }
-
 
 }
