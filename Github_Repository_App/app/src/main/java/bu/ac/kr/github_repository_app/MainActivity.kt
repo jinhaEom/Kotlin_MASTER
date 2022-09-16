@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private fun initViews() = with(binding) {
         emptyResultTextView.isGone = true
-        recyclerView.adapter = adapter
+        MainRecyclerView.adapter = adapter
 
         searchButton.setOnClickListener {
             startActivity(
@@ -70,10 +70,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private fun setData(githubRepoList: List<GithubRepoEntity>) = with(binding) {
         if (githubRepoList.isEmpty()) {
             emptyResultTextView.isGone = false
-            recyclerView.isGone = true
+            MainRecyclerView.isGone = true
         } else {
             emptyResultTextView.isGone = true
-            recyclerView.isGone = false
+            MainRecyclerView.isGone = false
             adapter.setSearchResultList(githubRepoList) {
                 startActivity(
                     Intent(this@MainActivity, RepositoryActivity::class.java).apply {

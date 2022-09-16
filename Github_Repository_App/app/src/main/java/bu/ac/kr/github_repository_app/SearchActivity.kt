@@ -38,7 +38,7 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
 
     private fun initViews() = with(binding) {
         emptyResultTextView.isGone = true
-        recyclerView.adapter = adapter
+        MainRecyclerView.adapter = adapter
     }
 
     private fun bindViews() = with(binding) {
@@ -75,7 +75,9 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
         adapter.setSearchResultList(items){
 /*
             Toast.makeText(this, "entity : $it", Toast.LENGTH_SHORT).show()
+
 */
+
             startActivity(
                 Intent(this, RepositoryActivity::class.java).apply{
                     putExtra(RepositoryActivity.REPOSITORY_OWNER_KEY, it.owner.login)
