@@ -1,7 +1,10 @@
 package bu.ac.kr.delivery_service.di
 
+import bu.ac.kr.delivery_service.api.SweetTrackerApi
 import bu.ac.kr.delivery_service.api.Url
 import bu.ac.kr.delivery_service.db.AppDatabase
+import bu.ac.kr.delivery_service.repository.TrackingItemRepository
+import bu.ac.kr.delivery_service.repository.TrackingItemRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,5 +36,12 @@ val appModule = module {
             )
             .build()
     }
-   
+    single<SweetTrackerApi>{
+        Retrofit.Builder().baseUrl(Url.SWEET_TRACKER_API_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+            .create()
+    }
+    single<TrackingItemRepository> { TrackingItemRepositoryImpl(get(), get(), get()) }
 }

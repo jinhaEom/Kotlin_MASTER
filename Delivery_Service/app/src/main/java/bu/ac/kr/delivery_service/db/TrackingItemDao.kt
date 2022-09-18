@@ -11,9 +11,9 @@ import bu.ac.kr.delivery_service.entity.TrackingItem
 interface TrackingItemDao {
 
     @Query("SELECT * FROM TrackingItem")
-    suspend fun getAll() : List<TrackingItem>
+    suspend fun getAll(): List<TrackingItem>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(item : TrackingItem)
+    suspend fun insert(item: TrackingItem)
 
 }

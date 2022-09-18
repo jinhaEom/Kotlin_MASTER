@@ -15,6 +15,7 @@ import bu.ac.kr.delivery_service.entity.TrackingItem
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun trackingItemDao() : TrackingItemDao
+
     companion object{
         private const val DATABASE_NAME = "tracking.db"
 

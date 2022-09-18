@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 31
 
     defaultConfig {
         applicationId "bu.ac.kr.delivery_service"
         minSdk 29
-        targetSdk 33
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
