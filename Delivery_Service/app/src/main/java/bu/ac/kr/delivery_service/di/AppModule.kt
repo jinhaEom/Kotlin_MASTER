@@ -1,8 +1,13 @@
 package bu.ac.kr.delivery_service.di
 
+import android.app.Presentation
+import androidx.core.view.MotionEventCompat.getSource
 import bu.ac.kr.delivery_service.api.SweetTrackerApi
 import bu.ac.kr.delivery_service.api.Url
 import bu.ac.kr.delivery_service.db.AppDatabase
+import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsContract
+import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsFragment
+import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsPresenter
 import bu.ac.kr.delivery_service.repository.TrackingItemRepository
 import bu.ac.kr.delivery_service.repository.TrackingItemRepositoryImpl
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidApplication
+import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -43,5 +49,11 @@ val appModule = module {
             .build()
             .create()
     }
-    single<TrackingItemRepository> { TrackingItemRepositoryImpl(get(), get(), get()) }
+    single<TrackingItemRepository> { TrackingItemRepositoryStub() }
+
+        //Presentation
+
+    scope<TrackingItemsFragment> {
+        scoped<TrackingItemsContract.Presenter> { TrackingItemsPresenter(getSource(), get()) }
+    }
 }
