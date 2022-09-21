@@ -5,5 +5,5 @@ import bu.ac.kr.delivery_service.entity.TrackingItem
 
 interface TrackingItemRepository {
 
-    suspend fun getTrackingItemInformation() : List<Pair<TrackingItem, TrackingInformation>>
+    suspend fun getTrackingItemInformation(): List<Pair<TrackingItem, TrackingInformation>>
 }

@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import bu.ac.kr.delivery_service.databinding.FragmentTrackingItemsBinding
 import bu.ac.kr.delivery_service.entity.TrackingInformation
 import bu.ac.kr.delivery_service.entity.TrackingItem
+import bu.ac.kr.delivery_service.extension.toGone
+import bu.ac.kr.delivery_service.extension.toInvisible
+import bu.ac.kr.delivery_service.extension.toVisible
 import org.koin.android.scope.ScopeFragment
 
 class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
@@ -30,7 +33,7 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
         presenter.onViewCreated()
     }
 
-   /* override fun onDestroyView() {
+    override fun onDestroyView() {
         super.onDestroyView()
         presenter.onDestroyView()
     }
@@ -50,6 +53,6 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
     }
 
     override fun showTrackingItemInformation(trackingItemInformation: List<Pair<TrackingItem, TrackingInformation>>) {
-    }*/
+    }
 
 }
