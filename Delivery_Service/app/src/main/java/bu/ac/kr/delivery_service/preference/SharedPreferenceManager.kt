@@ -1,0 +1,25 @@
+package bu.ac.kr.delivery_service.preference
+
+import android.content.SharedPreferences
+import androidx.core.content.edit
+
+class SharedPreferenceManager(
+    private val sharedPreferenceManager: SharedPreferences
+) : PreferenceManager {
+
+    override fun getLong(key: String): Long? {
+        val value = sharedPreferenceManager.getLong(key , INVALID_LONG_VALUE)
+
+        return if(value == INVALID_LONG_VALUE){
+            null
+        }else {
+            value
+        }
+    }
+    override fun putLong(key: String, value : Long)=
+        sharedPreferenceManager.edit { putLong(key,value) }
+
+    companion object{
+        private const val INVALID_LONG_VALUE = Long.MIN_VALUE
+    }
+}

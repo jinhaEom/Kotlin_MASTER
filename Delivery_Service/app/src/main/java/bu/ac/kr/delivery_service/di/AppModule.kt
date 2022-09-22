@@ -8,9 +8,7 @@ import bu.ac.kr.delivery_service.db.AppDatabase
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsContract
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsFragment
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsPresenter
-import bu.ac.kr.delivery_service.repository.TrackingItemRepository
-import bu.ac.kr.delivery_service.repository.TrackingItemRepositoryImpl
-import bu.ac.kr.delivery_service.repository.TrackingItemRepositoryStub
+import bu.ac.kr.delivery_service.repository.*
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -50,8 +48,8 @@ val appModule = module {
             .build()
             .create()
     }
-    single<TrackingItemRepository> { TrackingItemRepositoryStub() }
-
+    single<TrackingItemRepository> { TrackingItemRepositoryImpl(get(), get(), get()) }
+    single<ShippingCompanyRepository> { ShippingCompanyRepositoryImpl(get(), get(), get(), get()) }
         //Presentation
 
     scope<TrackingItemsFragment> {
