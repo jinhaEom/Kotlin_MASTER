@@ -2,6 +2,7 @@ package bu.ac.kr.delivery_service.repository
 
 import android.preference.PreferenceManager
 import bu.ac.kr.delivery_service.api.SweetTrackerApi
+import bu.ac.kr.delivery_service.db.ShippingCompanyDao
 import bu.ac.kr.delivery_service.entity.ShippingCompany
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
