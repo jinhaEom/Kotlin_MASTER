@@ -3,6 +3,7 @@ package bu.ac.kr.delivery_service.presentation.trackingitems
 import bu.ac.kr.delivery_service.entity.TrackingInformation
 import bu.ac.kr.delivery_service.entity.TrackingItem
 import bu.ac.kr.delivery_service.repository.TrackingItemRepository
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class TrackingItemsPresenter(
@@ -12,6 +13,13 @@ class TrackingItemsPresenter(
 
     override var trackingItemInformation : List<Pair<TrackingItem, TrackingInformation>> = emptyList()
 
+    init {
+        scope.launch{
+            trackingItemRepository
+                .trackingItems
+                .collect { refresh() }
+        }
+    }
     override fun onViewCreated() {
         fetchTrackingInformation()
     }
