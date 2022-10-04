@@ -32,6 +32,8 @@ class AddTrackingItemsContract{
 
         fun fetchShippingCompanies()  //택배사 목록
 
+        fun fetchRecommendShippingCompany()
+
         fun changeSelectedShippingCompany(companyName: String)  //선택한 택배사 변경
 
         fun changeShippingInvoice(invoice : String) //운송장
