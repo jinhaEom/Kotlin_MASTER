@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import bu.ac.kr.delivery_service.databinding.FragmentAddTrackingItemBinding
+import bu.ac.kr.delivery_service.entity.ShippingCompany
 import org.koin.android.scope.ScopeFragment
 
 class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
+
+
     override val presenter: AddTrackingItemsContract.Presenter by inject()
 
     private var binding: FragmentAddTrackingItemBinding? = null
@@ -19,4 +22,6 @@ class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
     ): View = FragmentAddTrackingItemBinding.inflate(inflater)
         .also { binding = it }
         .root
+
+
 }
