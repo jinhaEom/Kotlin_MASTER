@@ -21,20 +21,18 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
 
     override val presenter: TrackingItemsContract.Presenter by inject()
 
-    private var binding : FragmentTrackingItemsBinding? = null
+    private var binding: FragmentTrackingItemsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = FragmentTrackingItemsBinding.inflate(inflater)
-        .also{ binding = it}
+        .also { binding = it }
         .root
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
         bindView()
         presenter.onViewCreated()
@@ -45,13 +43,18 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
         presenter.onDestroyView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     override fun showLoadingIndicator() {
         binding?.progressBar?.toVisible()
     }
 
     override fun hideLoadingIndicator() {
         binding?.progressBar?.toGone()
-
+        binding?.refreshLayout?.isRefreshing = false
     }
 
     override fun showNoDataDescription() {
@@ -67,8 +70,9 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
             notifyDataSetChanged()
         }
     }
-    private fun initViews(){  //View 초기화
-        binding?.recyclerView?.apply{
+
+    private fun initViews() {
+        binding?.recyclerView?.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = TrackingItemsAdapter()
         }
@@ -78,10 +82,10 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
             presenter.refresh()
         }
         binding?.addTrackingItemButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_tracking_items_dest_to_add_tracking_item_dest2)
+            findNavController().navigate(R.id.action_tracking_items_dest_to_add_tracking_item_dest)
         }
         binding?.addTrackingItemFloatingActionButton?.setOnClickListener { _ ->
-            findNavController().navigate(R.id.action_tracking_items_dest_to_add_tracking_item_dest2)
+            findNavController().navigate(R.id.action_tracking_items_dest_to_add_tracking_item_dest)
         }
     }
 

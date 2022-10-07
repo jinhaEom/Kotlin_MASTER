@@ -5,6 +5,9 @@ import androidx.core.view.MotionEventCompat.getSource
 import bu.ac.kr.delivery_service.api.SweetTrackerApi
 import bu.ac.kr.delivery_service.api.Url
 import bu.ac.kr.delivery_service.db.AppDatabase
+import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemFragment
+import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemPresenter
+import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemsContract
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsContract
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsFragment
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsPresenter
@@ -25,23 +28,25 @@ val appModule = module {
 
     // Database
     single { AppDatabase.build(androidApplication()) }
-    single { get<AppDatabase>().trackingItemDao()}
+    single { get<AppDatabase>().trackingItemDao() }
+    single { get<AppDatabase>().shippingCompanyDao() }
 
     //Api
     single {
         OkHttpClient()
-            .newBuilder().addInterceptor(
-                HttpLoggingInterceptor().apply{
-                    level = if(BuildConfig.DEBUG){
+            .newBuilder()
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = if (BuildConfig.DEBUG) {
                         HttpLoggingInterceptor.Level.BODY
-                    }else {
+                    } else {
                         HttpLoggingInterceptor.Level.NONE
                     }
                 }
             )
             .build()
     }
-    single<SweetTrackerApi>{
+    single<SweetTrackerApi> {
         Retrofit.Builder().baseUrl(Url.SWEET_TRACKER_API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
@@ -54,5 +59,10 @@ val appModule = module {
 
     scope<TrackingItemsFragment> {
         scoped<TrackingItemsContract.Presenter> { TrackingItemsPresenter(getSource(), get()) }
+    }
+    scope<AddTrackingItemFragment> {
+        scoped<AddTrackingItemsContract.Presenter> {
+            AddTrackingItemPresenter(getSource(), get(), get())
+        }
     }
 }

@@ -4,22 +4,23 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 
 class SharedPreferenceManager(
-    private val sharedPreferenceManager: SharedPreferences
+    private val sharedPreferences: SharedPreferences
 ) : PreferenceManager {
 
     override fun getLong(key: String): Long? {
-        val value = sharedPreferenceManager.getLong(key , INVALID_LONG_VALUE)
+        val value = sharedPreferences.getLong(key, INVALID_LONG_VALUE)
 
-        return if(value == INVALID_LONG_VALUE){
+        return if (value == INVALID_LONG_VALUE) {
             null
-        }else {
+        } else {
             value
         }
     }
-    override fun putLong(key: String, value : Long)=
-        sharedPreferenceManager.edit { putLong(key,value) }
 
-    companion object{
+    override fun putLong(key: String, value: Long) =
+        sharedPreferences.edit { putLong(key, value) }
+
+    companion object {
         private const val INVALID_LONG_VALUE = Long.MIN_VALUE
     }
 }

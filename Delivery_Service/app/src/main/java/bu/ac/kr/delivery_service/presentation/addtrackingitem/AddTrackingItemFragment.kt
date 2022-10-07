@@ -1,10 +1,13 @@
 package bu.ac.kr.delivery_service.presentation.addtrackingitem
 
 import android.app.Activity
-import android.app.AlertDialog
+import bu.ac.kr.delivery_service.databinding.FragmentAddTrackingItemBinding
+import bu.ac.kr.delivery_service.entity.ShippingCompany
+import bu.ac.kr.delivery_service.extension.toGone
+import bu.ac.kr.delivery_service.extension.toVisible
+import org.koin.android.scope.ScopeFragment
 import android.content.ClipDescription
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +16,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
-import bu.ac.kr.delivery_service.databinding.FragmentAddTrackingItemBinding
-import bu.ac.kr.delivery_service.entity.ShippingCompany
-import bu.ac.kr.delivery_service.extension.toGone
-import bu.ac.kr.delivery_service.extension.toVisible
 import com.google.android.material.chip.Chip
-import org.koin.android.scope.ScopeFragment
 
 class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
-
 
     override val presenter: AddTrackingItemsContract.Presenter by inject()
 
@@ -30,7 +27,7 @@ class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View = FragmentAddTrackingItemBinding.inflate(inflater)
         .also { binding = it }
         .root
@@ -76,9 +73,9 @@ class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
     }
 
     override fun showCompanies(companies: List<ShippingCompany>) {
-        companies.forEach{ company ->
+        companies.forEach { company ->
             binding?.chipGroup?.addView(
-                Chip(context).apply{
+                Chip(context).apply {
                     text = company.name
                 }
             )
@@ -111,21 +108,6 @@ class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
             presenter.saveTrackingItem()
         }
     }
-    private fun changeInvoiceIfAvailable() {
-        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val invoice = clipboard.plainTextClip()
-        if (!invoice.isNullOrBlank()) {
-            AlertDialog.Builder(requireActivity())
-                .setTitle("클립 보드에 있는 $invoice 를 운송장 번호로 추가하시겠습니까?")
-                .setPositiveButton("추가할래요") { _, _ ->
-                    binding?.invoiceEditText?.setText(invoice)
-                    presenter.fetchRecommendShippingCompany()
-                }
-                .setNegativeButton("안할래요") { _, _ -> }
-                .create()
-                .show()
-        }
-    }
 
     private fun hideKeyboard() {
         val inputMethodManager = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -138,29 +120,4 @@ class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
         } else {
             null
         }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

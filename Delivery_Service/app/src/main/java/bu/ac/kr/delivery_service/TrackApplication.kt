@@ -8,7 +8,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-class TrackApplication : Application() {
+class TrackerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin{
@@ -19,7 +19,7 @@ class TrackApplication : Application() {
                     Level.NONE
                 }
             )
-            androidContext(this@TrackApplication)
+            androidContext(this@TrackerApplication)
             modules(appModule)
         }
     }

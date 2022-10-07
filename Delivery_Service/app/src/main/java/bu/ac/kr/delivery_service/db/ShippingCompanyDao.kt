@@ -10,7 +10,7 @@ import bu.ac.kr.delivery_service.entity.ShippingCompany
 interface ShippingCompanyDao {
 
     @Query("SELECT * FROM ShippingCompany")
-    suspend fun getAll() : List<ShippingCompany>
+    suspend fun getAll(): List<ShippingCompany>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: List<ShippingCompany>)

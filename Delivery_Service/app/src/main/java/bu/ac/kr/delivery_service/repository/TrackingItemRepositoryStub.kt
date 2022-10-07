@@ -1,10 +1,13 @@
 package bu.ac.kr.delivery_service.repository
 
 import bu.ac.kr.delivery_service.entity.*
+import kotlinx.coroutines.flow.Flow
 import kotlin.random.Random
 import kotlin.random.nextLong
 
 class TrackingItemRepositoryStub : TrackingItemRepository {
+    override val trackingItems: Flow<List<TrackingItem>>
+        get() = TODO("Not yet implemented")
 
     override suspend fun getTrackingItemInformation(): List<Pair<TrackingItem, TrackingInformation>> =
         (1_000_000..1_000_020)
@@ -33,5 +36,7 @@ class TrackingItemRepositoryStub : TrackingItemRepository {
                 )
             )
 
-    }
+    override suspend fun saveTrackingItem(trackingItem: TrackingItem) = Unit
+
+}
 

@@ -19,9 +19,9 @@ class TrackingItemsContract {
     }
 
     interface Presenter : BasePresenter {
-        var trackingItemInformation : List<Pair<TrackingItem, TrackingInformation>>
+
+        var trackingItemInformation: List<Pair<TrackingItem, TrackingInformation>>
 
         fun refresh()
     }
-
 }

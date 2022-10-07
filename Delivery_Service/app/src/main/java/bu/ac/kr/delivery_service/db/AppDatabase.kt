@@ -15,13 +15,14 @@ import bu.ac.kr.delivery_service.entity.TrackingItem
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun trackingItemDao() : TrackingItemDao
-    abstract fun shippingCompanyDao() : ShippingCompanyDao
+    abstract fun trackingItemDao(): TrackingItemDao
+    abstract fun shippingCompanyDao(): ShippingCompanyDao
 
-    companion object{
+    companion object {
+
         private const val DATABASE_NAME = "tracking.db"
 
-        fun build(context : Context) : AppDatabase =
-            Room.databaseBuilder(context , AppDatabase::class.java,DATABASE_NAME).build()
+        fun build(context: Context): AppDatabase =
+            Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
     }
 }

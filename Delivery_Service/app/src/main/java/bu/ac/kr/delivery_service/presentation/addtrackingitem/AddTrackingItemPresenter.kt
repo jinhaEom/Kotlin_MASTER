@@ -15,6 +15,7 @@ class AddTrackingItemPresenter(
 ) : AddTrackingItemsContract.Presenter{
 
     override val scope : CoroutineScope = MainScope()
+
     override var invoice : String? = null
     override var shippingCompanies : List<ShippingCompany>? = null
     override var selectedShippingCompany : ShippingCompany? = null
@@ -23,9 +24,8 @@ class AddTrackingItemPresenter(
         fetchShippingCompanies()
     }
 
-    override fun onDestroyView() {
+    override fun onDestroyView() {}
 
-    }
     override fun fetchShippingCompanies() {
         scope.launch{
             view.showShippingCompaniesLoadingIndicator()
@@ -38,6 +38,7 @@ class AddTrackingItemPresenter(
             view.hideShippingCompaniesLoadingIndicator()
         }
     }
+
     override fun changeSelectedShippingCompany(companyName : String){ //회사선택시
         selectedShippingCompany = shippingCompanies?.find { it.name == companyName }
         enabledSaveButtonIfAvailable()
@@ -58,7 +59,7 @@ class AddTrackingItemPresenter(
                 )
                 view.finish()
             }catch (exception : Exception){
-                view.showErrorToast(exception.message ?: "서비스에 문제가 생겨 운송장ㅇ르 추가하지 못했어요.")
+                view.showErrorToast(exception.message ?: "서비스에 문제가 생겨 운송장을 추가하지 못했어요.")
             }finally {
                 view.hideSaveTrackingItemIndicator()
             }

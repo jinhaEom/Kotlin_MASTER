@@ -7,8 +7,7 @@ import kotlinx.coroutines.cancel
 
 interface BasePresenter {
 
-    val scope : CoroutineScope
-    get() = MainScope()
+    val scope: CoroutineScope
 
     fun onViewCreated()
 
