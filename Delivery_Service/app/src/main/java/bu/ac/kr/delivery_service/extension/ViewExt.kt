@@ -15,4 +15,4 @@ fun View.toGone() {
     visibility = View.GONE
 }
 
-fun View.color(@ColorRes colorResId : Int) = context.color(colorResId)
+fun View.color(@ColorRes colorResId: Int) = context.color(colorResId)

@@ -19,11 +19,12 @@ class TrackingItemsPresenter(
 
     override val scope: CoroutineScope = MainScope()
 
-    init {
-        trackingItemRepository
-            .trackingItems
-            .onEach { refresh() }
-            .launchIn(scope)
+    init{
+        scope.launch {
+            trackingItemRepository
+                .trackingItems
+                .collect { refresh() }
+        }
     }
 
     override fun onViewCreated() {

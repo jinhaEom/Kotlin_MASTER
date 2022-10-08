@@ -1,7 +1,6 @@
 package bu.ac.kr.delivery_service.api
 
 import bu.ac.kr.delivery_service.BuildConfig
-import bu.ac.kr.delivery_service.BuildConfig.SWEET_TRACKER_API_KEY
 import bu.ac.kr.delivery_service.entity.ShippingCompanies
 import bu.ac.kr.delivery_service.entity.TrackingInformation
 import retrofit2.Response

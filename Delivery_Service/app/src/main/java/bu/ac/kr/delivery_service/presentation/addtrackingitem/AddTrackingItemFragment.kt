@@ -6,8 +6,6 @@ import bu.ac.kr.delivery_service.entity.ShippingCompany
 import bu.ac.kr.delivery_service.extension.toGone
 import bu.ac.kr.delivery_service.extension.toVisible
 import org.koin.android.scope.ScopeFragment
-import android.content.ClipDescription
-import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -114,10 +112,5 @@ class AddTrackingItemFragment : ScopeFragment(), AddTrackingItemsContract.View {
         inputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
 
-    private fun ClipboardManager.plainTextClip(): String? =
-        if (hasPrimaryClip() && (primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) == true)) {
-            primaryClip?.getItemAt(0)?.text?.toString()
-        } else {
-            null
-        }
+
 }

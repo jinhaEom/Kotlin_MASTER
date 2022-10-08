@@ -1,10 +1,13 @@
 package bu.ac.kr.delivery_service.di
 
+import android.app.Activity
 import android.app.Presentation
 import androidx.core.view.MotionEventCompat.getSource
 import bu.ac.kr.delivery_service.api.SweetTrackerApi
 import bu.ac.kr.delivery_service.api.Url
 import bu.ac.kr.delivery_service.db.AppDatabase
+import bu.ac.kr.delivery_service.preference.PreferenceManager
+import bu.ac.kr.delivery_service.preference.SharedPreferenceManager
 import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemFragment
 import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemPresenter
 import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemsContract
@@ -17,6 +20,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -53,10 +57,16 @@ val appModule = module {
             .build()
             .create()
     }
+    // Preference
+    single { androidContext().getSharedPreferences("preference", Activity.MODE_PRIVATE) }
+    single<PreferenceManager> { SharedPreferenceManager(get()) }
+
+    // Repository
+//    single<TrackingItemRepository> { TrackingItemRepositoryStub() }
     single<TrackingItemRepository> { TrackingItemRepositoryImpl(get(), get(), get()) }
     single<ShippingCompanyRepository> { ShippingCompanyRepositoryImpl(get(), get(), get(), get()) }
-        //Presentation
 
+    //Presentation
     scope<TrackingItemsFragment> {
         scoped<TrackingItemsContract.Presenter> { TrackingItemsPresenter(getSource(), get()) }
     }

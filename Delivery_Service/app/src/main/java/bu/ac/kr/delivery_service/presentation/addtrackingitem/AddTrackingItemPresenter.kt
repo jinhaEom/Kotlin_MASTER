@@ -41,11 +41,11 @@ class AddTrackingItemPresenter(
 
     override fun changeSelectedShippingCompany(companyName : String){ //회사선택시
         selectedShippingCompany = shippingCompanies?.find { it.name == companyName }
-        enabledSaveButtonIfAvailable()
+        enableSaveButtonIfAvailable()
     }
     override fun changeShippingInvoice(invoice : String){
         this.invoice = invoice
-        enabledSaveButtonIfAvailable()
+        enableSaveButtonIfAvailable()
     }
     override fun saveTrackingItem() {
         scope.launch {
@@ -65,7 +65,7 @@ class AddTrackingItemPresenter(
             }
         }
     }
-    private fun enabledSaveButtonIfAvailable(){
+    private fun enableSaveButtonIfAvailable(){
         if(!invoice.isNullOrBlank() && selectedShippingCompany != null){
             view.enableSaveButton()
         }else {
