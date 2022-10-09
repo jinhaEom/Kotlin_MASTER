@@ -14,7 +14,14 @@ class AddTrackingItemsContract{
 
         fun hideSaveTrackingItemIndicator()
 
+        fun showRecommendCompanyLoadingIndicator()
+
+        fun hideRecommendCompanyLoadingIndicator()
+
         fun showCompanies(companies : List<ShippingCompany>)  //불러온 택배사 보여주기
+
+        fun showRecommendCompany(company: ShippingCompany)
+
 
         fun enableSaveButton()   //운송장이 선택되었을때만 button  클릭 가능/불가능
 
@@ -31,6 +38,8 @@ class AddTrackingItemsContract{
         var selectedShippingCompany : ShippingCompany?
 
         fun fetchShippingCompanies()  //택배사 목록
+
+        fun fetchRecommendShippingCompany()
 
         fun changeSelectedShippingCompany(companyName: String)  //선택한 택배사 변경
 
