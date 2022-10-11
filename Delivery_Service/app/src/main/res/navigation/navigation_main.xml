@@ -12,7 +12,6 @@
         tools:layout="@layout/fragment_tracking_items">
 
 
-        \
         <action
             android:id="@+id/action_tracking_items_dest_to_add_tracking_item_dest"
             app:destination="@id/add_tracking_item_dest" />
@@ -34,4 +33,11 @@
         android:label="배송 상세"
         tools:layout="@layout/fragment_tracking_history"/>
 
+    <argument
+        android:name="item"
+        app:argType="bu.ac.kr.delivery_service.data.entity.TrackingItem"/>
+
+    <argument
+        android:name="information"
+        app:argType="bu.ac.kr.delivery_service.data.entity.TrackingInformation"/>
 </navigation>

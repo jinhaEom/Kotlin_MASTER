@@ -52,4 +52,10 @@ class TrackingItemRepositoryImpl(
         trackingItemDao.insert(trackingItem)
     }
 
+    override suspend fun deleteTrackingItem(trackingItem: TrackingItem) {
+        trackingItemDao.delete(trackingItem)
+    }
+    private fun TrackingInformation.sortTrackingDetailsByTimeDescending() =
+        copy(trackingDetails = trackingDetails?.sortedByDescending { it.time?: 0L })
+
 }

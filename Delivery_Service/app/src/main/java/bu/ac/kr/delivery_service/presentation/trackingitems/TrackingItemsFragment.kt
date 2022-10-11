@@ -87,6 +87,10 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
         binding?.addTrackingItemFloatingActionButton?.setOnClickListener { _ ->
             findNavController().navigate(R.id.action_tracking_items_dest_to_add_tracking_item_dest)
         }
+        (binding?.recyclerView?.adapter as? TrackingItemsAdapter)?.onClickItemListener = { item,information ->
+            findNavController()
+                .navigate(TrackingItemsFragmentDirections.toTrackingHistory(item,information))
+        }
     }
 
 }
