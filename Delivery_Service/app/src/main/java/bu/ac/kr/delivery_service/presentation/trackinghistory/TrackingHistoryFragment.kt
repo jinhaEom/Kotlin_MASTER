@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import bu.ac.kr.delivery_service.databinding.FragmentTrackingHistoryBinding
 import bu.ac.kr.delivery_service.entity.TrackingInformation
 import bu.ac.kr.delivery_service.entity.TrackingItem
@@ -50,25 +54,42 @@ class TrackingHistoryFragment : ScopeFragment(), TrackingHistoryContract.View{
         binding?.refreshLayout?.setOnRefreshListener{
             presenter.refresh()
         }
-        binding?.deleteTrackingItemButton?.setOnclickListener{
+        binding?.deleteTrackingItemButton?.setOnClickListener{
             presenter.deleteTrackingItem()
         }
     }
+    private fun initViews() {
+        binding?.recyclerView.apply{
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL , false)
+            adapter = TrackingHistoryAdapter()
+            addItemDecoration(DividerItemDecoration(context,RecyclerView.VERTICAL))
+        }
+    }
     override fun hideLoadingIndicator() {
-        TODO("Not yet implemented")
+        binding?.refreshLayout?.isRefreshing = false
     }
 
     override fun showTrackingItemInformation(
         trackingItem: TrackingItem,
         trackingInformation: TrackingInformation,
     ) {
-        TODO("Not yet implemented")
+       binding?.resultTextView?.text = trackingInformation.level?.label
+        binding?.invoiceTextView?.text = "${trackingInformation.invoiceNo} (${trackingItem.company.name}}"
+
+        binding?.itemNameTextView?.text =
+            if(trackingInformation.itemName.isNullOrBlank()){
+                "이름 없음"
+            }else {
+                trackingInformation.itemName
+            }
+        (binding?.recyclerView?.adapter as? TrackingHistoryAdapter)?.run{
+            data = trackingInformation.trackingDetails ?: emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun finish() {
-        TODO("Not yet implemented")
+        findNavController().popBackStack()
     }
 
-    override val presenter: TrackingItemsContract.Presenter
-        get() = TODO("Not yet implemented")
 }
