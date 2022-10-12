@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import bu.ac.kr.delivery_service.databinding.FragmentTrackingHistoryBinding
 import bu.ac.kr.delivery_service.entity.TrackingInformation
 import bu.ac.kr.delivery_service.entity.TrackingItem
-import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsContract
 import org.koin.android.scope.ScopeFragment
 import org.koin.core.parameter.parametersOf
 
-class TrackingHistoryFragment : ScopeFragment(), TrackingHistoryContract.View{
+class TrackingHistoryFragment : ScopeFragment(), TrackingHistoryContract.View {
 
-    override val presenter: TrackingItemsContract.Presenter by inject{
+    override val presenter: TrackingHistoryContract.Presenter by inject {
         parametersOf(arguments.item, arguments.information)
     }
+
     private var binding : FragmentTrackingHistoryBinding? = null
 
     private val arguments: TrackingHistoryFragmentArgs by navArgs()
@@ -37,7 +37,7 @@ class TrackingHistoryFragment : ScopeFragment(), TrackingHistoryContract.View{
         super.onViewCreated(view, savedInstanceState)
         initViews()
         bindViews()
-        presneter.onViewCreated()
+        presenter.onViewCreated()
     }
 
     override fun onDestroyView() {
@@ -59,12 +59,13 @@ class TrackingHistoryFragment : ScopeFragment(), TrackingHistoryContract.View{
         }
     }
     private fun initViews() {
-        binding?.recyclerView.apply{
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL , false)
+        binding?.recyclerView?.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = TrackingHistoryAdapter()
-            addItemDecoration(DividerItemDecoration(context,RecyclerView.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
         }
     }
+
     override fun hideLoadingIndicator() {
         binding?.refreshLayout?.isRefreshing = false
     }

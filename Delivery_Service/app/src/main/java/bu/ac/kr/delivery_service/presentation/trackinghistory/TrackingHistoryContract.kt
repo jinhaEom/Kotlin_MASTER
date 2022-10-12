@@ -8,10 +8,11 @@ import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsContrac
 
 class TrackingHistoryContract {
 
-    interface View : BaseView<TrackingItemsContract.Presenter>{
+    interface View : BaseView<Presenter> {
+
         fun hideLoadingIndicator()
 
-        fun showTrackingItemInformation(trackingItem : TrackingItem, trackingInformation: TrackingInformation)
+        fun showTrackingItemInformation(trackingItem: TrackingItem, trackingInformation: TrackingInformation)
 
         fun finish()
     }
