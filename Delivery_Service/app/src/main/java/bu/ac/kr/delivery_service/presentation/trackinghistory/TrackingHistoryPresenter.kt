@@ -24,19 +24,30 @@ class TrackingHistoryPresenter(
     override fun onDestroyView() {}
 
     override fun refresh() {
-        scope.launch{
-            try{
+        scope.launch {
+            try {
                 val newTrackingInformation =
-                    trackerRepository.getTrackingItemInformation(trackingItem.company.code,trackingItem.invoice)
-                newTrackingInformation?.let{
+                    trackerRepository.getTrackingInformation(trackingItem.company.code, trackingItem.invoice)
+                newTrackingInformation?.let {
                     trackingInformation = it
                     view.showTrackingItemInformation(trackingItem, trackingInformation)
                 }
-            }catch(exception : Exception){
+            } catch (exception: Exception) {
                 exception.printStackTrace()
-            }finally {
+            } finally {
                 view.hideLoadingIndicator()
             }
         }
+    }
+
+    override fun deleteTrackingItem() {
+         scope.launch{
+             try{
+                 trackerRepository.deleteTrackingItem(trackingItem)
+                 view.finish()
+             }catch (exception : Exception){
+                 exception.printStackTrace()
+             }
+         }
     }
 }

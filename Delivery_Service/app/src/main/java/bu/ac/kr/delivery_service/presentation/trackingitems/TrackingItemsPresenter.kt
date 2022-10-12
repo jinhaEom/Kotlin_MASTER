@@ -23,7 +23,8 @@ class TrackingItemsPresenter(
         scope.launch {
             trackingItemRepository
                 .trackingItems
-                .collect { refresh() }
+                .onEach { refresh() }
+                .launchIn(scope)
         }
     }
 
@@ -56,15 +57,5 @@ class TrackingItemsPresenter(
             view.hideLoadingIndicator()
         }
     }
-    override fun deleteTrackingITem() {
-        scope.launch{
-            try {
-                trackerRepository.deleteTrackingItem(trackingItem)
-                view.finish()
 
-            }catch (exception : Exception){
-                exception.printStackTrace()
-            }
-        }
-    }
 }

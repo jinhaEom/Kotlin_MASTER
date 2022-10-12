@@ -23,21 +23,21 @@
     <fragment
         android:id="@+id/add_tracking_item_dest"
         android:name="bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemFragment"
-        android:label="운송장 추가"
-        tools:layout="@layout/fragment_add_tracking_item">
+        android:label="운송장 추가">
 
     </fragment>
     <fragment
         android:id="@+id/tracking_history_dest"
         android:name="bu.ac.kr.delivery_service.presentation.trackinghistory.TrackingHistoryFragment"
         android:label="배송 상세"
-        tools:layout="@layout/fragment_tracking_history"/>
+        tools:layout="@layout/fragment_tracking_history">
+        <argument android:name="item"
+            app:argType=""
+            />
+        <argument android:name="information" />
 
-    <argument
-        android:name="item"
-        app:argType="bu.ac.kr.delivery_service.data.entity.TrackingItem"/>
 
-    <argument
-        android:name="information"
-        app:argType="bu.ac.kr.delivery_service.data.entity.TrackingInformation"/>
+    </fragment>
+
+
 </navigation>

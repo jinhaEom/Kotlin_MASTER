@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,11 +18,12 @@ import org.koin.core.parameter.parametersOf
 
 class TrackingHistoryFragment : ScopeFragment(), TrackingHistoryContract.View{
 
-    override val presenter : TrackingHistoryContract.Presenter by inject{
+    override val presenter: TrackingItemsContract.Presenter by inject{
         parametersOf(arguments.item, arguments.information)
     }
     private var binding : FragmentTrackingHistoryBinding? = null
-    private var arguments : TrackingHistoryFragmentArgs by navArgs()
+
+    private val arguments: TrackingHistoryFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,10 +51,10 @@ class TrackingHistoryFragment : ScopeFragment(), TrackingHistoryContract.View{
     }
 
     private fun bindViews() {
-        binding?.refreshLayout?.setOnRefreshListener{
+        binding?.refreshLayout?.setOnRefreshListener {
             presenter.refresh()
         }
-        binding?.deleteTrackingItemButton?.setOnClickListener{
+        binding?.deleteTrackingItemButton?.setOnClickListener {
             presenter.deleteTrackingItem()
         }
     }
