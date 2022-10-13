@@ -6,11 +6,16 @@ import androidx.core.view.MotionEventCompat.getSource
 import bu.ac.kr.delivery_service.api.SweetTrackerApi
 import bu.ac.kr.delivery_service.api.Url
 import bu.ac.kr.delivery_service.db.AppDatabase
+import bu.ac.kr.delivery_service.entity.TrackingInformation
+import bu.ac.kr.delivery_service.entity.TrackingItem
 import bu.ac.kr.delivery_service.preference.PreferenceManager
 import bu.ac.kr.delivery_service.preference.SharedPreferenceManager
 import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemFragment
 import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemPresenter
 import bu.ac.kr.delivery_service.presentation.addtrackingitem.AddTrackingItemsContract
+import bu.ac.kr.delivery_service.presentation.trackinghistory.TrackingHistoryContract
+import bu.ac.kr.delivery_service.presentation.trackinghistory.TrackingHistoryFragment
+import bu.ac.kr.delivery_service.presentation.trackinghistory.TrackingHistoryPresenter
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsContract
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsFragment
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsPresenter
@@ -73,6 +78,11 @@ val appModule = module {
     scope<AddTrackingItemFragment> {
         scoped<AddTrackingItemsContract.Presenter> {
             AddTrackingItemPresenter(getSource(), get(), get())
+        }
+    }
+    scope<TrackingHistoryFragment> {
+        scoped<TrackingHistoryContract.Presenter> { (trackingItem: TrackingItem, trackingInformation: TrackingInformation) ->
+            TrackingHistoryPresenter(getSource(), get(), trackingItem, trackingInformation)
         }
     }
 }

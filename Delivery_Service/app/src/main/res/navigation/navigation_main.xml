@@ -32,9 +32,11 @@
         android:label="배송 상세"
         tools:layout="@layout/fragment_tracking_history">
         <argument android:name="item"
-            app:argType=""
+            app:argType="bu.ac.kr.entity.TrackingItem"
             />
-        <argument android:name="information" />
+        <argument android:name="information"
+            app:argType="bu.ac.kr.entity.TrackingInformation"
+            />
 
 
     </fragment>
