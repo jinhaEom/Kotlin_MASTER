@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -87,9 +86,9 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
         binding?.addTrackingItemFloatingActionButton?.setOnClickListener { _ ->
             findNavController().navigate(R.id.action_tracking_items_dest_to_add_tracking_item_dest)
         }
-        (binding?.recyclerView?.adapter as? TrackingItemsAdapter)?.onClickItemListener = { item,information ->
+        (binding?.recyclerView?.adapter as? TrackingItemsAdapter)?.onClickItemListener = { item, information ->
             findNavController()
-                .navigate(TrackingItemsFragmentDirections.toTrackingHistory(item,information))
+                .navigate(TrackingItemsFragmentDirections.actionTrackingItemsDestToTrackingHistoryDest(item, information))
         }
     }
 

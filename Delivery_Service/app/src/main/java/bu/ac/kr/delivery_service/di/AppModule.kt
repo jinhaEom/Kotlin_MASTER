@@ -20,6 +20,7 @@ import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsContrac
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsFragment
 import bu.ac.kr.delivery_service.presentation.trackingitems.TrackingItemsPresenter
 import bu.ac.kr.delivery_service.repository.*
+import bu.ac.kr.delivery_service.work.AppWorkerFactory
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -71,6 +72,8 @@ val appModule = module {
     single<TrackingItemRepository> { TrackingItemRepositoryImpl(get(), get(), get()) }
     single<ShippingCompanyRepository> { ShippingCompanyRepositoryImpl(get(), get(), get(), get()) }
 
+    //work
+    single{ AppWorkerFactory(get(),get()) }
     //Presentation
     scope<TrackingItemsFragment> {
         scoped<TrackingItemsContract.Presenter> { TrackingItemsPresenter(getSource(), get()) }
