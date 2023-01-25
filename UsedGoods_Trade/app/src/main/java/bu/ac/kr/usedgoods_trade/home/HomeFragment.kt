@@ -27,8 +27,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var articleDB: DatabaseReference
     private lateinit var userDB: DatabaseReference
     private lateinit var articleAdapter: ArticleAdapter
-
-
     private val articleList = mutableListOf<ArticleModel>()
     private val listener = object: ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -100,9 +98,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 // 로그인을 안한 상태
                 Snackbar.make(view, "로그인 후 사용해주세요", Snackbar.LENGTH_LONG).show()
             }
-
-
-
 
         })
 
